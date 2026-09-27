@@ -23,6 +23,44 @@ export type BusinessStatus =
   | 'Temporarily Closed'
   | 'Suspended';
 
+export type DayOfWeek = 'Sunday' | 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday';
+
+export interface DaySchedule {
+  day: DayOfWeek;
+  isOpen: boolean;
+  openTime: string;
+  closeTime: string;
+}
+
+export interface HomeServiceDaySchedule {
+  day: DayOfWeek;
+  isAvailable: boolean;
+  startTime: string;
+  endTime: string;
+}
+
+export interface DeliveryFeeConfig {
+  baseFee: number; // minimum charge in SAR, e.g. 50
+  pricePerKm: number; // SAR per km, e.g. 3.5
+  freeDeliveryThreshold: number; // e.g. 500 SAR
+  maxServiceRadiusKm: number; // e.g. 35 km
+  minimumBookingAmount: number; // e.g. 150 SAR
+}
+
+export type ShiftType = 'MORNING' | 'EVENING' | 'FULL_DAY' | 'SPLIT_SHIFT' | 'CUSTOM';
+
+export interface EmployeeScheduleConfig {
+  shiftType: ShiftType;
+  shiftLabel: string;
+  workingDays: DayOfWeek[];
+  startTime: string;
+  endTime: string;
+  splitStartTime?: string;
+  splitEndTime?: string;
+  allowsHomeService: boolean;
+  notes?: string;
+}
+
 export interface Branch {
   id: string;
   name: string;
@@ -32,6 +70,9 @@ export interface Branch {
   isActive: boolean;
   managerId: string;
   managerName: string;
+  operatingSchedule?: DaySchedule[];
+  homeServiceSchedule?: HomeServiceDaySchedule[];
+  deliveryFeeConfig?: DeliveryFeeConfig;
 }
 
 export interface MasterService {
@@ -69,6 +110,7 @@ export interface Professional {
   isWorkingToday: boolean;
   workingSchedule: string;
   isDeactivated?: boolean;
+  scheduleConfig?: EmployeeScheduleConfig;
 }
 
 export type BookingStatus = 

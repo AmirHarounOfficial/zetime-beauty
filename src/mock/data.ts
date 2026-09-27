@@ -16,10 +16,35 @@ export const mockBranches: Branch[] = [
     name: 'Downtown Flagship Branch',
     address: 'King Fahd Rd, Tower 4, Riyadh',
     phone: '+966 50 123 4567',
-    workingHours: '09:00 - 22:00',
+    workingHours: '10:00 - 22:00',
     isActive: true,
     managerId: 'm-1',
-    managerName: 'Noura Al-Otaibi'
+    managerName: 'Noura Al-Otaibi',
+    operatingSchedule: [
+      { day: 'Sunday', isOpen: true, openTime: '10:00', closeTime: '22:00' },
+      { day: 'Monday', isOpen: true, openTime: '10:00', closeTime: '22:00' },
+      { day: 'Tuesday', isOpen: true, openTime: '10:00', closeTime: '22:00' },
+      { day: 'Wednesday', isOpen: true, openTime: '10:00', closeTime: '22:00' },
+      { day: 'Thursday', isOpen: true, openTime: '10:00', closeTime: '23:00' },
+      { day: 'Friday', isOpen: true, openTime: '13:30', closeTime: '23:00' },
+      { day: 'Saturday', isOpen: true, openTime: '10:00', closeTime: '22:00' }
+    ],
+    homeServiceSchedule: [
+      { day: 'Sunday', isAvailable: false, startTime: '11:00', endTime: '20:00' },
+      { day: 'Monday', isAvailable: false, startTime: '11:00', endTime: '20:00' },
+      { day: 'Tuesday', isAvailable: true, startTime: '11:00', endTime: '21:00' },
+      { day: 'Wednesday', isAvailable: true, startTime: '11:00', endTime: '21:00' },
+      { day: 'Thursday', isAvailable: true, startTime: '11:00', endTime: '22:00' },
+      { day: 'Friday', isAvailable: true, startTime: '14:00', endTime: '22:00' },
+      { day: 'Saturday', isAvailable: true, startTime: '11:00', endTime: '21:00' }
+    ],
+    deliveryFeeConfig: {
+      baseFee: 50,
+      pricePerKm: 3.5,
+      freeDeliveryThreshold: 500,
+      maxServiceRadiusKm: 35,
+      minimumBookingAmount: 150
+    }
   },
   {
     id: 'b-2',
@@ -29,7 +54,32 @@ export const mockBranches: Branch[] = [
     workingHours: '10:00 - 23:00',
     isActive: true,
     managerId: 'm-2',
-    managerName: 'Fahad Al-Zahrani'
+    managerName: 'Fahad Al-Zahrani',
+    operatingSchedule: [
+      { day: 'Sunday', isOpen: true, openTime: '10:00', closeTime: '23:00' },
+      { day: 'Monday', isOpen: true, openTime: '10:00', closeTime: '23:00' },
+      { day: 'Tuesday', isOpen: true, openTime: '10:00', closeTime: '23:00' },
+      { day: 'Wednesday', isOpen: true, openTime: '10:00', closeTime: '23:00' },
+      { day: 'Thursday', isOpen: true, openTime: '10:00', closeTime: '23:30' },
+      { day: 'Friday', isOpen: true, openTime: '13:00', closeTime: '23:30' },
+      { day: 'Saturday', isOpen: true, openTime: '10:00', closeTime: '23:00' }
+    ],
+    homeServiceSchedule: [
+      { day: 'Sunday', isAvailable: true, startTime: '12:00', endTime: '21:00' },
+      { day: 'Monday', isAvailable: true, startTime: '12:00', endTime: '21:00' },
+      { day: 'Tuesday', isAvailable: true, startTime: '12:00', endTime: '21:00' },
+      { day: 'Wednesday', isAvailable: true, startTime: '12:00', endTime: '21:00' },
+      { day: 'Thursday', isAvailable: true, startTime: '12:00', endTime: '22:00' },
+      { day: 'Friday', isAvailable: true, startTime: '14:00', endTime: '22:00' },
+      { day: 'Saturday', isAvailable: true, startTime: '12:00', endTime: '21:00' }
+    ],
+    deliveryFeeConfig: {
+      baseFee: 45,
+      pricePerKm: 3.0,
+      freeDeliveryThreshold: 450,
+      maxServiceRadiusKm: 30,
+      minimumBookingAmount: 120
+    }
   }
 ];
 
@@ -152,7 +202,16 @@ export const mockProfessionals: Professional[] = [
     rating: 4.9,
     completedBookingsCount: 342,
     isWorkingToday: true,
-    workingSchedule: '10:00 - 19:00'
+    workingSchedule: '09:00 - 15:30 (Morning Shift)',
+    scheduleConfig: {
+      shiftType: 'MORNING',
+      shiftLabel: 'Morning Shift',
+      workingDays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Saturday'],
+      startTime: '09:00',
+      endTime: '15:30',
+      allowsHomeService: true,
+      notes: 'VIP Bridal and Signature Blowdry specialist'
+    }
   },
   {
     id: 'p-2',
@@ -166,7 +225,16 @@ export const mockProfessionals: Professional[] = [
     rating: 4.95,
     completedBookingsCount: 512,
     isWorkingToday: true,
-    workingSchedule: '09:00 - 17:00'
+    workingSchedule: '10:00 - 18:00 (Full Day)',
+    scheduleConfig: {
+      shiftType: 'FULL_DAY',
+      shiftLabel: 'Full Day Shift',
+      workingDays: ['Sunday', 'Monday', 'Tuesday', 'Thursday', 'Saturday'],
+      startTime: '10:00',
+      endTime: '18:00',
+      allowsHomeService: true,
+      notes: 'Mobile skin hydration and 24K gold facial kits'
+    }
   },
   {
     id: 'p-3',
@@ -180,7 +248,16 @@ export const mockProfessionals: Professional[] = [
     rating: 4.85,
     completedBookingsCount: 280,
     isWorkingToday: true,
-    workingSchedule: '12:00 - 21:00'
+    workingSchedule: '15:00 - 22:30 (Evening Shift)',
+    scheduleConfig: {
+      shiftType: 'EVENING',
+      shiftLabel: 'Evening Shift',
+      workingDays: ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      startTime: '15:00',
+      endTime: '22:30',
+      allowsHomeService: false,
+      notes: 'In-salon chair only. Hot towel & beard master.'
+    }
   },
   {
     id: 'p-4',
@@ -194,7 +271,18 @@ export const mockProfessionals: Professional[] = [
     rating: 4.78,
     completedBookingsCount: 195,
     isWorkingToday: false,
-    workingSchedule: 'Day Off'
+    workingSchedule: 'Split: 10:00-14:00 & 17:00-21:00',
+    scheduleConfig: {
+      shiftType: 'SPLIT_SHIFT',
+      shiftLabel: 'Split Shift',
+      workingDays: ['Sunday', 'Monday', 'Wednesday', 'Thursday', 'Saturday'],
+      startTime: '10:00',
+      endTime: '14:00',
+      splitStartTime: '17:00',
+      splitEndTime: '21:00',
+      allowsHomeService: false,
+      notes: 'Available for peak afternoon and evening gel treatments'
+    }
   }
 ];
 

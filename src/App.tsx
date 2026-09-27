@@ -10,6 +10,8 @@ import { ProfessionalsView } from './components/ProfessionalsView';
 import { CrmView } from './components/CrmView';
 import { AnalyticsView } from './components/AnalyticsView';
 import { SettingsView } from './components/SettingsView';
+import { OperatingHoursView } from './components/OperatingHoursView';
+import { DeliveryFeeView } from './components/DeliveryFeeView';
 
 import { NewBookingModal } from './components/Modals/NewBookingModal';
 import { AddWalkinModal } from './components/Modals/AddWalkinModal';
@@ -34,13 +36,17 @@ import {
   QueueEntry,
   QueueStatus,
   BranchService,
-  Professional
+  Professional,
+  DaySchedule,
+  HomeServiceDaySchedule,
+  DeliveryFeeConfig,
+  EmployeeScheduleConfig
 } from './types/zetime';
 
 export function App() {
   const [activeTab, setActiveTab] = useState<TabType>('dashboard');
   const [currentRole, setCurrentRole] = useState<ProviderRole>('BUSINESS_OWNER');
-  const [branches] = useState<Branch[]>(mockBranches);
+  const [branches, setBranches] = useState<Branch[]>(mockBranches);
   const [selectedBranch, setSelectedBranch] = useState<Branch>(mockBranches[0]);
 
   const [bookings, setBookings] = useState<Booking[]>(mockBookings);
@@ -115,7 +121,7 @@ export function App() {
     );
   };
 
-  // Staff Transfers & Eligibility
+  // Staff Transfers, Shifts & Eligibility
   const handleTransferBranch = (profId: string, targetBranchId: string, targetBranchName: string) => {
     setProfessionals((prev) =>
       prev.map((p) =>
@@ -132,6 +138,65 @@ export function App() {
         p.id === profId ? { ...p, isHomeServiceEligible: !p.isHomeServiceEligible } : p
       )
     );
+  };
+
+  const handleUpdateProfessionalSchedule = (
+    profId: string,
+    scheduleConfig: EmployeeScheduleConfig
+  ) => {
+    setProfessionals((prev) =>
+      prev.map((p) =>
+        p.id === profId
+          ? {
+              ...p,
+              scheduleConfig,
+              workingSchedule: `${scheduleConfig.startTime} - ${scheduleConfig.endTime} (${scheduleConfig.shiftLabel})`,
+              isHomeServiceEligible: scheduleConfig.allowsHomeService
+            }
+          : p
+      )
+    );
+  };
+
+  // Branch Operating Hours & Delivery Fees Handlers
+  const handleUpdateBranchSchedule = (
+    branchId: string,
+    operatingSchedule: DaySchedule[],
+    homeServiceSchedule: HomeServiceDaySchedule[]
+  ) => {
+    setBranches((prev) =>
+      prev.map((b) =>
+        b.id === branchId
+          ? { ...b, operatingSchedule, homeServiceSchedule }
+          : b
+      )
+    );
+    if (selectedBranch.id === branchId) {
+      setSelectedBranch((prev) => ({
+        ...prev,
+        operatingSchedule,
+        homeServiceSchedule
+      }));
+    }
+  };
+
+  const handleUpdateDeliveryConfig = (
+    branchId: string,
+    deliveryFeeConfig: DeliveryFeeConfig
+  ) => {
+    setBranches((prev) =>
+      prev.map((b) =>
+        b.id === branchId
+          ? { ...b, deliveryFeeConfig }
+          : b
+      )
+    );
+    if (selectedBranch.id === branchId) {
+      setSelectedBranch((prev) => ({
+        ...prev,
+        deliveryFeeConfig
+      }));
+    }
   };
 
   const pendingCount = bookings.filter((b) => b.status === 'PENDING_CONFIRMATION').length;
@@ -198,6 +263,7 @@ export function App() {
           currentRole={currentRole}
           onTransferBranch={handleTransferBranch}
           onToggleHomeEligibility={handleToggleHomeEligibility}
+          onUpdateSchedule={handleUpdateProfessionalSchedule}
           onBackToSettings={() => setActiveTab('settings')}
         />
       )}
@@ -213,6 +279,22 @@ export function App() {
         <AnalyticsView
           bookings={bookings}
           currentRole={currentRole}
+          onBackToSettings={() => setActiveTab('settings')}
+        />
+      )}
+
+      {activeTab === 'operating-hours' && (
+        <OperatingHoursView
+          selectedBranch={selectedBranch}
+          onUpdateBranchSchedule={handleUpdateBranchSchedule}
+          onBackToSettings={() => setActiveTab('settings')}
+        />
+      )}
+
+      {activeTab === 'delivery-fees' && (
+        <DeliveryFeeView
+          selectedBranch={selectedBranch}
+          onUpdateDeliveryConfig={handleUpdateDeliveryConfig}
           onBackToSettings={() => setActiveTab('settings')}
         />
       )}
@@ -239,6 +321,7 @@ export function App() {
         customers={customers}
         branchId={selectedBranch.id}
         branchName={selectedBranch.name}
+        deliveryFeeConfig={selectedBranch.deliveryFeeConfig}
       />
 
       <AddWalkinModal

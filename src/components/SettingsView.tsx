@@ -18,7 +18,9 @@ import {
   Car,
   Shield,
   Building,
-  AlertCircle
+  AlertCircle,
+  Clock,
+  Truck
 } from 'lucide-react';
 
 interface SettingsViewProps {
@@ -94,7 +96,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
     }
   ];
 
-  const handleToolClick = (tool: 'crm' | 'analytics' | 'professionals') => {
+  const handleToolClick = (tool: 'crm' | 'analytics' | 'professionals' | 'operating-hours' | 'delivery-fees') => {
     if (tool === 'analytics') {
       if (!canViewAnalytics) {
         setPermissionAlert(
@@ -111,6 +113,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         return;
       }
       onNavigateToSubTab('professionals');
+    } else if (tool === 'operating-hours') {
+      onNavigateToSubTab('operating-hours');
+    } else if (tool === 'delivery-fees') {
+      onNavigateToSubTab('delivery-fees');
     } else {
       onNavigateToSubTab('crm');
     }
@@ -358,7 +364,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               </div>
               <div>
                 <div style={{ fontWeight: 700, fontSize: '13px', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span>Staff & Team Roster</span>
+                  <span>Staff & Team Shift Rosters</span>
                   {!canManageStaff && (
                     <span className="permission-locked-badge">
                       <Lock size={10} /> Locked
@@ -367,7 +373,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 </div>
                 <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
                   {canManageStaff
-                    ? 'Branch transfers, hours & home-service eligibility'
+                    ? 'Morning/evening shifts, working days & home eligibility'
                     : 'Requires Business Owner / Manager permissions'}
                 </div>
               </div>
@@ -377,6 +383,64 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             ) : (
               <Lock size={14} color="#dc2626" />
             )}
+          </div>
+
+          {/* Operating Hours & Days */}
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => handleToolClick('operating-hours')}
+            className="gold-card settings-tool-card"
+          >
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+              <div
+                className="icon-avatar-badge"
+                style={{
+                  background: 'rgba(212, 175, 55, 0.15)',
+                  color: 'var(--text-gold)'
+                }}
+              >
+                <Clock size={18} />
+              </div>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: '13px', color: 'var(--text-main)' }}>
+                  Salon & Home Operating Hours
+                </div>
+                <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+                  Weekly opening schedule & home service dispatch windows
+                </div>
+              </div>
+            </div>
+            <ChevronRight size={16} color="var(--text-muted)" />
+          </div>
+
+          {/* Delivery Fees & Travel Radius */}
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => handleToolClick('delivery-fees')}
+            className="gold-card settings-tool-card"
+          >
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+              <div
+                className="icon-avatar-badge"
+                style={{
+                  background: 'rgba(16, 185, 129, 0.12)',
+                  color: '#059669'
+                }}
+              >
+                <Truck size={18} />
+              </div>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: '13px', color: 'var(--text-main)' }}>
+                  Home Delivery Fees & Radius
+                </div>
+                <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+                  Minimum call-out charge, per-km rate & free delivery rule
+                </div>
+              </div>
+            </div>
+            <ChevronRight size={16} color="var(--text-muted)" />
           </div>
         </div>
       </div>
