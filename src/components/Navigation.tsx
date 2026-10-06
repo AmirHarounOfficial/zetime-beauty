@@ -1,7 +1,7 @@
 import React from 'react';
 import { LayoutDashboard, CalendarDays, Users2, Scissors, Settings, LucideIcon } from 'lucide-react';
 
-export type TabType = 'dashboard' | 'bookings' | 'queue' | 'services' | 'professionals' | 'crm' | 'analytics' | 'settings' | 'operating-hours' | 'delivery-fees';
+export type TabType = 'dashboard' | 'bookings' | 'queue' | 'services' | 'professionals' | 'crm' | 'analytics' | 'settings' | 'operating-hours' | 'delivery-fees' | 'business-branches';
 
 interface NavigationProps {
   activeTab: TabType;
@@ -37,7 +37,7 @@ export const Navigation: React.FC<NavigationProps> = ({
       {tabs.map((tab) => {
         const Icon = tab.icon;
         // If an activeTab is a sub-view housed under settings, highlight Settings tab
-        const isSettingsSubView = ['settings', 'crm', 'analytics', 'professionals', 'operating-hours', 'delivery-fees'].includes(activeTab);
+        const isSettingsSubView = ['settings', 'crm', 'analytics', 'professionals', 'operating-hours', 'delivery-fees', 'business-branches'].includes(activeTab);
         const isActive = tab.id === 'settings' ? isSettingsSubView : activeTab === tab.id;
         const badgeValue = tab.badge || 0;
 

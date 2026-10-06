@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { BranchService, MasterService, ProviderRole } from '../types/zetime';
 import { hasPermission } from '../utils/permissions';
-import { Home, Edit3, Lock, AlertCircle } from 'lucide-react';
+import { Home, Edit3, Lock, AlertCircle, Plus, Sparkles, Clock, Check } from 'lucide-react';
+import { AddServiceModal } from './Modals/AddServiceModal';
+import { EditServiceModal } from './Modals/EditServiceModal';
 
 interface ServicesViewProps {
   branchServices: BranchService[];
@@ -9,6 +11,9 @@ interface ServicesViewProps {
   currentRole: ProviderRole;
   onUpdateServicePrice: (serviceId: string, newPrice: number) => void;
   onToggleHomeService: (serviceId: string) => void;
+  onAddService?: (newService: BranchService) => void;
+  onUpdateService?: (updatedService: BranchService) => void;
+  onDeleteService?: (serviceId: string) => void;
 }
 
 export const ServicesView: React.FC<ServicesViewProps> = ({
@@ -16,11 +21,14 @@ export const ServicesView: React.FC<ServicesViewProps> = ({
   masterCatalog,
   currentRole,
   onUpdateServicePrice,
-  onToggleHomeService
+  onToggleHomeService,
+  onAddService,
+  onUpdateService,
+  onDeleteService
 }) => {
   const [activeCategory, setActiveCategory] = useState<string>('All');
-  const [editingId, setEditingId] = useState<string | null>(null);
-  const [editPriceInput, setEditPriceInput] = useState<number>(0);
+  const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
+  const [editingService, setEditingService] = useState<BranchService | null>(null);
 
   const canEditPricing = hasPermission(currentRole, 'EDIT_PRICING');
 
@@ -33,20 +41,45 @@ export const ServicesView: React.FC<ServicesViewProps> = ({
 
   return (
     <div style={{ padding: '14px' }}>
-      <div style={{ marginBottom: '12px' }}>
-        <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', color: 'var(--text-gold)' }}>
-          Branch Service Catalog
-        </h2>
-        <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
-          Powered by ZeTime Master Catalog
-        </span>
+      {/* Header with Title and Add Service Button */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+        <div>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', color: 'var(--text-gold)', margin: 0 }}>
+            Branch Service Catalog
+          </h2>
+          <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+            Powered by ZeTime Master Catalog ({branchServices.length} active)
+          </span>
+        </div>
+
+        {canEditPricing && (
+          <button
+            onClick={() => setIsAddModalOpen(true)}
+            style={{
+              background: 'var(--gold-gradient)',
+              color: '#0d0d10',
+              border: 'none',
+              borderRadius: '8px',
+              padding: '7px 12px',
+              fontSize: '11px',
+              fontWeight: 800,
+              cursor: 'pointer',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '4px',
+              boxShadow: '0 2px 8px var(--gold-glow)'
+            }}
+          >
+            <Plus size={14} /> Add Service
+          </button>
+        )}
       </div>
 
       {/* Permission Restriction Alert if Staff/Professional */}
       {!canEditPricing && (
         <div className="permission-denied-box">
           <AlertCircle size={16} color="#dc2626" />
-          <span>Role Permission: {currentRole.replace('_', ' ')} cannot modify service pricing.</span>
+          <span>Role Permission: {currentRole.replace('_', ' ')} cannot modify service catalog or pricing.</span>
         </div>
       )}
 
@@ -78,69 +111,76 @@ export const ServicesView: React.FC<ServicesViewProps> = ({
         {filteredServices.map((svc) => (
           <div key={svc.id} className="gold-card" style={{ padding: '12px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-              <div>
-                <span
-                  style={{
-                    fontSize: '9px',
-                    color: 'var(--text-gold)',
-                    background: 'rgba(212, 175, 55, 0.15)',
-                    padding: '2px 6px',
-                    borderRadius: '4px',
-                    fontWeight: 700
-                  }}
-                >
-                  {svc.category}
-                </span>
+              <div style={{ flex: 1, paddingRight: '8px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span
+                    style={{
+                      fontSize: '9px',
+                      color: 'var(--text-gold)',
+                      background: 'rgba(212, 175, 55, 0.15)',
+                      padding: '2px 6px',
+                      borderRadius: '4px',
+                      fontWeight: 700
+                    }}
+                  >
+                    {svc.category}
+                  </span>
+                  {svc.isEnabled === false && (
+                    <span
+                      style={{
+                        fontSize: '9px',
+                        color: '#64748b',
+                        background: '#f1f5f9',
+                        padding: '2px 6px',
+                        borderRadius: '4px',
+                        fontWeight: 700
+                      }}
+                    >
+                      Disabled
+                    </span>
+                  )}
+                </div>
+
                 <div style={{ fontWeight: 700, fontSize: '13px', color: 'var(--text-main)', marginTop: '4px' }}>
                   {svc.name}
                 </div>
               </div>
 
-              {/* Price & Edit Button (Permission Controlled) */}
-              {editingId === svc.id ? (
-                <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
-                  <input
-                    type="number"
-                    value={editPriceInput}
-                    onChange={(e) => setEditPriceInput(Number(e.target.value))}
-                    style={{ width: '65px' }}
-                  />
+              {/* Price & Edit Button */}
+              <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                <div style={{ fontWeight: 800, fontSize: '15px', color: 'var(--text-gold)' }}>
+                  {svc.price} SAR
+                </div>
+
+                {canEditPricing ? (
                   <button
-                    onClick={() => {
-                      onUpdateServicePrice(svc.id, editPriceInput);
-                      setEditingId(null);
+                    onClick={() => setEditingService(svc)}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      color: 'var(--text-gold)',
+                      fontSize: '11px',
+                      cursor: 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '3px',
+                      fontWeight: 700,
+                      marginTop: '2px'
                     }}
-                    style={{ background: 'var(--gold-gradient)', color: '#000', border: 'none', padding: '4px 8px', borderRadius: '4px', fontWeight: 700, fontSize: '11px', cursor: 'pointer' }}
                   >
-                    Save
+                    <Edit3 size={11} /> Edit Service
                   </button>
-                </div>
-              ) : (
-                <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontWeight: 800, fontSize: '14px', color: 'var(--text-gold)' }}>
-                    {svc.price} SAR
-                  </div>
-                  {canEditPricing ? (
-                    <button
-                      onClick={() => {
-                        setEditingId(svc.id);
-                        setEditPriceInput(svc.price);
-                      }}
-                      style={{ background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '2px', fontWeight: 600 }}
-                    >
-                      <Edit3 size={10} /> Edit Price
-                    </button>
-                  ) : (
-                    <span style={{ fontSize: '9px', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '2px' }}>
-                      <Lock size={9} /> Fixed Price
-                    </span>
-                  )}
-                </div>
-              )}
+                ) : (
+                  <span style={{ fontSize: '9px', color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: '2px' }}>
+                    <Lock size={9} /> Fixed
+                  </span>
+                )}
+              </div>
             </div>
 
+            {/* Bottom info & home service button */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px', paddingTop: '8px', borderTop: '1px solid var(--border-dark)', fontSize: '11px', color: 'var(--text-muted)' }}>
-              <span>⏱ Duration: {svc.durationMinutes} minutes</span>
+              <span>⏱ {svc.durationMinutes} mins</span>
 
               <button
                 onClick={() => canEditPricing && onToggleHomeService(svc.id)}
@@ -160,12 +200,54 @@ export const ServicesView: React.FC<ServicesViewProps> = ({
                   opacity: canEditPricing ? 1 : 0.6
                 }}
               >
-                <Home size={10} /> {svc.isHomeServiceAvailable ? `Home Visit (+${(svc.homeServicePrice || svc.price + 70) - svc.price} SAR)` : 'Enable Home Visit'}
+                <Home size={10} />{' '}
+                {svc.isHomeServiceAvailable
+                  ? `Home Visit (+${(svc.homeServicePrice || svc.price + 70) - svc.price} SAR)`
+                  : 'Enable Home Visit'}
               </button>
             </div>
           </div>
         ))}
       </div>
+
+      {/* Add Service Modal */}
+      {isAddModalOpen && (
+        <AddServiceModal
+          isOpen={isAddModalOpen}
+          onClose={() => setIsAddModalOpen(false)}
+          masterCatalog={masterCatalog}
+          existingServices={branchServices}
+          onAdd={(newSvc) => {
+            if (onAddService) {
+              onAddService(newSvc);
+            }
+          }}
+        />
+      )}
+
+      {/* Edit Service Modal */}
+      {editingService && (
+        <EditServiceModal
+          isOpen={Boolean(editingService)}
+          onClose={() => setEditingService(null)}
+          service={editingService}
+          masterCatalog={masterCatalog}
+          onSave={(updated) => {
+            if (onUpdateService) {
+              onUpdateService(updated);
+            } else {
+              onUpdateServicePrice(updated.id, updated.price);
+            }
+            setEditingService(null);
+          }}
+          onDelete={(id) => {
+            if (onDeleteService) {
+              onDeleteService(id);
+            }
+            setEditingService(null);
+          }}
+        />
+      )}
     </div>
   );
 };

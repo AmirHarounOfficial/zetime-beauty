@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SubscriptionPlan, ProviderRole, Branch } from '../types/zetime';
+import { SubscriptionPlan, ProviderRole, Branch, Professional } from '../types/zetime';
 import { hasPermission } from '../utils/permissions';
 import { TabType } from './Navigation';
 import {
@@ -29,6 +29,7 @@ interface SettingsViewProps {
   onSelectRole: (role: ProviderRole) => void;
   selectedBranch: Branch;
   branches: Branch[];
+  professionals?: Professional[];
   onSelectBranch: (branch: Branch) => void;
   onNavigateToSubTab: (tab: TabType) => void;
 }
@@ -39,6 +40,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   onSelectRole,
   selectedBranch,
   branches,
+  professionals = [],
   onSelectBranch,
   onNavigateToSubTab
 }) => {
@@ -96,8 +98,16 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
     }
   ];
 
-  const handleToolClick = (tool: 'crm' | 'analytics' | 'professionals' | 'operating-hours' | 'delivery-fees') => {
-    if (tool === 'analytics') {
+  const handleToolClick = (tool: 'crm' | 'analytics' | 'professionals' | 'operating-hours' | 'delivery-fees' | 'business-branches') => {
+    if (tool === 'business-branches') {
+      if (!canManageStaff && !canManageSub) {
+        setPermissionAlert(
+          `Permission Restricted: Multi-branch network and manager configurations require Business Owner or Branch Manager role clearance.`
+        );
+        return;
+      }
+      onNavigateToSubTab('business-branches');
+    } else if (tool === 'analytics') {
       if (!canViewAnalytics) {
         setPermissionAlert(
           `Permission Denied: Financial revenue and analytics reports are restricted to Business Owners and Managers. Active role "${currentRole.replace('_', ' ')}" has no financial clearance.`
@@ -274,6 +284,48 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          {/* Business & Branches Management */}
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => handleToolClick('business-branches')}
+            className="gold-card settings-tool-card"
+            style={{ border: '1.5px solid var(--border-gold)', background: 'linear-gradient(180deg, #ffffff 0%, #fdfcf7 100%)' }}
+          >
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+              <div
+                className="icon-avatar-badge"
+                style={{
+                  background: 'rgba(212, 175, 55, 0.2)',
+                  color: 'var(--text-gold)'
+                }}
+              >
+                <Building2 size={18} />
+              </div>
+              <div>
+                <div style={{ fontWeight: 800, fontSize: '13px', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span>Business Profile & Branches</span>
+                  <span
+                    style={{
+                      background: 'var(--gold-gradient)',
+                      color: '#000',
+                      fontSize: '8px',
+                      fontWeight: 800,
+                      padding: '1px 5px',
+                      borderRadius: '4px'
+                    }}
+                  >
+                    ENTERPRISE
+                  </span>
+                </div>
+                <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+                  {branches.length} Branches • Designated Managers • Enterprise CR Profile
+                </div>
+              </div>
+            </div>
+            <ChevronRight size={16} color="var(--text-gold)" />
+          </div>
+
           {/* CRM */}
           <div
             role="button"

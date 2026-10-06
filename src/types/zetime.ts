@@ -23,6 +23,21 @@ export type BusinessStatus =
   | 'Temporarily Closed'
   | 'Suspended';
 
+export interface BusinessProfile {
+  id: string;
+  name: string;
+  type: BusinessType;
+  commercialRegistrationNumber: string;
+  taxNumber: string;
+  phone: string;
+  email: string;
+  description: string;
+  status: BusinessStatus;
+  logoUrl?: string;
+  city?: string;
+  address?: string;
+}
+
 export type DayOfWeek = 'Sunday' | 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday';
 
 export interface DaySchedule {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Professional, Branch, ProviderRole, EmployeeScheduleConfig, ShiftType } from '../types/zetime';
+import { Professional, Branch, ProviderRole, EmployeeScheduleConfig, ShiftType, BranchService } from '../types/zetime';
 import { hasPermission } from '../utils/permissions';
 import {
   Star,
@@ -12,18 +12,25 @@ import {
   Sun,
   Moon,
   Split,
-  Calendar,
-  Sparkles
+  Sparkles,
+  UserPlus,
+  Edit3
 } from 'lucide-react';
 import { EditShiftModal } from './Modals/EditShiftModal';
+import { AddStaffModal } from './Modals/AddStaffModal';
+import { EditStaffModal } from './Modals/EditStaffModal';
 
 interface ProfessionalsViewProps {
   professionals: Professional[];
   branches: Branch[];
   currentRole: ProviderRole;
+  services?: BranchService[];
   onTransferBranch: (profId: string, targetBranchId: string, targetBranchName: string) => void;
   onToggleHomeEligibility: (profId: string) => void;
   onUpdateSchedule?: (profId: string, updatedConfig: EmployeeScheduleConfig) => void;
+  onAddProfessional?: (newProf: Professional) => void;
+  onUpdateProfessional?: (updatedProf: Professional) => void;
+  onDeleteProfessional?: (profId: string) => void;
   onBackToSettings?: () => void;
 }
 
@@ -31,13 +38,19 @@ export const ProfessionalsView: React.FC<ProfessionalsViewProps> = ({
   professionals,
   branches,
   currentRole,
+  services = [],
   onTransferBranch,
   onToggleHomeEligibility,
   onUpdateSchedule,
+  onAddProfessional,
+  onUpdateProfessional,
+  onDeleteProfessional,
   onBackToSettings
 }) => {
   const [selectedProfForTransfer, setSelectedProfForTransfer] = useState<Professional | null>(null);
   const [selectedProfForShift, setSelectedProfForShift] = useState<Professional | null>(null);
+  const [selectedProfForEdit, setSelectedProfForEdit] = useState<Professional | null>(null);
+  const [isAddStaffOpen, setIsAddStaffOpen] = useState(false);
   const [shiftFilter, setShiftFilter] = useState<'ALL' | ShiftType>('ALL');
 
   const canTransfer = hasPermission(currentRole, 'TRANSFER_PROFESSIONAL');
@@ -106,13 +119,38 @@ export const ProfessionalsView: React.FC<ProfessionalsViewProps> = ({
         </button>
       )}
 
-      <div style={{ marginBottom: '12px' }}>
-        <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', color: 'var(--text-gold)' }}>
-          Branch Staff & Shift Rosters
-        </h2>
-        <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
-          Working hours, shift rotations, and mobile home-service dispatch
-        </span>
+      {/* Header and Add Staff Button */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+        <div>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', color: 'var(--text-gold)', margin: 0 }}>
+            Branch Staff & Shift Rosters
+          </h2>
+          <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+            Working hours, shift rotations & mobile dispatch ({professionals.length} staff)
+          </span>
+        </div>
+
+        {canManageStaff && (
+          <button
+            onClick={() => setIsAddStaffOpen(true)}
+            style={{
+              background: 'var(--gold-gradient)',
+              color: '#0d0d10',
+              border: 'none',
+              borderRadius: '8px',
+              padding: '7px 12px',
+              fontSize: '11px',
+              fontWeight: 800,
+              cursor: 'pointer',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '4px',
+              boxShadow: '0 2px 8px var(--gold-glow)'
+            }}
+          >
+            <UserPlus size={14} /> Add Staff
+          </button>
+        )}
       </div>
 
       {!canTransfer && (
@@ -255,7 +293,29 @@ export const ProfessionalsView: React.FC<ProfessionalsViewProps> = ({
                 </button>
               </div>
 
-              <div style={{ display: 'flex', gap: '6px' }}>
+              <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                {/* Edit Profile Button */}
+                {canManageStaff && (
+                  <button
+                    onClick={() => setSelectedProfForEdit(p)}
+                    style={{
+                      background: '#f8fafc',
+                      color: 'var(--text-main)',
+                      border: '1px solid var(--border-dark)',
+                      padding: '3px 8px',
+                      borderRadius: '6px',
+                      fontSize: '10px',
+                      fontWeight: 700,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '3px',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    <Edit3 size={10} color="var(--text-gold)" /> Edit Profile
+                  </button>
+                )}
+
                 {/* Edit Shifts Button */}
                 <button
                   onClick={() => setSelectedProfForShift(p)}
@@ -273,7 +333,7 @@ export const ProfessionalsView: React.FC<ProfessionalsViewProps> = ({
                     cursor: 'pointer'
                   }}
                 >
-                  <Clock size={10} color="var(--text-gold)" /> Edit Shift & Hours
+                  <Clock size={10} color="var(--text-gold)" /> Shifts
                 </button>
 
                 {canTransfer ? (
@@ -357,6 +417,43 @@ export const ProfessionalsView: React.FC<ProfessionalsViewProps> = ({
             </button>
           </div>
         </div>
+      )}
+
+      {/* Add Staff Modal */}
+      {isAddStaffOpen && (
+        <AddStaffModal
+          isOpen={isAddStaffOpen}
+          onClose={() => setIsAddStaffOpen(false)}
+          branches={branches}
+          services={services}
+          onAdd={(newProf) => {
+            if (onAddProfessional) {
+              onAddProfessional(newProf);
+            }
+          }}
+        />
+      )}
+
+      {/* Edit Staff Profile Modal */}
+      {selectedProfForEdit && (
+        <EditStaffModal
+          isOpen={Boolean(selectedProfForEdit)}
+          onClose={() => setSelectedProfForEdit(null)}
+          professional={selectedProfForEdit}
+          branches={branches}
+          onSave={(updated) => {
+            if (onUpdateProfessional) {
+              onUpdateProfessional(updated);
+            }
+            setSelectedProfForEdit(null);
+          }}
+          onDelete={(id) => {
+            if (onDeleteProfessional) {
+              onDeleteProfessional(id);
+            }
+            setSelectedProfForEdit(null);
+          }}
+        />
       )}
 
       {/* Shift Editor Modal */}

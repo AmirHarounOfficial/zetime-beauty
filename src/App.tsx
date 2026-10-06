@@ -12,6 +12,7 @@ import { AnalyticsView } from './components/AnalyticsView';
 import { SettingsView } from './components/SettingsView';
 import { OperatingHoursView } from './components/OperatingHoursView';
 import { DeliveryFeeView } from './components/DeliveryFeeView';
+import { BusinessBranchesView } from './components/BusinessBranchesView';
 
 import { NewBookingModal } from './components/Modals/NewBookingModal';
 import { AddWalkinModal } from './components/Modals/AddWalkinModal';
@@ -25,7 +26,8 @@ import {
   mockQueueEntries,
   mockCustomers,
   mockNotifications,
-  mockSubscriptionPlan
+  mockSubscriptionPlan,
+  mockBusinessProfile
 } from './mock/data';
 
 import {
@@ -40,12 +42,14 @@ import {
   DaySchedule,
   HomeServiceDaySchedule,
   DeliveryFeeConfig,
-  EmployeeScheduleConfig
+  EmployeeScheduleConfig,
+  BusinessProfile
 } from './types/zetime';
 
 export function App() {
   const [activeTab, setActiveTab] = useState<TabType>('dashboard');
   const [currentRole, setCurrentRole] = useState<ProviderRole>('BUSINESS_OWNER');
+  const [businessProfile, setBusinessProfile] = useState<BusinessProfile>(mockBusinessProfile);
   const [branches, setBranches] = useState<Branch[]>(mockBranches);
   const [selectedBranch, setSelectedBranch] = useState<Branch>(mockBranches[0]);
 
@@ -100,7 +104,7 @@ export function App() {
     });
   };
 
-  // Service Pricing Updates
+  // Service Catalog Updates & Management
   const handleUpdateServicePrice = (serviceId: string, newPrice: number) => {
     setBranchServices((prev) =>
       prev.map((s) => (s.id === serviceId ? { ...s, price: newPrice } : s))
@@ -121,7 +125,35 @@ export function App() {
     );
   };
 
-  // Staff Transfers, Shifts & Eligibility
+  const handleAddService = (newService: BranchService) => {
+    setBranchServices((prev) => [newService, ...prev]);
+  };
+
+  const handleUpdateService = (updatedService: BranchService) => {
+    setBranchServices((prev) =>
+      prev.map((s) => (s.id === updatedService.id ? updatedService : s))
+    );
+  };
+
+  const handleDeleteService = (serviceId: string) => {
+    setBranchServices((prev) => prev.filter((s) => s.id !== serviceId));
+  };
+
+  // Staff Management (Add, Edit, Shifts, Eligibility, Delete)
+  const handleAddProfessional = (newProf: Professional) => {
+    setProfessionals((prev) => [newProf, ...prev]);
+  };
+
+  const handleUpdateProfessional = (updatedProf: Professional) => {
+    setProfessionals((prev) =>
+      prev.map((p) => (p.id === updatedProf.id ? updatedProf : p))
+    );
+  };
+
+  const handleDeleteProfessional = (profId: string) => {
+    setProfessionals((prev) => prev.filter((p) => p.id !== profId));
+  };
+
   const handleTransferBranch = (profId: string, targetBranchId: string, targetBranchName: string) => {
     setProfessionals((prev) =>
       prev.map((p) =>
@@ -156,6 +188,43 @@ export function App() {
           : p
       )
     );
+  };
+
+  // Business & Branch Management Handlers
+  const handleUpdateBusinessProfile = (updated: BusinessProfile) => {
+    setBusinessProfile(updated);
+  };
+
+  const handleAddBranch = (newBranch: Branch) => {
+    setBranches((prev) => [...prev, newBranch]);
+  };
+
+  const handleUpdateBranch = (updatedBranch: Branch) => {
+    setBranches((prev) =>
+      prev.map((b) => (b.id === updatedBranch.id ? updatedBranch : b))
+    );
+    if (selectedBranch.id === updatedBranch.id) {
+      setSelectedBranch(updatedBranch);
+    }
+  };
+
+  const handleSetBranchManager = (branchId: string, managerId: string, managerName: string) => {
+    setBranches((prev) =>
+      prev.map((b) => (b.id === branchId ? { ...b, managerId, managerName } : b))
+    );
+    if (selectedBranch.id === branchId) {
+      setSelectedBranch((prev) => ({ ...prev, managerId, managerName }));
+    }
+  };
+
+  const handleDeleteBranch = (branchId: string) => {
+    setBranches((prev) => {
+      const remaining = prev.filter((b) => b.id !== branchId);
+      if (selectedBranch.id === branchId && remaining.length > 0) {
+        setSelectedBranch(remaining[0]);
+      }
+      return remaining;
+    });
   };
 
   // Branch Operating Hours & Delivery Fees Handlers
@@ -253,6 +322,9 @@ export function App() {
           currentRole={currentRole}
           onUpdateServicePrice={handleUpdateServicePrice}
           onToggleHomeService={handleToggleHomeService}
+          onAddService={handleAddService}
+          onUpdateService={handleUpdateService}
+          onDeleteService={handleDeleteService}
         />
       )}
 
@@ -261,9 +333,13 @@ export function App() {
           professionals={professionals}
           branches={branches}
           currentRole={currentRole}
+          services={branchServices}
           onTransferBranch={handleTransferBranch}
           onToggleHomeEligibility={handleToggleHomeEligibility}
           onUpdateSchedule={handleUpdateProfessionalSchedule}
+          onAddProfessional={handleAddProfessional}
+          onUpdateProfessional={handleUpdateProfessional}
+          onDeleteProfessional={handleDeleteProfessional}
           onBackToSettings={() => setActiveTab('settings')}
         />
       )}
@@ -299,6 +375,25 @@ export function App() {
         />
       )}
 
+      {activeTab === 'business-branches' && (
+        <BusinessBranchesView
+          businessProfile={businessProfile}
+          branches={branches}
+          professionals={professionals}
+          subscription={mockSubscriptionPlan}
+          currentRole={currentRole}
+          selectedBranch={selectedBranch}
+          onSelectBranch={setSelectedBranch}
+          onUpdateBusinessProfile={handleUpdateBusinessProfile}
+          onAddBranch={handleAddBranch}
+          onUpdateBranch={handleUpdateBranch}
+          onSetBranchManager={handleSetBranchManager}
+          onDeleteBranch={handleDeleteBranch}
+          onBackToSettings={() => setActiveTab('settings')}
+          onNavigateToSubTab={setActiveTab}
+        />
+      )}
+
       {activeTab === 'settings' && (
         <SettingsView
           subscription={mockSubscriptionPlan}
@@ -306,6 +401,7 @@ export function App() {
           onSelectRole={setCurrentRole}
           selectedBranch={selectedBranch}
           branches={branches}
+          professionals={professionals}
           onSelectBranch={setSelectedBranch}
           onNavigateToSubTab={setActiveTab}
         />

@@ -7,8 +7,23 @@ import {
   QueueEntry,
   CustomerProfile,
   NotificationItem,
-  SubscriptionPlan
+  SubscriptionPlan,
+  BusinessProfile
 } from '../types/zetime';
+
+export const mockBusinessProfile: BusinessProfile = {
+  id: 'biz-1',
+  name: 'ZeTime Prestige Beauty & Wellness',
+  type: 'Beauty Center',
+  commercialRegistrationNumber: '1010928374',
+  taxNumber: '310294857200003',
+  phone: '+966 11 482 9900',
+  email: 'concierge@zetimebeauty.com',
+  description: 'Premier Saudi luxury beauty and wellness center providing salon treatments, skincare rituals, and on-demand VIP home visits.',
+  status: 'Active',
+  city: 'Riyadh',
+  address: 'King Fahd Rd, Prestige District, Riyadh'
+};
 
 export const mockBranches: Branch[] = [
   {
@@ -130,6 +145,54 @@ export const mockMasterCatalog: MasterService[] = [
     category: 'Home Beauty',
     description: 'On-demand home beauty team for complete hair and glam makeup service.',
     defaultDurationMinutes: 120,
+    genderAudience: 'Women'
+  },
+  {
+    id: 'ms-7',
+    name: 'Keratin Silk Hair Smoothing Treatment',
+    category: 'Hair',
+    description: 'Formaldehyde-free organic keratin infusion for mirror-like frizz-free shine.',
+    defaultDurationMinutes: 105,
+    genderAudience: 'Women'
+  },
+  {
+    id: 'ms-8',
+    name: 'Hydrafacial Deep Pore Purification',
+    category: 'Facial & Skincare',
+    description: 'Patented vortex extraction, peptide infusion, and antioxidant LED therapy.',
+    defaultDurationMinutes: 50,
+    genderAudience: 'All'
+  },
+  {
+    id: 'ms-9',
+    name: 'Acrylic Nail Extensions & French Art',
+    category: 'Nails',
+    description: 'Sculpted acrylic tips with hand-painted French borders and cuticle oil.',
+    defaultDurationMinutes: 75,
+    genderAudience: 'Women'
+  },
+  {
+    id: 'ms-10',
+    name: 'Aromatherapy Full Body Herbal Massage',
+    category: 'Spa & Body',
+    description: 'Warm botanical essential oils with Swedish tension-release techniques.',
+    defaultDurationMinutes: 60,
+    genderAudience: 'All'
+  },
+  {
+    id: 'ms-11',
+    name: 'Classic Hot Oil Beard & Scalp Ritual',
+    category: 'Beard & Grooming',
+    description: 'Herbal hot oil scalp stimulation, steam cleanse, and precision razor shaping.',
+    defaultDurationMinutes: 40,
+    genderAudience: 'Men'
+  },
+  {
+    id: 'ms-12',
+    name: 'Event Glam Evening Makeup & Styling',
+    category: 'Home Beauty',
+    description: 'HD camera-ready contouring, premium lashes, and Hollywood wave blowout.',
+    defaultDurationMinutes: 90,
     genderAudience: 'Women'
   }
 ];
