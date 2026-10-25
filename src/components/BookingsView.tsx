@@ -11,7 +11,7 @@ import {
   Home,
   DollarSign,
   AlertTriangle,
-  ChevronRight,
+  ChevronLeft,
   Filter,
   Scissors,
   Navigation as NavigationIcon
@@ -34,7 +34,7 @@ export const BookingsView: React.FC<BookingsViewProps> = ({
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
 
   const filteredBookings = bookings.filter((b) => {
-    if (filter === 'MY_CLIENTS') return b.bookingItems.some((item) => item.professionalName === 'Lina Al-Harthi');
+    if (filter === 'MY_CLIENTS') return b.bookingItems.some((item) => item.professionalName === 'سارة السيد');
     if (filter === 'PENDING') return b.status === 'PENDING_CONFIRMATION';
     if (filter === 'CONFIRMED') return b.status === 'CONFIRMED' || b.status === 'CHECKED_IN';
     if (filter === 'IN_SERVICE') return b.status === 'IN_SERVICE';
@@ -45,28 +45,56 @@ export const BookingsView: React.FC<BookingsViewProps> = ({
   const getStatusBadge = (status: BookingStatus) => {
     switch (status) {
       case 'PENDING_CONFIRMATION':
-        return { label: 'Pending Confirmation', bg: 'rgba(217, 119, 6, 0.15)', color: '#d97706' };
+        return { label: 'بانتظار التأكيد', bg: 'rgba(217, 119, 6, 0.15)', color: '#d97706' };
       case 'CONFIRMED':
-        return { label: 'Confirmed', bg: 'rgba(37, 99, 235, 0.15)', color: '#2563eb' };
+        return { label: 'مؤكد', bg: 'rgba(37, 99, 235, 0.15)', color: '#2563eb' };
       case 'CHECKED_IN':
-        return { label: 'Checked In', bg: 'rgba(124, 58, 237, 0.15)', color: '#7c3aed' };
+        return { label: 'تم الحضور', bg: 'rgba(124, 58, 237, 0.15)', color: '#7c3aed' };
       case 'IN_SERVICE':
-        return { label: 'In Service', bg: 'rgba(5, 150, 105, 0.15)', color: '#059669' };
+        return { label: 'قيد التنفيذ', bg: 'rgba(5, 150, 105, 0.15)', color: '#059669' };
       case 'COMPLETED':
-        return { label: 'Completed', bg: 'rgba(16, 185, 129, 0.15)', color: '#10b981' };
+        return { label: 'مكتمل', bg: 'rgba(16, 185, 129, 0.15)', color: '#10b981' };
       case 'REJECTED':
       case 'CANCELLED':
-        return { label: 'Cancelled/Rejected', bg: 'rgba(220, 38, 38, 0.15)', color: '#dc2626' };
+        return { label: 'ملغي / مرفوض', bg: 'rgba(220, 38, 38, 0.15)', color: '#dc2626' };
       case 'NO_SHOW':
-        return { label: 'No Show', bg: 'rgba(239, 68, 68, 0.2)', color: '#dc2626' };
+        return { label: 'لم يحضر', bg: 'rgba(239, 68, 68, 0.2)', color: '#dc2626' };
       default:
         return { label: status, bg: 'rgba(0, 0, 0, 0.06)', color: 'var(--text-main)' };
     }
   };
 
+  const formatPaymentMethod = (method: string) => {
+    switch (method) {
+      case 'Online Payment':
+        return 'دفع إلكتروني';
+      case 'Card at Provider':
+        return 'بطاقة لدى المزود (شبكة)';
+      case 'Cash':
+        return 'نقداً';
+      case 'Apple Pay':
+        return 'أبل باي (Apple Pay)';
+      default:
+        return method;
+    }
+  };
+
+  const formatPaymentStatus = (status: string) => {
+    switch (status) {
+      case 'Paid':
+        return 'مدفوع';
+      case 'Pending':
+        return 'معلق';
+      case 'Refunded':
+        return 'مسترد';
+      default:
+        return status;
+    }
+  };
+
   return (
-    <div style={{ padding: '14px' }}>
-      {/* Top Filter Chips */}
+    <div style={{ padding: '13px' }}>
+      {/* فلاتر الحجوزات العلوية */}
       <div style={{ display: 'flex', gap: '6px', overflowX: 'auto', paddingBottom: '8px', marginBottom: '12px' }}>
         <button
           onClick={() => setFilter('ALL')}
@@ -79,10 +107,11 @@ export const BookingsView: React.FC<BookingsViewProps> = ({
             fontSize: '11px',
             fontWeight: 700,
             cursor: 'pointer',
-            whiteSpace: 'nowrap'
+            whiteSpace: 'nowrap',
+            fontFamily: 'var(--font-body)'
           }}
         >
-          All ({bookings.length})
+          الكل ({bookings.length})
         </button>
         {currentRole === 'PROFESSIONAL' && (
           <button
@@ -96,10 +125,11 @@ export const BookingsView: React.FC<BookingsViewProps> = ({
               fontSize: '11px',
               fontWeight: 700,
               cursor: 'pointer',
-              whiteSpace: 'nowrap'
+              whiteSpace: 'nowrap',
+              fontFamily: 'var(--font-body)'
             }}
           >
-            ✂️ My Clients
+            ✂️ عميلاتي
           </button>
         )}
         <button
@@ -113,10 +143,11 @@ export const BookingsView: React.FC<BookingsViewProps> = ({
             fontSize: '11px',
             fontWeight: 700,
             cursor: 'pointer',
-            whiteSpace: 'nowrap'
+            whiteSpace: 'nowrap',
+            fontFamily: 'var(--font-body)'
           }}
         >
-          Pending
+          بانتظار التأكيد
         </button>
         <button
           onClick={() => setFilter('IN_SERVICE')}
@@ -129,10 +160,11 @@ export const BookingsView: React.FC<BookingsViewProps> = ({
             fontSize: '11px',
             fontWeight: 700,
             cursor: 'pointer',
-            whiteSpace: 'nowrap'
+            whiteSpace: 'nowrap',
+            fontFamily: 'var(--font-body)'
           }}
         >
-          In Service
+          قيد التنفيذ
         </button>
         <button
           onClick={() => setFilter('HOME')}
@@ -145,15 +177,23 @@ export const BookingsView: React.FC<BookingsViewProps> = ({
             fontSize: '11px',
             fontWeight: 700,
             cursor: 'pointer',
-            whiteSpace: 'nowrap'
+            whiteSpace: 'nowrap',
+            fontFamily: 'var(--font-body)'
           }}
         >
-          🏠 Home Visits
+          🏠 زيارات منزلية
         </button>
       </div>
 
-      {/* Bookings List */}
+      {/* قائمة بطاقات الحجوزات */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        {filteredBookings.length === 0 && (
+          <div className="gold-card" style={{ textAlign: 'center', padding: '24px 14px' }}>
+            <CalendarDays size={32} color="var(--text-muted)" style={{ margin: '0 auto 8px' }} />
+            <div style={{ fontWeight: 700, color: 'var(--text-main)' }}>لا توجد حجوزات في هذا التصنيف</div>
+          </div>
+        )}
+
         {filteredBookings.map((b) => {
           const badge = getStatusBadge(b.status);
           const item = b.bookingItems[0];
@@ -162,19 +202,19 @@ export const BookingsView: React.FC<BookingsViewProps> = ({
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <span style={{ fontWeight: 700, fontSize: '13px', color: 'var(--text-main)' }}>{b.customerName}</span>
+                    <span style={{ fontWeight: 800, fontSize: '13.5px', color: 'var(--text-main)' }}>{b.customerName}</span>
                     {b.isHomeService && (
                       <span
                         style={{
                           background: 'rgba(212, 175, 55, 0.2)',
                           color: 'var(--text-gold)',
-                          fontSize: '9px',
+                          fontSize: '9.5px',
                           fontWeight: 700,
-                          padding: '1px 5px',
+                          padding: '1px 6px',
                           borderRadius: '4px'
                         }}
                       >
-                        🏠 Home Visit
+                        🏠 زيارة منزلية
                       </span>
                     )}
                   </div>
@@ -187,8 +227,8 @@ export const BookingsView: React.FC<BookingsViewProps> = ({
                   style={{
                     background: badge.bg,
                     color: badge.color,
-                    fontSize: '10px',
-                    fontWeight: 700,
+                    fontSize: '10.5px',
+                    fontWeight: 800,
                     padding: '3px 8px',
                     borderRadius: '6px'
                   }}
@@ -197,7 +237,7 @@ export const BookingsView: React.FC<BookingsViewProps> = ({
                 </span>
               </div>
 
-              {/* Time & Price Row */}
+              {/* صف الوقت والقيمة */}
               <div
                 style={{
                   display: 'flex',
@@ -211,26 +251,26 @@ export const BookingsView: React.FC<BookingsViewProps> = ({
                 }}
               >
                 <span>
-                  ⏰ {b.scheduledTime} ({b.totalDurationMinutes}m)
+                  ⏰ {b.scheduledTime} ({b.totalDurationMinutes} دقيقة)
                 </span>
-                <span style={{ fontWeight: 800, color: 'var(--text-gold)' }}>{b.totalPrice} SAR</span>
+                <span style={{ fontWeight: 800, color: 'var(--text-gold)', fontSize: '12px' }}>{b.totalPrice} ر.س</span>
               </div>
 
-              {/* Dynamic Action Buttons depending on Booking Lifecycle state */}
+              {/* أزرار الإجراءات التفاعلية */}
               <div style={{ display: 'flex', gap: '6px', marginTop: '10px' }}>
                 {b.status === 'PENDING_CONFIRMATION' && (
                   <>
                     <button
                       onClick={() => onUpdateStatus(b.id, 'CONFIRMED')}
-                      style={{ flex: 1, background: 'var(--gold-gradient)', color: '#000', border: 'none', padding: '6px', borderRadius: '6px', fontWeight: 700, fontSize: '11px', cursor: 'pointer' }}
+                      style={{ flex: 1, background: 'var(--gold-gradient)', color: '#000', border: 'none', padding: '7px', borderRadius: '6px', fontWeight: 800, fontSize: '11.5px', cursor: 'pointer', fontFamily: 'var(--font-body)' }}
                     >
-                      Accept
+                      قبول الحجز
                     </button>
                     <button
                       onClick={() => onUpdateStatus(b.id, 'REJECTED')}
-                      style={{ background: '#fef2f2', color: '#dc2626', border: '1px solid #fca5a5', padding: '6px 12px', borderRadius: '6px', fontSize: '11px', fontWeight: 600, cursor: 'pointer' }}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: '1px solid #fca5a5', padding: '7px 12px', borderRadius: '6px', fontSize: '11.5px', fontWeight: 700, cursor: 'pointer', fontFamily: 'var(--font-body)' }}
                     >
-                      Reject
+                      رفض
                     </button>
                   </>
                 )}
@@ -238,35 +278,35 @@ export const BookingsView: React.FC<BookingsViewProps> = ({
                 {b.status === 'CONFIRMED' && (
                   <button
                     onClick={() => onUpdateStatus(b.id, 'CHECKED_IN')}
-                    style={{ flex: 1, background: 'rgba(124, 58, 237, 0.12)', color: '#7c3aed', border: '1px solid rgba(124, 58, 237, 0.3)', padding: '6px', borderRadius: '6px', fontWeight: 700, fontSize: '11px', cursor: 'pointer' }}
+                    style={{ flex: 1, background: 'rgba(124, 58, 237, 0.12)', color: '#7c3aed', border: '1px solid rgba(124, 58, 237, 0.3)', padding: '7px', borderRadius: '6px', fontWeight: 800, fontSize: '11.5px', cursor: 'pointer', fontFamily: 'var(--font-body)' }}
                   >
-                    Mark Checked-In
+                    تسجيل الحضور
                   </button>
                 )}
 
                 {b.status === 'CHECKED_IN' && (
                   <button
                     onClick={() => onUpdateStatus(b.id, 'IN_SERVICE')}
-                    style={{ flex: 1, background: 'rgba(5, 150, 105, 0.12)', color: '#059669', border: '1px solid rgba(5, 150, 105, 0.3)', padding: '6px', borderRadius: '6px', fontWeight: 700, fontSize: '11px', cursor: 'pointer' }}
+                    style={{ flex: 1, background: 'rgba(5, 150, 105, 0.12)', color: '#059669', border: '1px solid rgba(5, 150, 105, 0.3)', padding: '7px', borderRadius: '6px', fontWeight: 800, fontSize: '11.5px', cursor: 'pointer', fontFamily: 'var(--font-body)' }}
                   >
-                    ▶ Start Service
+                    ▶ بدء الخدمة
                   </button>
                 )}
 
                 {b.status === 'IN_SERVICE' && (
                   <button
                     onClick={() => onUpdateStatus(b.id, 'COMPLETED')}
-                    style={{ flex: 1, background: 'var(--gold-gradient)', color: '#000', border: 'none', padding: '6px', borderRadius: '6px', fontWeight: 700, fontSize: '11px', cursor: 'pointer' }}
+                    style={{ flex: 1, background: 'var(--gold-gradient)', color: '#000', border: 'none', padding: '7px', borderRadius: '6px', fontWeight: 800, fontSize: '11.5px', cursor: 'pointer', fontFamily: 'var(--font-body)' }}
                   >
-                    ✓ Complete Service
+                    ✓ إتمام الخدمة
                   </button>
                 )}
 
                 <button
                   onClick={() => setSelectedBooking(b)}
-                  style={{ background: '#f1f5f9', color: 'var(--text-main)', border: '1px solid var(--border-dark)', padding: '6px 10px', borderRadius: '6px', fontSize: '11px', fontWeight: 600, cursor: 'pointer' }}
+                  style={{ background: '#f1f5f9', color: 'var(--text-main)', border: '1px solid var(--border-dark)', padding: '7px 11px', borderRadius: '6px', fontSize: '11.5px', fontWeight: 700, cursor: 'pointer', fontFamily: 'var(--font-body)' }}
                 >
-                  Details
+                  التفاصيل
                 </button>
               </div>
             </div>
@@ -274,48 +314,67 @@ export const BookingsView: React.FC<BookingsViewProps> = ({
         })}
       </div>
 
-      {/* Booking Details Modal */}
+      {/* نافذة تفاصيل الحجز السفلية */}
       {selectedBooking && (
         <div className="modal-overlay" onClick={() => setSelectedBooking(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
-              <h3 style={{ color: 'var(--text-gold)', fontSize: '15px' }}>Booking Details #{selectedBooking.id}</h3>
-              <button onClick={() => setSelectedBooking(null)} style={{ background: 'none', border: 'none', color: 'var(--text-main)', fontSize: '16px', fontWeight: 700 }}>✕</button>
+            <div className="modal-drag-handle" />
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+              <h3 style={{ color: 'var(--text-gold)', fontSize: '15px', fontWeight: 800 }}>
+                تفاصيل الحجز #{selectedBooking.id}
+              </h3>
+              <button
+                onClick={() => setSelectedBooking(null)}
+                style={{ background: 'none', border: 'none', color: 'var(--text-main)', fontSize: '16px', fontWeight: 800, cursor: 'pointer' }}
+              >
+                ✕
+              </button>
             </div>
 
-            <div style={{ fontSize: '12px', display: 'flex', flexDirection: 'column', gap: '8px', color: 'var(--text-main)' }}>
-              <div><strong>Customer:</strong> {selectedBooking.customerName} ({selectedBooking.customerPhone})</div>
-              <div><strong>Branch:</strong> {selectedBooking.branchName}</div>
-              <div><strong>Scheduled:</strong> {selectedBooking.scheduledDate} at {selectedBooking.scheduledTime}</div>
-              <div><strong>Payment Method:</strong> {selectedBooking.paymentMethod} ({selectedBooking.paymentStatus})</div>
+            <div style={{ fontSize: '12px', display: 'flex', flexDirection: 'column', gap: '9px', color: 'var(--text-main)' }}>
+              <div><strong>العميل:</strong> {selectedBooking.customerName} ({selectedBooking.customerPhone})</div>
+              <div><strong>الفرع:</strong> {selectedBooking.branchName}</div>
+              <div><strong>الموعد المحدد:</strong> {selectedBooking.scheduledDate} في تمام {selectedBooking.scheduledTime}</div>
+              <div><strong>طريقة الدفع:</strong> {formatPaymentMethod(selectedBooking.paymentMethod)} ({formatPaymentStatus(selectedBooking.paymentStatus)})</div>
 
               {selectedBooking.isHomeService && (
-                <div style={{ background: '#f8fafc', padding: '8px', borderRadius: '6px', border: '1px solid var(--border-dark)' }}>
-                  <strong>🏠 Home Address:</strong> {selectedBooking.homeAddress}
+                <div style={{ background: '#f8fafc', padding: '9px', borderRadius: '8px', border: '1px solid var(--border-dark)' }}>
+                  <strong>🏠 عنوان الخدمة المنزلية:</strong> {selectedBooking.homeAddress}
                 </div>
               )}
 
               {selectedBooking.notes && (
-                <div style={{ background: '#f8fafc', padding: '8px', borderRadius: '6px', border: '1px solid var(--border-dark)' }}>
-                  <strong>Note:</strong> {selectedBooking.notes}
+                <div style={{ background: '#f8fafc', padding: '9px', borderRadius: '8px', border: '1px solid var(--border-dark)' }}>
+                  <strong>ملاحظات العميل:</strong> {selectedBooking.notes}
                 </div>
               )}
 
               {selectedBooking.customerAllergies && selectedBooking.customerAllergies.length > 0 && (
-                <div style={{ color: '#dc2626', background: '#fef2f2', border: '1px solid #fca5a5', padding: '8px', borderRadius: '6px' }}>
-                  <strong>⚠️ Allergy Alert:</strong> {selectedBooking.customerAllergies.join(', ')}
+                <div style={{ color: '#dc2626', background: '#fef2f2', border: '1px solid #fca5a5', padding: '9px', borderRadius: '8px', fontWeight: 700 }}>
+                  <strong>⚠️ تنبيه الحساسية:</strong> {selectedBooking.customerAllergies.join('، ')}
                 </div>
               )}
 
-              <div style={{ marginTop: '10px', display: 'flex', gap: '6px' }}>
+              <div style={{ marginTop: '12px', display: 'flex', gap: '8px' }}>
                 <button
                   onClick={() => {
                     onUpdateStatus(selectedBooking.id, 'NO_SHOW');
                     setSelectedBooking(null);
                   }}
-                  style={{ flex: 1, background: '#fef2f2', color: '#dc2626', border: '1px solid #fca5a5', padding: '8px', borderRadius: '6px', fontSize: '11px', fontWeight: 700, cursor: 'pointer' }}
+                  style={{
+                    flex: 1,
+                    background: '#fef2f2',
+                    color: '#dc2626',
+                    border: '1px solid #fca5a5',
+                    padding: '9px',
+                    borderRadius: '8px',
+                    fontSize: '11.5px',
+                    fontWeight: 800,
+                    cursor: 'pointer',
+                    fontFamily: 'var(--font-body)'
+                  }}
                 >
-                  Mark No-Show
+                  تسجيل كـ (لم يحضر)
                 </button>
               </div>
             </div>

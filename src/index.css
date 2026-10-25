@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800&family=Outfit:wght@500;700&display=swap');
+
 :root {
-  --font-heading: 'Outfit', -apple-system, sans-serif;
-  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-heading: 'Cairo', 'Tajawal', system-ui, -apple-system, sans-serif;
+  --font-body: 'Cairo', 'Tajawal', system-ui, -apple-system, sans-serif;
 
   /* Luxury Light Yellow Gold Palette */
   --gold-primary: #d4af37;
@@ -13,21 +15,15 @@
 
   /* Pure Light Theme Base & Surfaces */
   --bg-dark: #f8f6f0;
-  /* Light warm ivory background */
   --bg-card: #ffffff;
-  /* Pure white card surface */
   --bg-card-hover: #faf8f3;
   --bg-glass: rgba(255, 255, 255, 0.95);
 
   --text-main: #18181b;
-  /* Deep obsidian text for crisp contrast */
   --text-muted: #64748b;
-  /* Slate muted text */
   --text-gold: #b8860b;
-  /* High contrast gold text */
 
   --border-dark: #e2e8f0;
-  /* Light clean border */
   --border-gold: rgba(212, 175, 55, 0.4);
 
   /* Status colors */
@@ -56,10 +52,13 @@ html,
 body {
   width: 100%;
   height: 100%;
-  background-color: #f1ede4;
+  background: radial-gradient(circle at 50% 15%, #f5f2ea 0%, #e6dfd1 100%);
   color: var(--text-main);
   overflow-x: hidden;
-  font-size: 14px;
+  font-size: 13.5px;
+  direction: rtl;
+  text-align: right;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Form Inputs, Selects & Textareas in Light Mode */
@@ -74,10 +73,13 @@ textarea {
   color: #18181b !important;
   border: 1px solid var(--border-dark) !important;
   border-radius: 8px !important;
-  padding: 8px 10px !important;
-  font-size: 12px !important;
+  padding: 9px 12px !important;
+  font-size: 13px !important;
+  font-family: var(--font-body) !important;
   outline: none !important;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  direction: rtl;
+  text-align: right;
 }
 
 input:focus,
@@ -87,9 +89,10 @@ textarea:focus {
   box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15) !important;
 }
 
-/* App Viewport Container (True Mobile Application) */
+/* App Viewport Container (Native Mobile Phone Size) */
 .app-viewport {
   width: 100%;
+  max-width: 430px; /* Standard flagship mobile screen width */
   height: 100vh;
   margin: 0 auto;
   background-color: var(--bg-dark);
@@ -97,14 +100,69 @@ textarea:focus {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.12);
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  direction: rtl;
+  text-align: right;
 }
 
-@media (max-width: 360px) {
+/* On Desktop: Show as an authentic luxury mobile device mockup */
+@media (min-width: 500px) {
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 16px 0;
+  }
+
+  .app-viewport {
+    height: 94vh;
+    max-height: 890px;
+    border-radius: 40px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2), 0 0 0 9px #1c1c20, 0 0 0 11px #3a3a42;
+    border: 3px solid rgba(255, 255, 255, 0.15);
+  }
+}
+
+/* On real Mobile Devices: 100% full screen */
+@media (max-width: 499px) {
+  body {
+    padding: 0;
+    background: var(--bg-dark);
+  }
+
   .app-viewport {
     max-width: 100%;
+    height: 100dvh;
+    border-radius: 0;
     box-shadow: none;
+    border: none;
   }
+}
+
+/* Mobile Screen Top Status Bar (Time, Wifi, Battery) */
+.mobile-status-bar {
+  height: 28px;
+  background: rgba(255, 255, 255, 0.98);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 18px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #18181b;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.02);
+  z-index: 85;
+}
+
+.status-bar-notch {
+  width: 90px;
+  height: 14px;
+  background: #1c1c20;
+  border-radius: 12px;
 }
 
 /* App Main Content Area */
@@ -114,12 +172,13 @@ textarea:focus {
   flex-direction: column;
   overflow-y: auto;
   position: relative;
-  padding-bottom: 70px;
+  padding-bottom: 74px;
   scroll-behavior: smooth;
+  direction: rtl;
 }
 
 .app-content::-webkit-scrollbar {
-  width: 4px;
+  width: 3px;
 }
 
 .app-content::-webkit-scrollbar-thumb {
@@ -129,7 +188,7 @@ textarea:focus {
 
 /* Refined Native Mobile App Header */
 .app-header {
-  padding: 10px 16px;
+  padding: 10px 14px;
   background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-dark);
@@ -139,8 +198,9 @@ textarea:focus {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 56px;
+  min-height: 54px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.03);
+  direction: rtl;
 }
 
 .top-bar-left {
@@ -152,9 +212,9 @@ textarea:focus {
 }
 
 .top-bar-avatar {
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
   background: var(--gold-gradient);
   display: flex;
   align-items: center;
@@ -170,29 +230,30 @@ textarea:focus {
 .online-dot {
   position: absolute;
   bottom: -1px;
-  right: -1px;
-  width: 8px;
-  height: 8px;
+  left: -1px; /* In RTL, place badge on bottom-left of avatar */
+  width: 9px;
+  height: 9px;
   background: #10b981;
   border-radius: 50%;
-  border: 1.5px solid #ffffff;
+  border: 2px solid #ffffff;
 }
 
 .top-bar-titles {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  text-align: right;
 }
 
 .top-bar-title {
   font-family: var(--font-heading);
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 800;
   color: var(--text-main);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 1.2;
+  line-height: 1.3;
 }
 
 .top-bar-subtitle {
@@ -201,8 +262,8 @@ textarea:focus {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 1.2;
-  margin-top: 2px;
+  line-height: 1.3;
+  margin-top: 1px;
 }
 
 .top-bar-actions {
@@ -216,9 +277,9 @@ textarea:focus {
   background: #f8fafc;
   border: 1px solid var(--border-dark);
   color: var(--text-main);
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -237,21 +298,28 @@ textarea:focus {
 }
 
 .header-back-btn {
-  background: none;
-  border: none;
-  display: flex;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   font-size: 12px;
   font-weight: 700;
   color: var(--text-gold);
   cursor: pointer;
-  padding: 4px 6px;
-  border-radius: 6px;
+  padding: 5px 9px;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+  font-family: var(--font-body);
 }
 
 .header-back-btn:hover {
-  background: rgba(212, 175, 55, 0.1);
+  background: rgba(212, 175, 55, 0.18);
+}
+
+/* RTL Icon Flip Helper */
+.rtl-flip {
+  transform: scaleX(-1);
 }
 
 /* Interactive Role & Branch Switcher Cards (Settings View) */
@@ -263,6 +331,7 @@ textarea:focus {
   cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
+  text-align: right;
 }
 
 .role-option-card:hover {
@@ -300,7 +369,7 @@ textarea:focus {
   font-weight: 600;
 }
 
-/* Bottom Navigation Bar (5 Core Elements) */
+/* Bottom Navigation Bar (5 Core Elements for Mobile) */
 .bottom-nav {
   position: absolute;
   bottom: 0;
@@ -316,6 +385,7 @@ textarea:focus {
   z-index: 90;
   padding: 0 4px;
   box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.04);
+  direction: rtl;
 }
 
 .nav-item {
@@ -324,15 +394,16 @@ textarea:focus {
   align-items: center;
   justify-content: center;
   color: var(--text-muted);
-  font-size: 10px;
-  font-weight: 600;
+  font-size: 10.5px;
+  font-weight: 700;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 6px 10px;
+  padding: 5px 8px;
   border-radius: 8px;
   transition: all 0.2s ease;
   position: relative;
+  font-family: var(--font-body);
 }
 
 .nav-item.active {
@@ -344,20 +415,30 @@ textarea:focus {
   color: var(--text-gold);
 }
 
+.nav-icon-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2px;
+  transition: transform 0.2s ease;
+}
+
 .nav-badge {
   position: absolute;
-  top: 1px;
-  right: 6px;
+  top: -4px;
+  left: -8px; /* In RTL, place badge on left of the icon */
   background: var(--gold-gradient);
   color: #000;
   font-size: 9px;
   font-weight: 800;
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0 3px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
@@ -366,11 +447,12 @@ textarea:focus {
   background: var(--bg-card);
   border: 1px solid var(--border-dark);
   border-radius: var(--radius-md);
-  padding: 14px;
-  margin-bottom: 12px;
+  padding: 13px;
+  margin-bottom: 11px;
   position: relative;
   transition: all 0.2s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  text-align: right;
 }
 
 .gold-card.highlight {
@@ -404,6 +486,7 @@ textarea:focus {
   border-radius: var(--radius-sm);
   padding: 10px 14px;
   font-size: 13px;
+  font-family: var(--font-body);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -425,7 +508,8 @@ textarea:focus {
   border-radius: var(--radius-sm);
   padding: 8px 12px;
   font-size: 12px;
-  font-weight: 600;
+  font-family: var(--font-body);
+  font-weight: 700;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -437,14 +521,15 @@ textarea:focus {
   background: #fef2f2;
   border: 1px solid #fca5a5;
   color: #991b1b;
-  padding: 12px;
+  padding: 11px;
   border-radius: 10px;
-  font-size: 12px;
+  font-size: 11.5px;
   margin-bottom: 12px;
   display: flex;
   align-items: center;
   gap: 8px;
   font-weight: 600;
+  text-align: right;
 }
 
 /* Queue Button Classes */
@@ -453,20 +538,22 @@ textarea:focus {
   background: rgba(212, 175, 55, 0.15);
   color: var(--text-gold);
   border: 1px solid rgba(212, 175, 55, 0.4);
-  padding: 6px;
-  border-radius: 6px;
+  padding: 7px;
+  border-radius: 7px;
   font-weight: 700;
-  font-size: 11px;
+  font-size: 11.5px;
+  font-family: var(--font-body);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 5px;
   cursor: pointer;
 }
 
 .queue-btn-call.called {
   background: #10b981;
   color: #fff;
+  border-color: #10b981;
 }
 
 .queue-btn-start {
@@ -474,51 +561,72 @@ textarea:focus {
   background: var(--gold-gradient);
   color: #000;
   border: none;
-  padding: 6px;
-  border-radius: 6px;
+  padding: 7px;
+  border-radius: 7px;
   font-weight: 700;
-  font-size: 11px;
+  font-size: 11.5px;
+  font-family: var(--font-body);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 5px;
   cursor: pointer;
 }
 
-/* Modal Overlay & Pure Light Modal Content */
+/* Modal Overlay & Pure Light Modal Content (Mobile Bottom-Sheet Style) */
 .modal-overlay {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(6px);
   z-index: 200;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   animation: fadeIn 0.2s ease;
+  direction: rtl;
 }
 
 .modal-content {
   background: #ffffff !important;
   color: #18181b !important;
-  border-top-left-radius: 24px;
-  border-top-right-radius: 24px;
+  border-top-left-radius: 26px;
+  border-top-right-radius: 26px;
   border-top: 2px solid var(--border-gold);
-  padding: 18px;
-  max-height: 85%;
+  padding: 18px 16px;
+  max-height: 88%;
   overflow-y: auto;
-  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.18);
+  direction: rtl;
+  text-align: right;
+  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-drag-handle {
+  width: 36px;
+  height: 4px;
+  background: #cbd5e1;
+  border-radius: 4px;
+  margin: 0 auto 12px;
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
   }
-
   to {
     opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
   }
 }

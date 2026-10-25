@@ -81,10 +81,10 @@ export const EditBranchModal: React.FC<EditBranchModalProps> = ({
             </div>
             <div>
               <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '15px', color: 'var(--text-main)', margin: 0 }}>
-                Edit Branch Location
+                تعديل بيانات الفرع
               </h3>
               <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>
-                Configure branch details and assign Branch Manager
+                تحديث معلومات موقع الفرع وتعيين مدير للفرع
               </span>
             </div>
           </div>
@@ -107,7 +107,7 @@ export const EditBranchModal: React.FC<EditBranchModalProps> = ({
           {/* Branch Name */}
           <div>
             <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-              Branch Name *
+              اسم الفرع *
             </label>
             <input
               type="text"
@@ -121,7 +121,7 @@ export const EditBranchModal: React.FC<EditBranchModalProps> = ({
           {/* Address */}
           <div>
             <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-              Address *
+              العنوان والمدينة *
             </label>
             <input
               type="text"
@@ -136,26 +136,26 @@ export const EditBranchModal: React.FC<EditBranchModalProps> = ({
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
             <div>
               <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-                Phone Number *
+                رقم التواصل *
               </label>
               <input
                 type="tel"
                 required
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                style={{ width: '100%' }}
+                style={{ width: '100%', direction: 'ltr', textAlign: 'right' }}
               />
             </div>
             <div>
               <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-                Working Hours *
+                ساعات العمل اليومية *
               </label>
               <input
                 type="text"
                 required
                 value={workingHours}
                 onChange={(e) => setWorkingHours(e.target.value)}
-                style={{ width: '100%' }}
+                style={{ width: '100%', direction: 'ltr', textAlign: 'right' }}
               />
             </div>
           </div>
@@ -172,7 +172,7 @@ export const EditBranchModal: React.FC<EditBranchModalProps> = ({
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
               <UserCheck size={16} color="var(--text-gold)" />
               <label style={{ fontSize: '11px', fontWeight: 800, color: 'var(--text-main)', margin: 0 }}>
-                Select Staff to be Branch Manager *
+                تعيين موظف كمدير للفرع *
               </label>
             </div>
             <select
@@ -197,7 +197,7 @@ export const EditBranchModal: React.FC<EditBranchModalProps> = ({
               ))}
             </select>
             <span style={{ fontSize: '10px', color: 'var(--text-muted)', marginTop: '4px', display: 'block' }}>
-              Current Manager: <strong>{branch.managerName || 'None'}</strong>
+              المدير الحالي: <strong>{branch.managerName || 'غير محدد'}</strong>
             </span>
           </div>
 
@@ -215,10 +215,10 @@ export const EditBranchModal: React.FC<EditBranchModalProps> = ({
           >
             <div>
               <div style={{ fontSize: '12px', fontWeight: 700, color: 'var(--text-main)' }}>
-                Branch Operating Status
+                حالة تشغيل الفرع
               </div>
               <div style={{ fontSize: '10px', color: 'var(--text-muted)' }}>
-                Active branches accept online customer bookings
+                الفروع النشطة تستقبل حجوزات العملاء إلكترونياً
               </div>
             </div>
             <input
@@ -235,7 +235,7 @@ export const EditBranchModal: React.FC<EditBranchModalProps> = ({
               <button
                 type="button"
                 onClick={() => {
-                  if (confirm(`Are you sure you want to delete branch "${branch.name}"?`)) {
+                  if (confirm(`هل أنت متأكد من رغبتك في حذف فرع "${branch.name}"؟`)) {
                     onDelete(branch.id);
                     onClose();
                   }
@@ -243,7 +243,7 @@ export const EditBranchModal: React.FC<EditBranchModalProps> = ({
                 className="secondary-button"
                 style={{ color: '#dc2626', borderColor: '#fecaca', background: '#fef2f2' }}
               >
-                <Trash2 size={14} /> Remove
+                <Trash2 size={14} /> حذف
               </button>
             )}
 
@@ -253,7 +253,7 @@ export const EditBranchModal: React.FC<EditBranchModalProps> = ({
               className="secondary-button"
               style={{ flex: 1, justifyContent: 'center' }}
             >
-              Cancel
+              إلغاء
             </button>
 
             <button
@@ -261,7 +261,7 @@ export const EditBranchModal: React.FC<EditBranchModalProps> = ({
               className="gold-button"
               style={{ flex: 2 }}
             >
-              <Check size={16} /> Save Changes
+              <Check size={16} /> حفظ التعديلات
             </button>
           </div>
         </form>

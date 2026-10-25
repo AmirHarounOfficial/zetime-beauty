@@ -1,7 +1,7 @@
 import React from 'react';
 import { TabType, Navigation } from './Navigation';
 import { Branch, ProviderRole } from '../types/zetime';
-import { Bell, ArrowLeft, Shield, Sparkles, Building, Scissors, Users, Car } from 'lucide-react';
+import { Bell, ArrowRight, Shield, Sparkles, Building, Scissors, Users, Car, Wifi, Battery } from 'lucide-react';
 
 interface MobileContainerProps {
   children: React.ReactNode;
@@ -24,65 +24,78 @@ export const MobileContainer: React.FC<MobileContainerProps> = ({
   queueCount,
   unreadNotificationCount
 }) => {
-  // Compute role-based presentation details for the top bar
+  // تفاصيل الترويسة حسب الدور الإداري باللغة العربية
   const getRoleHeaderInfo = () => {
     switch (currentRole) {
       case 'BUSINESS_OWNER':
         return {
-          initials: 'DF',
+          initials: 'مالك',
           icon: <Building size={16} />,
           title: selectedBranch.name,
-          subtitle: 'Salon Hub • All Systems Active'
+          subtitle: 'إشراف عام • كافة الأنظمة نشطة'
         };
       case 'BRANCH_MANAGER':
         return {
-          initials: 'BM',
+          initials: 'مدير',
           icon: <Shield size={16} />,
           title: selectedBranch.name,
-          subtitle: 'Branch Floor • Manager View'
+          subtitle: 'إدارة العمليات اليومية للفرع'
         };
       case 'BRANCH_STAFF':
         return {
-          initials: 'FD',
+          initials: 'استقبال',
           icon: <Users size={16} />,
-          title: 'Front Desk & Queue',
-          subtitle: `${selectedBranch.name} • Reception`
+          title: 'الاستقبال وقائمة الانتظار',
+          subtitle: `${selectedBranch.name} • صالة الاستقبال`
         };
       case 'PROFESSIONAL':
         return {
-          initials: 'LA',
+          initials: 'سارة',
           icon: <Scissors size={16} />,
-          title: 'Lina Al-Harthi',
-          subtitle: 'Senior Stylist • Station #2'
+          title: 'سارة السيد',
+          subtitle: 'كبيرة مصففي الشعر • محطة #2'
         };
       case 'FREELANCER':
         return {
-          initials: 'SA',
+          initials: 'سارة',
           icon: <Car size={16} />,
-          title: 'Sarah Al-Rashid',
-          subtitle: 'Mobile & Home Beauty Specialist'
+          title: 'سارة الرشيد',
+          subtitle: 'أخصائية خدمات تجميل منزلية متنقلة'
         };
       default:
         return {
-          initials: 'ZT',
+          initials: 'زيتيم',
           icon: <Sparkles size={16} />,
           title: selectedBranch.name,
-          subtitle: 'Active Hub'
+          subtitle: 'الفرع النشط'
         };
     }
   };
 
   const roleInfo = getRoleHeaderInfo();
-  const isSubView = ['professionals', 'crm', 'analytics'].includes(activeTab);
+  const isSubView = [
+    'professionals',
+    'crm',
+    'analytics',
+    'operating-hours',
+    'delivery-fees',
+    'business-branches'
+  ].includes(activeTab);
 
   const getSubViewTitle = () => {
     switch (activeTab) {
       case 'professionals':
-        return { title: 'Staff & Team Roster', subtitle: 'Shifts, branch assignments & home service' };
+        return { title: 'طاقم العمل والمناوبات', subtitle: 'المناوبات، الفروع، والخدمة المنزلية' };
       case 'crm':
-        return { title: 'Customer CRM', subtitle: 'Beauty profiles, allergies & histories' };
+        return { title: 'إدارة علاقات العملاء CRM', subtitle: 'الملفات التجميلية، الحساسية، والإنفاق' };
       case 'analytics':
-        return { title: 'Business Analytics', subtitle: 'Performance & revenue insights' };
+        return { title: 'التقارير والأداء المالي', subtitle: 'إحصائيات الإيرادات والمؤشرات التشغيلية' };
+      case 'operating-hours':
+        return { title: 'أوقات العمل والدوام', subtitle: 'ساعات الصالون والخدمة المنزلية' };
+      case 'delivery-fees':
+        return { title: 'رسوم التوصيل المنزلي', subtitle: 'حاسبة وتكلفة الخدمة الخارجية' };
+      case 'business-branches':
+        return { title: 'الملف التجاري وفروع المنشأة', subtitle: 'بيانات السجل التجاري وإدارة الفروع' };
       default:
         return { title: '', subtitle: '' };
     }
@@ -90,6 +103,16 @@ export const MobileContainer: React.FC<MobileContainerProps> = ({
 
   return (
     <div className="app-viewport">
+      {/* Mobile Top Status Bar for Authentic Mobile Experience */}
+      <div className="mobile-status-bar">
+        <span>09:41</span>
+        <div className="status-bar-notch" />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <Wifi size={12} />
+          <Battery size={13} />
+        </div>
+      </div>
+
       {/* Refined Native Top App Header */}
       <div className="app-header">
         {isSubView ? (
@@ -98,10 +121,10 @@ export const MobileContainer: React.FC<MobileContainerProps> = ({
               <button
                 onClick={() => setActiveTab('settings')}
                 className="header-back-btn"
-                title="Back to Settings"
+                title="الرجوع للإعدادات"
               >
-                <ArrowLeft size={16} />
-                <span>Back</span>
+                <ArrowRight size={15} />
+                <span>رجوع</span>
               </button>
               <div className="top-bar-titles">
                 <div className="top-bar-title">{getSubViewTitle().title}</div>
@@ -112,7 +135,7 @@ export const MobileContainer: React.FC<MobileContainerProps> = ({
               <button
                 onClick={() => setActiveTab('settings')}
                 className="icon-action-btn"
-                title="Settings"
+                title="الإعدادات"
               >
                 <Bell size={16} />
               </button>
@@ -134,26 +157,26 @@ export const MobileContainer: React.FC<MobileContainerProps> = ({
                 )}
                 {activeTab === 'bookings' && (
                   <>
-                    <div className="top-bar-title">Appointments</div>
-                    <div className="top-bar-subtitle">Today's schedule & booking requests</div>
+                    <div className="top-bar-title">جدول المواعيد والحجوزات</div>
+                    <div className="top-bar-subtitle">مواعيد اليوم وطلبات الحجز الجديدة</div>
                   </>
                 )}
                 {activeTab === 'queue' && (
                   <>
-                    <div className="top-bar-title">Live Walk-In Queue</div>
-                    <div className="top-bar-subtitle">{queueCount} clients currently waiting</div>
+                    <div className="top-bar-title">قائمة الانتظار الفورية</div>
+                    <div className="top-bar-subtitle">{queueCount} عملاء بانتظار الخدمة حالياً</div>
                   </>
                 )}
                 {activeTab === 'services' && (
                   <>
-                    <div className="top-bar-title">Service Catalog</div>
-                    <div className="top-bar-subtitle">Treatments, durations & offerings</div>
+                    <div className="top-bar-title">دليل خدمات الفرع</div>
+                    <div className="top-bar-subtitle">الباقات، الأسعار، ومدد الجلسات</div>
                   </>
                 )}
                 {activeTab === 'settings' && (
                   <>
-                    <div className="top-bar-title">Settings & Profile</div>
-                    <div className="top-bar-subtitle">Roles, branches & operational tools</div>
+                    <div className="top-bar-title">الإعدادات والملف التعريفي</div>
+                    <div className="top-bar-subtitle">الأدوار، الفروع، والخيارات التشغيلية</div>
                   </>
                 )}
               </div>
@@ -163,7 +186,7 @@ export const MobileContainer: React.FC<MobileContainerProps> = ({
               <button
                 onClick={() => setActiveTab('settings')}
                 className="icon-action-btn"
-                title="Notifications"
+                title="الإشعارات"
               >
                 <Bell size={16} />
                 {unreadNotificationCount > 0 && (
@@ -171,9 +194,9 @@ export const MobileContainer: React.FC<MobileContainerProps> = ({
                     style={{
                       position: 'absolute',
                       top: '6px',
-                      right: '6px',
-                      width: '6px',
-                      height: '6px',
+                      left: '6px',
+                      width: '7px',
+                      height: '7px',
                       background: 'var(--gold-primary)',
                       borderRadius: '50%'
                     }}

@@ -26,29 +26,60 @@ export const ServicesView: React.FC<ServicesViewProps> = ({
   onUpdateService,
   onDeleteService
 }) => {
-  const [activeCategory, setActiveCategory] = useState<string>('All');
+  const [activeCategoryId, setActiveCategoryId] = useState<string>('All');
   const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
   const [editingService, setEditingService] = useState<BranchService | null>(null);
 
   const canEditPricing = hasPermission(currentRole, 'EDIT_PRICING');
 
-  const categories = ['All', 'Hair', 'Facial & Skincare', 'Nails', 'Spa & Body', 'Beard & Grooming', 'Home Beauty'];
+  const categories = [
+    { id: 'All', label: 'الكل' },
+    { id: 'Hair', label: 'الشعر' },
+    { id: 'Facial & Skincare', label: 'العناية بالبشرة' },
+    { id: 'Nails', label: 'الأظافر' },
+    { id: 'Spa & Body', label: 'السبا والمساج' },
+    { id: 'Beard & Grooming', label: 'العناية باللحية' },
+    { id: 'Home Beauty', label: 'التجميل المنزلي' }
+  ];
+
+  const getCategoryLabel = (cat: string) => {
+    switch (cat) {
+      case 'Hair': return 'الشعر';
+      case 'Facial & Skincare': return 'العناية بالبشرة';
+      case 'Nails': return 'الأظافر';
+      case 'Spa & Body': return 'السبا والمساج';
+      case 'Beard & Grooming': return 'العناية باللحية';
+      case 'Home Beauty': return 'التجميل المنزلي';
+      default: return cat;
+    }
+  };
+
+  const formatRoleName = (role: ProviderRole) => {
+    switch (role) {
+      case 'BUSINESS_OWNER': return 'مالك المنشأة';
+      case 'BRANCH_MANAGER': return 'مدير الفرع';
+      case 'BRANCH_STAFF': return 'موظف الاستقبال';
+      case 'PROFESSIONAL': return 'أخصائية التجميل';
+      case 'FREELANCER': return 'المقدمة المستقلة';
+      default: return role;
+    }
+  };
 
   const filteredServices = branchServices.filter((s) => {
-    if (activeCategory === 'All') return true;
-    return s.category === activeCategory;
+    if (activeCategoryId === 'All') return true;
+    return s.category === activeCategoryId;
   });
 
   return (
-    <div style={{ padding: '14px' }}>
-      {/* Header with Title and Add Service Button */}
+    <div style={{ padding: '13px' }}>
+      {/* ترويسة الصفحة وزر إضافة خدمة */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
         <div>
           <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', color: 'var(--text-gold)', margin: 0 }}>
-            Branch Service Catalog
+            دليل خدمات الفرع
           </h2>
           <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
-            Powered by ZeTime Master Catalog ({branchServices.length} active)
+            مرتبط بكتالوج خدمات زيتيم المعتمد ({branchServices.length} خدمة نشطة)
           </span>
         </div>
 
@@ -61,95 +92,97 @@ export const ServicesView: React.FC<ServicesViewProps> = ({
               border: 'none',
               borderRadius: '8px',
               padding: '7px 12px',
-              fontSize: '11px',
+              fontSize: '11.5px',
               fontWeight: 800,
               cursor: 'pointer',
               display: 'inline-flex',
               alignItems: 'center',
               gap: '4px',
-              boxShadow: '0 2px 8px var(--gold-glow)'
+              boxShadow: '0 2px 8px var(--gold-glow)',
+              fontFamily: 'var(--font-body)'
             }}
           >
-            <Plus size={14} /> Add Service
+            <Plus size={14} /> إضافة خدمة
           </button>
         )}
       </div>
 
-      {/* Permission Restriction Alert if Staff/Professional */}
+      {/* تنبيه الصلاحيات إذا لم يكن للمستخدم صلاحية التعديل */}
       {!canEditPricing && (
         <div className="permission-denied-box">
           <AlertCircle size={16} color="#dc2626" />
-          <span>Role Permission: {currentRole.replace('_', ' ')} cannot modify service catalog or pricing.</span>
+          <span>تنبيه الصلاحية: دور ({formatRoleName(currentRole)}) لا يملك صلاحية تعديل باقات الخدمات أو التسعير.</span>
         </div>
       )}
 
-      {/* Category Pills */}
+      {/* تصنيفات الخدمات (Category Pills) */}
       <div style={{ display: 'flex', gap: '6px', overflowX: 'auto', paddingBottom: '8px', marginBottom: '12px' }}>
         {categories.map((cat) => (
           <button
-            key={cat}
-            onClick={() => setActiveCategory(cat)}
+            key={cat.id}
+            onClick={() => setActiveCategoryId(cat.id)}
             style={{
-              background: activeCategory === cat ? 'var(--gold-gradient)' : '#ffffff',
-              color: activeCategory === cat ? '#000' : 'var(--text-main)',
-              border: activeCategory === cat ? 'none' : '1px solid var(--border-dark)',
+              background: activeCategoryId === cat.id ? 'var(--gold-gradient)' : '#ffffff',
+              color: activeCategoryId === cat.id ? '#000' : 'var(--text-main)',
+              border: activeCategoryId === cat.id ? 'none' : '1px solid var(--border-dark)',
               borderRadius: '16px',
               padding: '5px 12px',
               fontSize: '11px',
               fontWeight: 700,
               cursor: 'pointer',
-              whiteSpace: 'nowrap'
+              whiteSpace: 'nowrap',
+              fontFamily: 'var(--font-body)'
             }}
           >
-            {cat}
+            {cat.label}
           </button>
         ))}
       </div>
 
-      {/* Services List */}
+      {/* قائمة الخدمات */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         {filteredServices.map((svc) => (
           <div key={svc.id} className="gold-card" style={{ padding: '12px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-              <div style={{ flex: 1, paddingRight: '8px' }}>
+              <div style={{ flex: 1, paddingLeft: '8px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                   <span
                     style={{
-                      fontSize: '9px',
+                      fontSize: '9.5px',
                       color: 'var(--text-gold)',
                       background: 'rgba(212, 175, 55, 0.15)',
-                      padding: '2px 6px',
+                      padding: '2px 7px',
                       borderRadius: '4px',
-                      fontWeight: 700
+                      fontWeight: 800
                     }}
                   >
-                    {svc.category}
+                    {getCategoryLabel(svc.category)}
                   </span>
                   {svc.isEnabled === false && (
                     <span
                       style={{
-                        fontSize: '9px',
+                        fontSize: '9.5px',
                         color: '#64748b',
                         background: '#f1f5f9',
-                        padding: '2px 6px',
+                        padding: '2px 7px',
                         borderRadius: '4px',
                         fontWeight: 700
                       }}
                     >
-                      Disabled
+                      معطلة
                     </span>
                   )}
                 </div>
 
-                <div style={{ fontWeight: 700, fontSize: '13px', color: 'var(--text-main)', marginTop: '4px' }}>
+                <div style={{ fontWeight: 800, fontSize: '13.5px', color: 'var(--text-main)', marginTop: '4px' }}>
                   {svc.name}
                 </div>
               </div>
 
-              {/* Price & Edit Button */}
-              <div style={{ textAlign: 'right', flexShrink: 0 }}>
+              {/* السعر وزر التعديل */}
+              <div style={{ textAlign: 'left', flexShrink: 0 }}>
                 <div style={{ fontWeight: 800, fontSize: '15px', color: 'var(--text-gold)' }}>
-                  {svc.price} SAR
+                  {svc.price} ر.س
                 </div>
 
                 {canEditPricing ? (
@@ -165,22 +198,23 @@ export const ServicesView: React.FC<ServicesViewProps> = ({
                       alignItems: 'center',
                       gap: '3px',
                       fontWeight: 700,
-                      marginTop: '2px'
+                      marginTop: '2px',
+                      fontFamily: 'var(--font-body)'
                     }}
                   >
-                    <Edit3 size={11} /> Edit Service
+                    <Edit3 size={11} /> تعديل الخدمة
                   </button>
                 ) : (
-                  <span style={{ fontSize: '9px', color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: '2px' }}>
-                    <Lock size={9} /> Fixed
+                  <span style={{ fontSize: '9.5px', color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: '2px' }}>
+                    <Lock size={9} /> ثابت
                   </span>
                 )}
               </div>
             </div>
 
-            {/* Bottom info & home service button */}
+            {/* تفاصيل المدة وزر الخدمة المنزلية */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px', paddingTop: '8px', borderTop: '1px solid var(--border-dark)', fontSize: '11px', color: 'var(--text-muted)' }}>
-              <span>⏱ {svc.durationMinutes} mins</span>
+              <span>⏱ {svc.durationMinutes} دقيقة</span>
 
               <button
                 onClick={() => canEditPricing && onToggleHomeService(svc.id)}
@@ -197,20 +231,21 @@ export const ServicesView: React.FC<ServicesViewProps> = ({
                   display: 'flex',
                   alignItems: 'center',
                   gap: '4px',
-                  opacity: canEditPricing ? 1 : 0.6
+                  opacity: canEditPricing ? 1 : 0.6,
+                  fontFamily: 'var(--font-body)'
                 }}
               >
                 <Home size={10} />{' '}
                 {svc.isHomeServiceAvailable
-                  ? `Home Visit (+${(svc.homeServicePrice || svc.price + 70) - svc.price} SAR)`
-                  : 'Enable Home Visit'}
+                  ? `زيارة منزلية (+${(svc.homeServicePrice || svc.price + 70) - svc.price} ر.س)`
+                  : 'تفعيل الزيارة المنزلية'}
               </button>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Add Service Modal */}
+      {/* نافذة إضافة خدمة */}
       {isAddModalOpen && (
         <AddServiceModal
           isOpen={isAddModalOpen}
@@ -225,7 +260,7 @@ export const ServicesView: React.FC<ServicesViewProps> = ({
         />
       )}
 
-      {/* Edit Service Modal */}
+      {/* نافذة تعديل الخدمة */}
       {editingService && (
         <EditServiceModal
           isOpen={Boolean(editingService)}

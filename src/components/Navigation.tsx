@@ -23,13 +23,13 @@ export const Navigation: React.FC<NavigationProps> = ({
   pendingCount,
   queueCount
 }) => {
-  // Exactly 5 elements for the bottom navigation bar
+  // Exactly 5 elements for the bottom navigation bar in Arabic
   const tabs: NavTabItem[] = [
-    { id: 'dashboard', label: 'Home', icon: LayoutDashboard },
-    { id: 'bookings', label: 'Bookings', icon: CalendarDays, badge: pendingCount },
-    { id: 'queue', label: 'Queue', icon: Users2, badge: queueCount },
-    { id: 'services', label: 'Services', icon: Scissors },
-    { id: 'settings', label: 'Settings', icon: Settings },
+    { id: 'dashboard', label: 'الرئيسية', icon: LayoutDashboard },
+    { id: 'bookings', label: 'الحجوزات', icon: CalendarDays, badge: pendingCount },
+    { id: 'queue', label: 'الانتظار', icon: Users2, badge: queueCount },
+    { id: 'services', label: 'الخدمات', icon: Scissors },
+    { id: 'settings', label: 'الإعدادات', icon: Settings },
   ];
 
   return (

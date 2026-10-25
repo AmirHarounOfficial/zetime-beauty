@@ -8,7 +8,7 @@ import {
   UserCheck,
   Plus,
   Edit3,
-  ArrowLeft,
+  ArrowRight,
   MapPin,
   Phone,
   Clock,
@@ -19,7 +19,7 @@ import {
   Mail,
   ShieldCheck,
   ExternalLink,
-  ChevronRight,
+  ChevronLeft,
   Sparkles
 } from 'lucide-react';
 import { AddBranchModal } from './Modals/AddBranchModal';
@@ -70,20 +70,20 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
   const [bizTax, setBizTax] = useState(businessProfile.taxNumber);
   const [bizPhone, setBizPhone] = useState(businessProfile.phone);
   const [bizEmail, setBizEmail] = useState(businessProfile.email);
-  const [bizCity, setBizCity] = useState(businessProfile.city || 'Riyadh');
-  const [bizAddress, setBizAddress] = useState(businessProfile.address || 'King Fahd Rd, Prestige District');
+  const [bizCity, setBizCity] = useState(businessProfile.city || 'الرياض');
+  const [bizAddress, setBizAddress] = useState(businessProfile.address || 'طريق الملك فهد، حي الصحافة');
   const [bizDescription, setBizDescription] = useState(businessProfile.description);
 
   const canManageBusiness = hasPermission(currentRole, 'MANAGE_SUBSCRIPTION') || currentRole === 'BUSINESS_OWNER';
 
-  const businessTypes: BusinessType[] = [
-    'Salon',
-    'Barber Shop',
-    'Spa',
-    'Beauty Center',
-    'Nail & Lash Studio',
-    'Independent Professional',
-    'Home-Service Professional'
+  const businessTypes: { type: BusinessType; label: string }[] = [
+    { type: 'Salon', label: 'صالون نسائي / رجالي' },
+    { type: 'Barber Shop', label: 'صالون حلاقة رجالي' },
+    { type: 'Spa', label: 'سبا واستجمام' },
+    { type: 'Beauty Center', label: 'مركز تجميل وعناية شامل' },
+    { type: 'Nail & Lash Studio', label: 'استوديو أظافر ورموش' },
+    { type: 'Independent Professional', label: 'أخصائية تجميل مستقلة' },
+    { type: 'Home-Service Professional', label: 'خدمات تجميل منزلية متنقلة' }
   ];
 
   const handleSaveBusiness = (e: React.FormEvent) => {
@@ -101,7 +101,7 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
       description: bizDescription
     };
     onUpdateBusinessProfile(updated);
-    setSaveSuccessMsg('Business profile successfully saved and updated!');
+    setSaveSuccessMsg('تم حفظ وتحديث بيانات الملف التجاري بنجاح!');
     setTimeout(() => setSaveSuccessMsg(null), 3500);
   };
 
@@ -109,14 +109,14 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
     const staff = professionals.find((p) => p.id === staffId);
     if (staff) {
       onSetBranchManager(branchId, staff.id, staff.name);
-      setSaveSuccessMsg(`Manager for branch updated to ${staff.name}!`);
+      setSaveSuccessMsg(`تم تعيين ${staff.name} مديراً للفرع بنجاح!`);
       setTimeout(() => setSaveSuccessMsg(null), 3000);
     }
   };
 
   return (
-    <div style={{ padding: '14px' }}>
-      {/* Back button to Settings */}
+    <div style={{ padding: '13px' }}>
+      {/* زر الرجوع */}
       <button
         onClick={onBackToSettings}
         style={{
@@ -124,28 +124,29 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
           border: 'none',
           color: 'var(--text-gold)',
           fontSize: '12px',
-          fontWeight: 700,
+          fontWeight: 800,
           cursor: 'pointer',
           display: 'inline-flex',
           alignItems: 'center',
           gap: '4px',
-          marginBottom: '8px'
+          marginBottom: '8px',
+          fontFamily: 'var(--font-body)'
         }}
       >
-        <ArrowLeft size={14} /> Back to Settings Hub
+        <ArrowRight size={14} /> الرجوع لمركز الإعدادات
       </button>
 
-      {/* Header */}
+      {/* الترويسة */}
       <div style={{ marginBottom: '12px' }}>
         <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', color: 'var(--text-gold)', margin: 0 }}>
-          Business & Branches Management
+          إدارة المنشأة وفروع العمل
         </h2>
         <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
-          Configure enterprise profile, operating branches, and branch managers
+          إعداد وتعديل الملف التجاري، الفروع، وتعيين المدراء
         </span>
       </div>
 
-      {/* Success Notification Alert */}
+      {/* إشعار نجاح الحفظ */}
       {saveSuccessMsg && (
         <div
           style={{
@@ -159,7 +160,7 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
             gap: '8px',
             color: '#047857',
             fontSize: '11px',
-            fontWeight: 700
+            fontWeight: 800
           }}
         >
           <Check size={16} color="#059669" />
@@ -167,7 +168,7 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
         </div>
       )}
 
-      {/* Tab Selector: Branches vs Business Profile */}
+      {/* التبديل بين الفروع والملف التجاري */}
       <div
         style={{
           display: 'grid',
@@ -194,10 +195,11 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '6px'
+            gap: '6px',
+            fontFamily: 'var(--font-body)'
           }}
         >
-          <Building2 size={14} /> Branches ({branches.length})
+          <Building2 size={14} /> فروع المنشأة ({branches.length})
         </button>
 
         <button
@@ -215,17 +217,18 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '6px'
+            gap: '6px',
+            fontFamily: 'var(--font-body)'
           }}
         >
-          <Briefcase size={14} /> Business Profile
+          <Briefcase size={14} /> الملف التجاري
         </button>
       </div>
 
-      {/* SECTION 1: BRANCHES MANAGEMENT */}
+      {/* القسم 1: إدارة الفروع */}
       {activeSection === 'branches' && (
         <div>
-          {/* Top Branch Actions & Limits */}
+          {/* الإجراءات وحدود الباقة */}
           <div
             style={{
               display: 'flex',
@@ -236,10 +239,10 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
           >
             <div>
               <span style={{ fontSize: '11px', fontWeight: 800, color: 'var(--text-main)' }}>
-                Active Salon Locations
+                الفروع النشطة
               </span>
               <div style={{ fontSize: '10px', color: 'var(--text-muted)' }}>
-                {branches.length} of {subscription.branchLimit} allowed by tier
+                {branches.length} من أصل {subscription.branchLimit} فروع مسموحة بالباقة
               </div>
             </div>
 
@@ -247,7 +250,7 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
               <button
                 onClick={() => {
                   if (branches.length >= subscription.branchLimit) {
-                    alert(`Subscription limit reached (${subscription.branchLimit} branches). Upgrade your subscription tier to add more branches.`);
+                    alert(`تم الوصول للحد الأقصى للفروع (${subscription.branchLimit} فروع). يرجى ترقية الباقة لإضافة فروع جديدة.`);
                     return;
                   }
                   setIsAddBranchOpen(true);
@@ -264,19 +267,19 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '4px',
-                  boxShadow: '0 2px 8px var(--gold-glow)'
+                  boxShadow: '0 2px 8px var(--gold-glow)',
+                  fontFamily: 'var(--font-body)'
                 }}
               >
-                <Plus size={14} /> Add Branch
+                <Plus size={14} /> إضافة فرع جديد
               </button>
             )}
           </div>
 
-          {/* Branches List */}
+          {/* قائمة الفروع */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {branches.map((b) => {
               const isSelected = b.id === selectedBranch.id;
-              const currentManager = professionals.find((p) => p.id === b.managerId);
 
               return (
                 <div
@@ -288,7 +291,7 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
                     position: 'relative'
                   }}
                 >
-                  {/* Top line: Name & Status */}
+                  {/* السطر الأول: الاسم والحالة */}
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       <div
@@ -300,26 +303,27 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          color: 'var(--text-gold)'
+                          color: 'var(--text-gold)',
+                          flexShrink: 0
                         }}
                       >
                         <Building2 size={16} />
                       </div>
                       <div>
-                        <div style={{ fontWeight: 800, fontSize: '14px', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <div style={{ fontWeight: 800, fontSize: '13.5px', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '6px' }}>
                           <span>{b.name}</span>
                           {isSelected && (
                             <span
                               style={{
                                 background: 'var(--gold-gradient)',
                                 color: '#000',
-                                fontSize: '8px',
+                                fontSize: '8.5px',
                                 fontWeight: 800,
                                 padding: '1px 5px',
                                 borderRadius: '4px'
                               }}
                             >
-                              CURRENT
+                              الفرع النشط
                             </span>
                           )}
                         </div>
@@ -333,17 +337,17 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
                       style={{
                         background: b.isActive ? 'rgba(16, 185, 129, 0.15)' : '#f1f5f9',
                         color: b.isActive ? '#059669' : '#64748b',
-                        fontSize: '9px',
+                        fontSize: '9.5px',
                         fontWeight: 800,
                         padding: '2px 8px',
                         borderRadius: '10px'
                       }}
                     >
-                      {b.isActive ? 'OPERATIONAL' : 'INACTIVE'}
+                      {b.isActive ? 'يعمل' : 'غير نشط'}
                     </span>
                   </div>
 
-                  {/* Branch Details Row */}
+                  {/* تفاصيل الفرع */}
                   <div
                     style={{
                       marginTop: '10px',
@@ -368,7 +372,7 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
                     </div>
                   </div>
 
-                  {/* BRANCH MANAGER SELECTOR (Direct User Requirement: Select a staff to be manager) */}
+                  {/* اختيار وتعيين مدير الفرع */}
                   <div
                     style={{
                       marginTop: '10px',
@@ -382,24 +386,24 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                         <UserCheck size={14} color="var(--text-gold)" />
                         <span style={{ fontSize: '11px', fontWeight: 800, color: 'var(--text-main)' }}>
-                          Designated Branch Manager:
+                          المدير المسؤول عن الفرع:
                         </span>
                       </div>
                       <span
                         style={{
-                          fontSize: '9px',
+                          fontSize: '9.5px',
                           color: 'var(--text-gold)',
-                          fontWeight: 700,
+                          fontWeight: 800,
                           background: 'rgba(212, 175, 55, 0.12)',
                           padding: '2px 6px',
                           borderRadius: '4px'
                         }}
                       >
-                        ⭐ {b.managerName || 'None'}
+                        ⭐ {b.managerName || 'غير محدد'}
                       </span>
                     </div>
 
-                    {/* Manager Select Dropdown */}
+                    {/* قائمة الموظفين لاختيار المدير */}
                     <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
                       <select
                         value={b.managerId}
@@ -411,10 +415,11 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
                           borderRadius: '6px',
                           border: '1px solid var(--border-dark)',
                           background: '#fff',
-                          fontSize: '11px',
-                          fontWeight: 600,
+                          fontSize: '11.5px',
+                          fontWeight: 700,
                           color: 'var(--text-main)',
-                          cursor: canManageBusiness ? 'pointer' : 'not-allowed'
+                          cursor: canManageBusiness ? 'pointer' : 'not-allowed',
+                          fontFamily: 'var(--font-body)'
                         }}
                       >
                         {professionals.map((prof) => (
@@ -424,12 +429,12 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
                         ))}
                       </select>
                     </div>
-                    <span style={{ fontSize: '9px', color: 'var(--text-muted)', marginTop: '4px', display: 'block' }}>
-                      Managers have full shift scheduling, walk-in queue oversight, and operational clearance.
+                    <span style={{ fontSize: '9.5px', color: 'var(--text-muted)', marginTop: '4px', display: 'block' }}>
+                      يمتلك مدير الفرع صلاحية تنظيم المناوبات، إدارة قائمة الانتظار، والإشراف اليومي الكامل.
                     </span>
                   </div>
 
-                  {/* Branch Action Buttons */}
+                  {/* أزرار الإجراءات للفرع */}
                   <div
                     style={{
                       marginTop: '10px',
@@ -451,13 +456,14 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
                             color: 'var(--text-main)',
                             border: '1px solid var(--border-dark)',
                             borderRadius: '6px',
-                            padding: '4px 8px',
-                            fontSize: '10px',
+                            padding: '5px 9px',
+                            fontSize: '10.5px',
                             fontWeight: 700,
-                            cursor: 'pointer'
+                            cursor: 'pointer',
+                            fontFamily: 'var(--font-body)'
                           }}
                         >
-                          Switch Active
+                          تعيين كنشط
                         </button>
                       )}
 
@@ -471,16 +477,17 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
                           color: 'var(--text-gold)',
                           border: '1px solid var(--border-gold)',
                           borderRadius: '6px',
-                          padding: '4px 8px',
-                          fontSize: '10px',
+                          padding: '5px 9px',
+                          fontSize: '10.5px',
                           fontWeight: 700,
                           cursor: 'pointer',
                           display: 'flex',
                           alignItems: 'center',
-                          gap: '3px'
+                          gap: '3px',
+                          fontFamily: 'var(--font-body)'
                         }}
                       >
-                        <Clock size={10} /> Hours
+                        <Clock size={10} /> الدوام
                       </button>
 
                       <button
@@ -493,16 +500,17 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
                           color: '#059669',
                           border: '1px solid rgba(16, 185, 129, 0.3)',
                           borderRadius: '6px',
-                          padding: '4px 8px',
-                          fontSize: '10px',
+                          padding: '5px 9px',
+                          fontSize: '10.5px',
                           fontWeight: 700,
                           cursor: 'pointer',
                           display: 'flex',
                           alignItems: 'center',
-                          gap: '3px'
+                          gap: '3px',
+                          fontFamily: 'var(--font-body)'
                         }}
                       >
-                        Delivery Fee
+                        رسوم التوصيل
                       </button>
                     </div>
 
@@ -518,10 +526,11 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
                           cursor: 'pointer',
                           display: 'flex',
                           alignItems: 'center',
-                          gap: '3px'
+                          gap: '3px',
+                          fontFamily: 'var(--font-body)'
                         }}
                       >
-                        <Edit3 size={11} /> Edit Branch
+                        <Edit3 size={11} /> تعديل الفرع
                       </button>
                     )}
                   </div>
@@ -532,7 +541,7 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
         </div>
       )}
 
-      {/* SECTION 2: BUSINESS PROFILE MANAGEMENT */}
+      {/* القسم 2: الملف التجاري للمنشأة */}
       {activeSection === 'business' && (
         <div>
           <div className="gold-card" style={{ padding: '14px', marginBottom: '14px' }}>
@@ -540,32 +549,32 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <Crown size={18} color="var(--text-gold)" />
                 <span style={{ fontWeight: 800, fontSize: '13px', color: 'var(--text-main)' }}>
-                  Enterprise Registry Profile
+                  بيانات السجل التجاري والتوثيق
                 </span>
               </div>
               <span
                 style={{
                   background: 'rgba(16, 185, 129, 0.15)',
                   color: '#059669',
-                  fontSize: '9px',
+                  fontSize: '9.5px',
                   fontWeight: 800,
                   padding: '2px 8px',
                   borderRadius: '10px'
                 }}
               >
-                VERIFIED STATUS
+                موثق ومعتمد
               </span>
             </div>
 
             <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '12px', lineHeight: 1.4 }}>
-              Your verified Saudi commercial registration and tax identification compliant with Ministry of Commerce regulations.
+              بيانات السجل التجاري والرقم الضريبي المسجلة رسمياً ومتوافقة مع متطلبات وزارة التجارة وهيئة الزكاة والضريبة والجمارك.
             </p>
 
             <form onSubmit={handleSaveBusiness} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {/* Business Name */}
+              {/* الاسم التجاري */}
               <div>
-                <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-                  Trade / Commercial Business Name *
+                <label style={{ display: 'block', fontSize: '11px', fontWeight: 800, color: 'var(--text-main)', marginBottom: '4px' }}>
+                  الاسم التجاري للمنشأة *
                 </label>
                 <input
                   type="text"
@@ -576,10 +585,10 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
                 />
               </div>
 
-              {/* Business Type */}
+              {/* تصنيف المنشأة */}
               <div>
-                <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-                  Business Category & Entity Type *
+                <label style={{ display: 'block', fontSize: '11px', fontWeight: 800, color: 'var(--text-main)', marginBottom: '4px' }}>
+                  تصنيف ونوع النشاط *
                 </label>
                 <select
                   value={bizType}
@@ -591,24 +600,25 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
                     border: '1.5px solid var(--border-gold)',
                     background: '#fff',
                     fontSize: '12px',
-                    fontWeight: 600,
+                    fontWeight: 700,
                     color: 'var(--text-main)',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    fontFamily: 'var(--font-body)'
                   }}
                 >
-                  {businessTypes.map((type) => (
-                    <option key={type} value={type}>
-                      {type}
+                  {businessTypes.map((item) => (
+                    <option key={item.type} value={item.type}>
+                      {item.label}
                     </option>
                   ))}
                 </select>
               </div>
 
-              {/* CR & Tax Number */}
+              {/* السجل التجاري والرقم الضريبي */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-                    Commercial Reg (CR) *
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: 800, color: 'var(--text-main)', marginBottom: '4px' }}>
+                    رقم السجل التجاري *
                   </label>
                   <input
                     type="text"
@@ -619,8 +629,8 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-                    VAT / Tax Number *
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: 800, color: 'var(--text-main)', marginBottom: '4px' }}>
+                    الرقم الضريبي (VAT) *
                   </label>
                   <input
                     type="text"
@@ -632,11 +642,11 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
                 </div>
               </div>
 
-              {/* Contact Phone & Email */}
+              {/* الهاتف والبريد */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-                    Corporate Phone *
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: 800, color: 'var(--text-main)', marginBottom: '4px' }}>
+                    هاتف المنشأة *
                   </label>
                   <input
                     type="tel"
@@ -647,8 +657,8 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-                    Corporate Email *
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: 800, color: 'var(--text-main)', marginBottom: '4px' }}>
+                    البريد الإلكتروني الرسمي *
                   </label>
                   <input
                     type="email"
@@ -660,11 +670,11 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
                 </div>
               </div>
 
-              {/* Headquarters Address */}
+              {/* العنوان والمدينة */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '10px' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-                    HQ City
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: 800, color: 'var(--text-main)', marginBottom: '4px' }}>
+                    المدينة
                   </label>
                   <input
                     type="text"
@@ -674,8 +684,8 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-                    HQ Street Address
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: 800, color: 'var(--text-main)', marginBottom: '4px' }}>
+                    العنوان والشارع
                   </label>
                   <input
                     type="text"
@@ -686,10 +696,10 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
                 </div>
               </div>
 
-              {/* Description */}
+              {/* نبذة عن المنشأة */}
               <div>
-                <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-                  Public Business Bio & Description
+                <label style={{ display: 'block', fontSize: '11px', fontWeight: 800, color: 'var(--text-main)', marginBottom: '4px' }}>
+                  نبذة تعريفية عامة عن المنشأة
                 </label>
                 <textarea
                   rows={3}
@@ -705,7 +715,7 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
                   className="gold-button"
                   style={{ marginTop: '8px' }}
                 >
-                  <Check size={16} /> Save Business Profile
+                  <Check size={16} /> حفظ بيانات الملف التجاري
                 </button>
               )}
             </form>
@@ -713,7 +723,7 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
         </div>
       )}
 
-      {/* Add Branch Modal */}
+      {/* نافذة إضافة فرع جديد */}
       {isAddBranchOpen && (
         <AddBranchModal
           isOpen={isAddBranchOpen}
@@ -721,13 +731,13 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
           professionals={professionals}
           onAdd={(newBranch) => {
             onAddBranch(newBranch);
-            setSaveSuccessMsg(`New branch "${newBranch.name}" created with manager ${newBranch.managerName}!`);
+            setSaveSuccessMsg(`تم إنشاء الفرع الجديد "${newBranch.name}" بنجاح!`);
             setTimeout(() => setSaveSuccessMsg(null), 3500);
           }}
         />
       )}
 
-      {/* Edit Branch Modal */}
+      {/* نافذة تعديل بيانات الفرع */}
       {editingBranch && (
         <EditBranchModal
           isOpen={Boolean(editingBranch)}
@@ -738,7 +748,7 @@ export const BusinessBranchesView: React.FC<BusinessBranchesViewProps> = ({
           onSave={(updated) => {
             onUpdateBranch(updated);
             setEditingBranch(null);
-            setSaveSuccessMsg(`Branch "${updated.name}" updated successfully!`);
+            setSaveSuccessMsg(`تم تحديث بيانات الفرع "${updated.name}" بنجاح!`);
             setTimeout(() => setSaveSuccessMsg(null), 3500);
           }}
           onDelete={(id) => {

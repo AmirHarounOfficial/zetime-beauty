@@ -77,11 +77,11 @@ export const AddStaffModal: React.FC<AddStaffModalProps> = ({
 
     const assignedBranch = branches.find((b) => b.id === selectedBranchId) || branches[0];
     const shiftLabelMap: Record<ShiftType, string> = {
-      MORNING: 'Morning Shift',
-      EVENING: 'Evening Shift',
-      FULL_DAY: 'Full Day Shift',
-      SPLIT_SHIFT: 'Split Shift',
-      CUSTOM: 'Custom Hours'
+      MORNING: 'دوام صباحي',
+      EVENING: 'دوام مسائي',
+      FULL_DAY: 'دوام كامل',
+      SPLIT_SHIFT: 'دوام مجزأ',
+      CUSTOM: 'ساعات مخصصة'
     };
 
     const newProfessional: Professional = {
@@ -133,10 +133,10 @@ export const AddStaffModal: React.FC<AddStaffModalProps> = ({
             </div>
             <div>
               <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '15px', color: 'var(--text-main)', margin: 0 }}>
-                Add New Staff Member
+                إضافة عضو جديد للفريق
               </h3>
               <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>
-                Register stylist, barber, or aesthetician for your business
+                تسجيل مصفف شعر، حلاق، أو أخصائية تجميل لصالونك
               </span>
             </div>
           </div>
@@ -159,7 +159,7 @@ export const AddStaffModal: React.FC<AddStaffModalProps> = ({
           {/* Avatar Selection */}
           <div>
             <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '6px' }}>
-              Select Profile Photo
+              اختيار الصورة الشخصية
             </label>
             <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '4px' }}>
               {PRESET_AVATARS.map((av) => {
@@ -190,12 +190,12 @@ export const AddStaffModal: React.FC<AddStaffModalProps> = ({
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
             <div>
               <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-                Full Name *
+                الاسم الكامل *
               </label>
               <input
                 type="text"
                 required
-                placeholder="e.g. Layla Al-Ghamdi"
+                placeholder="مثال: ليلى الغامدي"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 style={{ width: '100%' }}
@@ -204,12 +204,12 @@ export const AddStaffModal: React.FC<AddStaffModalProps> = ({
 
             <div>
               <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-                Job Title / Specialty *
+                المسمى الوظيفي والتخصص *
               </label>
               <input
                 type="text"
                 required
-                placeholder="e.g. Senior Hair Stylist"
+                placeholder="مثال: أخصائية تصفيف شعر"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 style={{ width: '100%' }}
@@ -220,7 +220,7 @@ export const AddStaffModal: React.FC<AddStaffModalProps> = ({
           {/* Assigned Branch Selection */}
           <div>
             <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-              Assigned Branch Location *
+              الفرع المخصص *
             </label>
             <select
               value={selectedBranchId}
@@ -248,16 +248,16 @@ export const AddStaffModal: React.FC<AddStaffModalProps> = ({
           {/* Shift Schedule Type */}
           <div>
             <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-              Shift Preset
+              نمط مناوبة العمل
             </label>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '6px' }}>
               {(['MORNING', 'EVENING', 'FULL_DAY', 'SPLIT_SHIFT'] as ShiftType[]).map((st) => {
                 const isSelected = shiftType === st;
                 const labels: Record<string, string> = {
-                  MORNING: 'Morning',
-                  EVENING: 'Evening',
-                  FULL_DAY: 'Full Day',
-                  SPLIT_SHIFT: 'Split'
+                  MORNING: 'صباحي',
+                  EVENING: 'مسائي',
+                  FULL_DAY: 'كامل',
+                  SPLIT_SHIFT: 'مجزأ'
                 };
                 return (
                   <button
@@ -286,24 +286,24 @@ export const AddStaffModal: React.FC<AddStaffModalProps> = ({
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
             <div>
               <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-                Start Time
+                بداية الوردية
               </label>
               <input
                 type="time"
                 value={startTime}
                 onChange={(e) => setStartTime(e.target.value)}
-                style={{ width: '100%' }}
+                style={{ width: '100%', direction: 'ltr', textAlign: 'right' }}
               />
             </div>
             <div>
               <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-                End Time
+                نهاية الوردية
               </label>
               <input
                 type="time"
                 value={endTime}
                 onChange={(e) => setEndTime(e.target.value)}
-                style={{ width: '100%' }}
+                style={{ width: '100%', direction: 'ltr', textAlign: 'right' }}
               />
             </div>
           </div>
@@ -311,12 +311,20 @@ export const AddStaffModal: React.FC<AddStaffModalProps> = ({
           {/* Working Days Selection */}
           <div>
             <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '5px' }}>
-              Working Days
+              أيام العمل الأسبوعية
             </label>
             <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap' }}>
               {allDays.map((d) => {
                 const isSelected = workingDays.includes(d);
-                const shortLabel = d.slice(0, 3);
+                const dayLabelsArabic: Record<DayOfWeek, string> = {
+                  Sunday: 'الأحد',
+                  Monday: 'الإثنين',
+                  Tuesday: 'الثلاثاء',
+                  Wednesday: 'الأربعاء',
+                  Thursday: 'الخميس',
+                  Friday: 'الجمعة',
+                  Saturday: 'السبت'
+                };
                 return (
                   <button
                     key={d}
@@ -333,7 +341,7 @@ export const AddStaffModal: React.FC<AddStaffModalProps> = ({
                       cursor: 'pointer'
                     }}
                   >
-                    {shortLabel}
+                    {dayLabelsArabic[d]}
                   </button>
                 );
               })}
@@ -356,10 +364,10 @@ export const AddStaffModal: React.FC<AddStaffModalProps> = ({
               <Home size={16} color={isHomeServiceEligible ? 'var(--text-gold)' : 'var(--text-muted)'} />
               <div>
                 <div style={{ fontSize: '12px', fontWeight: 700, color: 'var(--text-main)' }}>
-                  Home Service Dispatch Eligible
+                  إتاحة تقديم الخدمات المنزلية
                 </div>
                 <div style={{ fontSize: '10px', color: 'var(--text-muted)' }}>
-                  Eligible for VIP home beauty bookings
+                  مؤهل للخروج في مواعيد التجميل المنزلية VIP
                 </div>
               </div>
             </div>
@@ -379,14 +387,14 @@ export const AddStaffModal: React.FC<AddStaffModalProps> = ({
               className="secondary-button"
               style={{ flex: 1, justifyContent: 'center' }}
             >
-              Cancel
+              إلغاء
             </button>
             <button
               type="submit"
               className="gold-button"
               style={{ flex: 2 }}
             >
-              <Check size={16} /> Register Staff
+              <Check size={16} /> تسجيل الموظف
             </button>
           </div>
         </form>

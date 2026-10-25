@@ -5,7 +5,7 @@ import {
   Star,
   Home,
   ArrowRightLeft,
-  ArrowLeft,
+  ArrowRight,
   Lock,
   AlertCircle,
   Clock,
@@ -66,39 +66,49 @@ export const ProfessionalsView: React.FC<ProfessionalsViewProps> = ({
     switch (config.shiftType) {
       case 'MORNING':
         return (
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px', background: '#fef3c7', color: '#b45309', fontSize: '9px', fontWeight: 800, padding: '2px 6px', borderRadius: '4px' }}>
-            <Sun size={10} /> Morning ({config.startTime}-{config.endTime})
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px', background: '#fef3c7', color: '#b45309', fontSize: '9.5px', fontWeight: 800, padding: '2px 7px', borderRadius: '4px' }}>
+            <Sun size={11} /> صباحي ({config.startTime} - {config.endTime})
           </span>
         );
       case 'EVENING':
         return (
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px', background: '#e0e7ff', color: '#4338ca', fontSize: '9px', fontWeight: 800, padding: '2px 6px', borderRadius: '4px' }}>
-            <Moon size={10} /> Evening ({config.startTime}-{config.endTime})
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px', background: '#e0e7ff', color: '#4338ca', fontSize: '9.5px', fontWeight: 800, padding: '2px 7px', borderRadius: '4px' }}>
+            <Moon size={11} /> مسائي ({config.startTime} - {config.endTime})
           </span>
         );
       case 'SPLIT_SHIFT':
         return (
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px', background: '#f3e8ff', color: '#7e22ce', fontSize: '9px', fontWeight: 800, padding: '2px 6px', borderRadius: '4px' }}>
-            <Split size={10} /> Split ({config.startTime}-{config.endTime} & {config.splitStartTime}-{config.splitEndTime})
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px', background: '#f3e8ff', color: '#7e22ce', fontSize: '9.5px', fontWeight: 800, padding: '2px 7px', borderRadius: '4px' }}>
+            <Split size={11} /> مجزأ ({config.startTime}-{config.endTime} و {config.splitStartTime}-{config.splitEndTime})
           </span>
         );
       case 'FULL_DAY':
         return (
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px', background: 'rgba(212, 175, 55, 0.15)', color: 'var(--text-gold)', fontSize: '9px', fontWeight: 800, padding: '2px 6px', borderRadius: '4px' }}>
-            <Clock size={10} /> Full Day ({config.startTime}-{config.endTime})
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px', background: 'rgba(212, 175, 55, 0.15)', color: 'var(--text-gold)', fontSize: '9.5px', fontWeight: 800, padding: '2px 7px', borderRadius: '4px' }}>
+            <Clock size={11} /> دوام كامل ({config.startTime} - {config.endTime})
           </span>
         );
       default:
         return (
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px', background: '#ecfdf5', color: '#047857', fontSize: '9px', fontWeight: 800, padding: '2px 6px', borderRadius: '4px' }}>
-            <Sparkles size={10} /> Custom ({config.startTime}-{config.endTime})
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px', background: '#ecfdf5', color: '#047857', fontSize: '9.5px', fontWeight: 800, padding: '2px 7px', borderRadius: '4px' }}>
+            <Sparkles size={11} /> مخصص ({config.startTime} - {config.endTime})
           </span>
         );
     }
   };
 
+  const daysArabicMap: Record<string, { label: string; full: string }> = {
+    Sunday: { label: 'أحد', full: 'Sunday' },
+    Monday: { label: 'إثنين', full: 'Monday' },
+    Tuesday: { label: 'ثلاثاء', full: 'Tuesday' },
+    Wednesday: { label: 'أربعاء', full: 'Wednesday' },
+    Thursday: { label: 'خميس', full: 'Thursday' },
+    Friday: { label: 'جمعة', full: 'Friday' },
+    Saturday: { label: 'سبت', full: 'Saturday' }
+  };
+
   return (
-    <div style={{ padding: '14px' }}>
+    <div style={{ padding: '13px' }}>
       {onBackToSettings && (
         <button
           onClick={onBackToSettings}
@@ -107,15 +117,16 @@ export const ProfessionalsView: React.FC<ProfessionalsViewProps> = ({
             border: 'none',
             color: 'var(--text-gold)',
             fontSize: '12px',
-            fontWeight: 700,
+            fontWeight: 800,
             cursor: 'pointer',
             display: 'inline-flex',
             alignItems: 'center',
             gap: '4px',
-            marginBottom: '8px'
+            marginBottom: '8px',
+            fontFamily: 'var(--font-body)'
           }}
         >
-          <ArrowLeft size={14} /> Back to Settings Hub
+          <ArrowRight size={14} /> الرجوع لمركز الإعدادات
         </button>
       )}
 
@@ -123,10 +134,10 @@ export const ProfessionalsView: React.FC<ProfessionalsViewProps> = ({
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
         <div>
           <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', color: 'var(--text-gold)', margin: 0 }}>
-            Branch Staff & Shift Rosters
+            طاقم العمل وجداول المناوبات
           </h2>
           <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
-            Working hours, shift rotations & mobile dispatch ({professionals.length} staff)
+            ساعات الدوام، المناوبات، والخدمة الخارجية ({professionals.length} موظفين)
           </span>
         </div>
 
@@ -139,16 +150,17 @@ export const ProfessionalsView: React.FC<ProfessionalsViewProps> = ({
               border: 'none',
               borderRadius: '8px',
               padding: '7px 12px',
-              fontSize: '11px',
+              fontSize: '11.5px',
               fontWeight: 800,
               cursor: 'pointer',
               display: 'inline-flex',
               alignItems: 'center',
               gap: '4px',
-              boxShadow: '0 2px 8px var(--gold-glow)'
+              boxShadow: '0 2px 8px var(--gold-glow)',
+              fontFamily: 'var(--font-body)'
             }}
           >
-            <UserPlus size={14} /> Add Staff
+            <UserPlus size={14} /> إضافة موظف
           </button>
         )}
       </div>
@@ -156,7 +168,7 @@ export const ProfessionalsView: React.FC<ProfessionalsViewProps> = ({
       {!canTransfer && (
         <div className="permission-denied-box" style={{ marginBottom: '10px' }}>
           <AlertCircle size={16} color="#dc2626" />
-          <span>Role Notice: Only Business Owners can transfer staff across branch locations.</span>
+          <span>تنبيه: ميزة نقل الموظفين بين الفروع متاحة فقط لمالك المنشأة.</span>
         </div>
       )}
 
@@ -165,26 +177,27 @@ export const ProfessionalsView: React.FC<ProfessionalsViewProps> = ({
         {(['ALL', 'MORNING', 'EVENING', 'SPLIT_SHIFT', 'FULL_DAY'] as const).map((filter) => {
           const isSelected = shiftFilter === filter;
           const labelMap: Record<string, string> = {
-            ALL: 'All Staff',
-            MORNING: 'Morning',
-            EVENING: 'Evening',
-            SPLIT_SHIFT: 'Split Shift',
-            FULL_DAY: 'Full Day'
+            ALL: 'كافة الطاقم',
+            MORNING: 'صباحي',
+            EVENING: 'مسائي',
+            SPLIT_SHIFT: 'دوام مجزأ',
+            FULL_DAY: 'دوام كامل'
           };
           return (
             <button
               key={filter}
               onClick={() => setShiftFilter(filter)}
               style={{
-                padding: '4px 10px',
+                padding: '4px 11px',
                 borderRadius: '16px',
-                fontSize: '10px',
+                fontSize: '10.5px',
                 fontWeight: 700,
                 whiteSpace: 'nowrap',
                 border: isSelected ? '1px solid var(--gold-primary)' : '1px solid var(--border-dark)',
                 background: isSelected ? 'var(--gold-gradient)' : '#ffffff',
                 color: isSelected ? '#000000' : 'var(--text-muted)',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                fontFamily: 'var(--font-body)'
               }}
             >
               {labelMap[filter]}
@@ -200,21 +213,21 @@ export const ProfessionalsView: React.FC<ProfessionalsViewProps> = ({
               <img
                 src={p.photoUrl}
                 alt={p.name}
-                style={{ width: '48px', height: '48px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--gold-primary)' }}
+                style={{ width: '48px', height: '48px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--gold-primary)', flexShrink: 0 }}
               />
 
-              <div style={{ flex: 1 }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                   <div>
-                    <div style={{ fontWeight: 700, fontSize: '13px', color: 'var(--text-main)' }}>{p.name}</div>
-                    <div style={{ fontSize: '11px', color: 'var(--text-gold)', fontWeight: 600 }}>{p.title}</div>
+                    <div style={{ fontWeight: 800, fontSize: '13.5px', color: 'var(--text-main)' }}>{p.name}</div>
+                    <div style={{ fontSize: '11px', color: 'var(--text-gold)', fontWeight: 700 }}>{p.title}</div>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '2px', color: '#d97706', fontSize: '11px', fontWeight: 700 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '2px', color: '#d97706', fontSize: '11px', fontWeight: 800 }}>
                     <Star size={12} fill="#d97706" /> {p.rating}
                   </div>
                 </div>
 
-                <div style={{ fontSize: '10px', color: 'var(--text-muted)', marginTop: '2px' }}>
+                <div style={{ fontSize: '10.5px', color: 'var(--text-muted)', marginTop: '2px' }}>
                   📍 {p.branchName}
                 </div>
 
@@ -226,30 +239,21 @@ export const ProfessionalsView: React.FC<ProfessionalsViewProps> = ({
                 {/* Working Days Pill Row */}
                 {p.scheduleConfig?.workingDays && p.scheduleConfig.workingDays.length > 0 && (
                   <div style={{ display: 'flex', gap: '3px', marginTop: '6px', flexWrap: 'wrap' }}>
-                    {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => {
-                      const fullDayName = {
-                        Sun: 'Sunday',
-                        Mon: 'Monday',
-                        Tue: 'Tuesday',
-                        Wed: 'Wednesday',
-                        Thu: 'Thursday',
-                        Fri: 'Friday',
-                        Sat: 'Saturday'
-                      }[d];
-                      const isWorking = p.scheduleConfig?.workingDays.includes(fullDayName as any);
+                    {Object.entries(daysArabicMap).map(([dayKey, dayVal]) => {
+                      const isWorking = p.scheduleConfig?.workingDays.includes(dayKey as any);
                       return (
                         <span
-                          key={d}
+                          key={dayKey}
                           style={{
-                            fontSize: '8px',
+                            fontSize: '9px',
                             fontWeight: 700,
-                            padding: '1px 4px',
+                            padding: '1px 5px',
                             borderRadius: '3px',
                             background: isWorking ? 'rgba(212, 175, 55, 0.15)' : '#f1f5f9',
                             color: isWorking ? 'var(--text-gold)' : '#94a3b8'
                           }}
                         >
-                          {d}
+                          {dayVal.label}
                         </span>
                       );
                     })}
@@ -286,15 +290,15 @@ export const ProfessionalsView: React.FC<ProfessionalsViewProps> = ({
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '4px'
+                    gap: '4px',
+                    fontFamily: 'var(--font-body)'
                   }}
                 >
-                  <Home size={10} /> {p.isHomeServiceEligible ? 'Home Dispatch' : 'In-Salon Only'}
+                  <Home size={10} /> {p.isHomeServiceEligible ? 'مؤهلة لزيارات منزلية' : 'داخل الصالون فقط'}
                 </button>
               </div>
 
-              <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-                {/* Edit Profile Button */}
+              <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap' }}>
                 {canManageStaff && (
                   <button
                     onClick={() => setSelectedProfForEdit(p)}
@@ -304,19 +308,19 @@ export const ProfessionalsView: React.FC<ProfessionalsViewProps> = ({
                       border: '1px solid var(--border-dark)',
                       padding: '3px 8px',
                       borderRadius: '6px',
-                      fontSize: '10px',
+                      fontSize: '10.5px',
                       fontWeight: 700,
                       display: 'flex',
                       alignItems: 'center',
                       gap: '3px',
-                      cursor: 'pointer'
+                      cursor: 'pointer',
+                      fontFamily: 'var(--font-body)'
                     }}
                   >
-                    <Edit3 size={10} color="var(--text-gold)" /> Edit Profile
+                    <Edit3 size={10} color="var(--text-gold)" /> تعديل الملف
                   </button>
                 )}
 
-                {/* Edit Shifts Button */}
                 <button
                   onClick={() => setSelectedProfForShift(p)}
                   style={{
@@ -325,15 +329,16 @@ export const ProfessionalsView: React.FC<ProfessionalsViewProps> = ({
                     border: '1px solid var(--border-dark)',
                     padding: '3px 8px',
                     borderRadius: '6px',
-                    fontSize: '10px',
+                    fontSize: '10.5px',
                     fontWeight: 700,
                     display: 'flex',
                     alignItems: 'center',
                     gap: '4px',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    fontFamily: 'var(--font-body)'
                   }}
                 >
-                  <Clock size={10} color="var(--text-gold)" /> Shifts
+                  <Clock size={10} color="var(--text-gold)" /> المناوبة
                 </button>
 
                 {canTransfer ? (
@@ -345,19 +350,20 @@ export const ProfessionalsView: React.FC<ProfessionalsViewProps> = ({
                       border: '1px solid var(--border-dark)',
                       padding: '3px 8px',
                       borderRadius: '6px',
-                      fontSize: '10px',
-                      fontWeight: 600,
+                      fontSize: '10.5px',
+                      fontWeight: 700,
                       display: 'flex',
                       alignItems: 'center',
                       gap: '4px',
-                      cursor: 'pointer'
+                      cursor: 'pointer',
+                      fontFamily: 'var(--font-body)'
                     }}
                   >
-                    <ArrowRightLeft size={10} /> Transfer
+                    <ArrowRightLeft size={10} /> نقل
                   </button>
                 ) : (
-                  <span style={{ fontSize: '9px', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '2px' }}>
-                    <Lock size={9} /> Owner Only
+                  <span style={{ fontSize: '9.5px', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '2px' }}>
+                    <Lock size={9} /> خاص بالمالك
                   </span>
                 )}
               </div>
@@ -370,11 +376,12 @@ export const ProfessionalsView: React.FC<ProfessionalsViewProps> = ({
       {selectedProfForTransfer && canTransfer && (
         <div className="modal-overlay" onClick={() => setSelectedProfForTransfer(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-drag-handle" />
             <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--text-gold)', fontSize: '15px', marginBottom: '8px' }}>
-              Transfer {selectedProfForTransfer.name}
+              نقل الموظف {selectedProfForTransfer.name}
             </h3>
             <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '14px' }}>
-              Select target branch location:
+              اختر الفرع المطلوب للنقل إليه:
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {branches.map((b) => (
@@ -391,11 +398,12 @@ export const ProfessionalsView: React.FC<ProfessionalsViewProps> = ({
                     border: '1px solid var(--border-dark)',
                     background: b.id === selectedProfForTransfer.branchId ? '#f1f5f9' : '#ffffff',
                     cursor: b.id === selectedProfForTransfer.branchId ? 'not-allowed' : 'pointer',
-                    textAlign: 'left'
+                    textAlign: 'right',
+                    fontFamily: 'var(--font-body)'
                   }}
                 >
-                  <div style={{ fontWeight: 700, fontSize: '12px', color: 'var(--text-main)' }}>{b.name}</div>
-                  <div style={{ fontSize: '10px', color: 'var(--text-muted)' }}>{b.address}</div>
+                  <div style={{ fontWeight: 800, fontSize: '12.5px', color: 'var(--text-main)' }}>{b.name}</div>
+                  <div style={{ fontSize: '10.5px', color: 'var(--text-muted)' }}>{b.address}</div>
                 </button>
               ))}
             </div>
@@ -403,17 +411,18 @@ export const ProfessionalsView: React.FC<ProfessionalsViewProps> = ({
               onClick={() => setSelectedProfForTransfer(null)}
               style={{
                 width: '100%',
-                padding: '8px',
+                padding: '9px',
                 marginTop: '12px',
-                borderRadius: '6px',
+                borderRadius: '8px',
                 border: 'none',
                 background: '#f1f5f9',
                 cursor: 'pointer',
                 fontWeight: 700,
-                fontSize: '11px'
+                fontSize: '11.5px',
+                fontFamily: 'var(--font-body)'
               }}
             >
-              Cancel
+              إلغاء
             </button>
           </div>
         </div>

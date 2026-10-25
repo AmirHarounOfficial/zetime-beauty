@@ -76,11 +76,11 @@ export const EditShiftModal: React.FC<EditShiftModalProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const shiftLabels: Record<ShiftType, string> = {
-      MORNING: 'Morning Shift',
-      EVENING: 'Evening Shift',
-      FULL_DAY: 'Full Day Shift',
-      SPLIT_SHIFT: 'Split Shift',
-      CUSTOM: 'Custom Hours'
+      MORNING: 'دوام صباحي',
+      EVENING: 'دوام مسائي',
+      FULL_DAY: 'دوام كامل',
+      SPLIT_SHIFT: 'دوام مجزأ',
+      CUSTOM: 'ساعات مخصصة'
     };
 
     const newConfig: EmployeeScheduleConfig = {
@@ -100,11 +100,11 @@ export const EditShiftModal: React.FC<EditShiftModalProps> = ({
   };
 
   const shiftOptions: { type: ShiftType; label: string; icon: React.ReactNode; defaultHours: string }[] = [
-    { type: 'MORNING', label: 'Morning Shift', icon: <Sun size={14} color="#d97706" />, defaultHours: '09:00 - 15:30' },
-    { type: 'EVENING', label: 'Evening Shift', icon: <Moon size={14} color="#4338ca" />, defaultHours: '15:00 - 22:30' },
-    { type: 'FULL_DAY', label: 'Full Day', icon: <Clock size={14} color="var(--gold-dark)" />, defaultHours: '10:00 - 18:30' },
-    { type: 'SPLIT_SHIFT', label: 'Split Shift', icon: <Split size={14} color="#7c3aed" />, defaultHours: '10-14 & 17-21' },
-    { type: 'CUSTOM', label: 'Custom Hours', icon: <Sparkles size={14} color="#059669" />, defaultHours: 'Flexible' }
+    { type: 'MORNING', label: 'دوام صباحي', icon: <Sun size={14} color="#d97706" />, defaultHours: '09:00 - 15:30' },
+    { type: 'EVENING', label: 'دوام مسائي', icon: <Moon size={14} color="#4338ca" />, defaultHours: '15:00 - 22:30' },
+    { type: 'FULL_DAY', label: 'دوام كامل', icon: <Clock size={14} color="var(--gold-dark)" />, defaultHours: '10:00 - 18:30' },
+    { type: 'SPLIT_SHIFT', label: 'دوام مجزأ', icon: <Split size={14} color="#7c3aed" />, defaultHours: '10-14 و 17-21' },
+    { type: 'CUSTOM', label: 'ساعات مخصصة', icon: <Sparkles size={14} color="#059669" />, defaultHours: 'ساعات مرنة' }
   ];
 
   return (
@@ -123,7 +123,7 @@ export const EditShiftModal: React.FC<EditShiftModalProps> = ({
                 {professional.name}
               </h3>
               <span style={{ fontSize: '11px', color: 'var(--text-gold)', fontWeight: 600 }}>
-                {professional.title} • Working Hours & Shifts
+                {professional.title} • مواعيد ومناوبات العمل
               </span>
             </div>
           </div>
@@ -135,8 +135,8 @@ export const EditShiftModal: React.FC<EditShiftModalProps> = ({
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
           {/* Shift Type Selection */}
           <div>
-            <label style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-              Select Working Shift Model
+            <label style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', display: 'block', marginBottom: '6px', letterSpacing: '0.2px' }}>
+              اختيار نمط مناوبة العمل
             </label>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '6px' }}>
               {shiftOptions.map((opt) => {
@@ -155,7 +155,7 @@ export const EditShiftModal: React.FC<EditShiftModalProps> = ({
                       alignItems: 'center',
                       gap: '6px',
                       cursor: 'pointer',
-                      textAlign: 'left'
+                      textAlign: 'right'
                     }}
                   >
                     <div>{opt.icon}</div>
@@ -163,7 +163,7 @@ export const EditShiftModal: React.FC<EditShiftModalProps> = ({
                       <div style={{ fontSize: '11px', fontWeight: 700, color: isSelected ? 'var(--text-gold)' : 'var(--text-main)' }}>
                         {opt.label}
                       </div>
-                      <div style={{ fontSize: '9px', color: 'var(--text-muted)' }}>{opt.defaultHours}</div>
+                      <div style={{ fontSize: '9px', color: 'var(--text-muted)', direction: 'ltr', textAlign: 'right' }}>{opt.defaultHours}</div>
                     </div>
                   </button>
                 );
@@ -174,7 +174,7 @@ export const EditShiftModal: React.FC<EditShiftModalProps> = ({
           {/* Time Pickers */}
           <div style={{ background: '#f8fafc', padding: '10px', borderRadius: '10px', border: '1px solid var(--border-dark)' }}>
             <div style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '8px' }}>
-              Shift Working Hours
+              ساعات الوردية المحددة
             </div>
 
             {shiftType === 'SPLIT_SHIFT' ? (
@@ -182,24 +182,24 @@ export const EditShiftModal: React.FC<EditShiftModalProps> = ({
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                   <div>
                     <label style={{ fontSize: '10px', color: 'var(--text-muted)', display: 'block', marginBottom: '2px' }}>
-                      First Session Start
+                      بداية الفترة الأولى
                     </label>
                     <input
                       type="time"
                       value={startTime}
                       onChange={(e) => setStartTime(e.target.value)}
-                      style={{ width: '100%' }}
+                      style={{ width: '100%', direction: 'ltr', textAlign: 'right' }}
                     />
                   </div>
                   <div>
                     <label style={{ fontSize: '10px', color: 'var(--text-muted)', display: 'block', marginBottom: '2px' }}>
-                      First Session End
+                      نهاية الفترة الأولى
                     </label>
                     <input
                       type="time"
                       value={endTime}
                       onChange={(e) => setEndTime(e.target.value)}
-                      style={{ width: '100%' }}
+                      style={{ width: '100%', direction: 'ltr', textAlign: 'right' }}
                     />
                   </div>
                 </div>
@@ -207,24 +207,24 @@ export const EditShiftModal: React.FC<EditShiftModalProps> = ({
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                   <div>
                     <label style={{ fontSize: '10px', color: 'var(--text-muted)', display: 'block', marginBottom: '2px' }}>
-                      Second Session Start
+                      بداية الفترة الثانية
                     </label>
                     <input
                       type="time"
                       value={splitStartTime}
                       onChange={(e) => setSplitStartTime(e.target.value)}
-                      style={{ width: '100%' }}
+                      style={{ width: '100%', direction: 'ltr', textAlign: 'right' }}
                     />
                   </div>
                   <div>
                     <label style={{ fontSize: '10px', color: 'var(--text-muted)', display: 'block', marginBottom: '2px' }}>
-                      Second Session End
+                      نهاية الفترة الثانية
                     </label>
                     <input
                       type="time"
                       value={splitEndTime}
                       onChange={(e) => setSplitEndTime(e.target.value)}
-                      style={{ width: '100%' }}
+                      style={{ width: '100%', direction: 'ltr', textAlign: 'right' }}
                     />
                   </div>
                 </div>
@@ -233,24 +233,24 @@ export const EditShiftModal: React.FC<EditShiftModalProps> = ({
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                 <div>
                   <label style={{ fontSize: '10px', color: 'var(--text-muted)', display: 'block', marginBottom: '2px' }}>
-                    Shift Start Time
+                    وقت بدء الوردية
                   </label>
                   <input
                     type="time"
                     value={startTime}
                     onChange={(e) => setStartTime(e.target.value)}
-                    style={{ width: '100%' }}
+                    style={{ width: '100%', direction: 'ltr', textAlign: 'right' }}
                   />
                 </div>
                 <div>
                   <label style={{ fontSize: '10px', color: 'var(--text-muted)', display: 'block', marginBottom: '2px' }}>
-                    Shift End Time
+                    وقت انتهاء الوردية
                   </label>
                   <input
                     type="time"
                     value={endTime}
                     onChange={(e) => setEndTime(e.target.value)}
-                    style={{ width: '100%' }}
+                    style={{ width: '100%', direction: 'ltr', textAlign: 'right' }}
                   />
                 </div>
               </div>
@@ -260,21 +260,30 @@ export const EditShiftModal: React.FC<EditShiftModalProps> = ({
           {/* Working Days of the Week */}
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-              <label style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                Assigned Working Days ({workingDays.length}/7)
+              <label style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.2px' }}>
+                أيام العمل الأسبوعية ({workingDays.length}/7)
               </label>
               <button
                 type="button"
                 onClick={() => setWorkingDays(workingDays.length === 7 ? ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'] : ALL_DAYS)}
                 style={{ background: 'none', border: 'none', fontSize: '10px', color: 'var(--text-gold)', fontWeight: 700, cursor: 'pointer' }}
               >
-                {workingDays.length === 7 ? 'Standard Weekdays' : 'Select All Days'}
+                {workingDays.length === 7 ? 'أيام العمل القياسية' : 'تحديد كل الأيام'}
               </button>
             </div>
 
             <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap' }}>
               {ALL_DAYS.map((day) => {
                 const isActive = workingDays.includes(day);
+                const dayLabelsArabic: Record<DayOfWeek, string> = {
+                  Sunday: 'الأحد',
+                  Monday: 'الإثنين',
+                  Tuesday: 'الثلاثاء',
+                  Wednesday: 'الأربعاء',
+                  Thursday: 'الخميس',
+                  Friday: 'الجمعة',
+                  Saturday: 'السبت'
+                };
                 return (
                   <button
                     type="button"
@@ -292,7 +301,7 @@ export const EditShiftModal: React.FC<EditShiftModalProps> = ({
                       transition: 'all 0.15s ease'
                     }}
                   >
-                    {day.slice(0, 3)}
+                    {dayLabelsArabic[day]}
                   </button>
                 );
               })}
@@ -315,10 +324,10 @@ export const EditShiftModal: React.FC<EditShiftModalProps> = ({
               <Home size={16} color={allowsHomeService ? 'var(--text-gold)' : 'var(--text-muted)'} />
               <div>
                 <div style={{ fontSize: '12px', fontWeight: 700, color: 'var(--text-main)' }}>
-                  Home Service Eligible on Shift
+                  إتاحة تقديم الخدمة المنزلية بالوردية
                 </div>
                 <div style={{ fontSize: '10px', color: 'var(--text-muted)' }}>
-                  Allow dispatch for home & mobile appointments
+                  السماح بخروج الموظف لمواعيد التجميل المنزلية
                 </div>
               </div>
             </div>
@@ -337,18 +346,18 @@ export const EditShiftModal: React.FC<EditShiftModalProps> = ({
                 color: '#ffffff'
               }}
             >
-              {allowsHomeService ? 'ENABLED' : 'SALON ONLY'}
+              {allowsHomeService ? 'مفعل' : 'الصالون فقط'}
             </button>
           </div>
 
           {/* Special Notes / Instructions */}
           <div>
             <label style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'block', marginBottom: '4px', fontWeight: 600 }}>
-              Special Notes / Station Assignment
+              ملاحظات خاصة / تعيين المحطة أو الكرسي
             </label>
             <input
               type="text"
-              placeholder="e.g. Chair 3, VIP mobile kit, Sunday off"
+              placeholder="مثال: كرسي رقم 3، حقيبة VIP المتنقلة، الأحد إجازة"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               style={{ width: '100%' }}
@@ -372,11 +381,11 @@ export const EditShiftModal: React.FC<EditShiftModalProps> = ({
                 cursor: 'pointer'
               }}
             >
-              Cancel
+              إلغاء
             </button>
             <button
               type="submit"
-              className="gold-btn"
+              className="gold-button"
               style={{
                 flex: 2,
                 padding: '10px',
@@ -388,7 +397,7 @@ export const EditShiftModal: React.FC<EditShiftModalProps> = ({
                 gap: '6px'
               }}
             >
-              <Check size={14} /> Save Shift & Schedule
+              <Check size={14} /> حفظ الوردية وجدول العمل
             </button>
           </div>
         </form>

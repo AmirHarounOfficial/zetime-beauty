@@ -93,10 +93,10 @@ export const AddBranchModal: React.FC<AddBranchModalProps> = ({
             </div>
             <div>
               <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '15px', color: 'var(--text-main)', margin: 0 }}>
-                Add New Salon Branch
+                إضافة فرع صالون جديد
               </h3>
               <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>
-                Register new operational branch location & assign manager
+                تسجيل موقع فرع تشغيلي جديد وتعيين مدير للفرع
               </span>
             </div>
           </div>
@@ -119,12 +119,12 @@ export const AddBranchModal: React.FC<AddBranchModalProps> = ({
           {/* Branch Name */}
           <div>
             <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-              Branch Name *
+              اسم الفرع *
             </label>
             <input
               type="text"
               required
-              placeholder="e.g. Al-Nakheel Boulevard Branch"
+              placeholder="مثال: فرع النخيل بوليفارد"
               value={name}
               onChange={(e) => setName(e.target.value)}
               style={{ width: '100%' }}
@@ -134,12 +134,12 @@ export const AddBranchModal: React.FC<AddBranchModalProps> = ({
           {/* Address */}
           <div>
             <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-              Street Address & City *
+              العنوان الحي والمدينة *
             </label>
             <input
               type="text"
               required
-              placeholder="e.g. Northern Ring Rd, Exit 4, Al-Nakheel, Riyadh"
+              placeholder="مثال: طريق الدائري الشمالي، مخرج 4، حي النخيل، الرياض"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               style={{ width: '100%' }}
@@ -150,7 +150,7 @@ export const AddBranchModal: React.FC<AddBranchModalProps> = ({
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
             <div>
               <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-                Contact Phone *
+                رقم التواصل *
               </label>
               <input
                 type="tel"
@@ -158,12 +158,12 @@ export const AddBranchModal: React.FC<AddBranchModalProps> = ({
                 placeholder="+966 50 123 4567"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                style={{ width: '100%' }}
+                style={{ width: '100%', direction: 'ltr', textAlign: 'right' }}
               />
             </div>
             <div>
               <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-                Working Hours *
+                ساعات العمل اليومية *
               </label>
               <input
                 type="text"
@@ -171,7 +171,7 @@ export const AddBranchModal: React.FC<AddBranchModalProps> = ({
                 placeholder="10:00 - 22:00"
                 value={workingHours}
                 onChange={(e) => setWorkingHours(e.target.value)}
-                style={{ width: '100%' }}
+                style={{ width: '100%', direction: 'ltr', textAlign: 'right' }}
               />
             </div>
           </div>
@@ -188,7 +188,7 @@ export const AddBranchModal: React.FC<AddBranchModalProps> = ({
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
               <UserCheck size={16} color="var(--text-gold)" />
               <label style={{ fontSize: '11px', fontWeight: 800, color: 'var(--text-main)', margin: 0 }}>
-                Select Staff to be Branch Manager *
+                تعيين موظف كمدير للفرع *
               </label>
             </div>
             <select
@@ -213,7 +213,7 @@ export const AddBranchModal: React.FC<AddBranchModalProps> = ({
               ))}
             </select>
             <span style={{ fontSize: '10px', color: 'var(--text-muted)', marginTop: '4px', display: 'block' }}>
-              Selected team member will lead shift rotations, queue & operational controls for this branch.
+              يتولى العضو المختار إدارة مناوبات العمل وطابور الانتظار والعمليات التشغيلية للفرع.
             </span>
           </div>
 
@@ -231,10 +231,10 @@ export const AddBranchModal: React.FC<AddBranchModalProps> = ({
           >
             <div>
               <div style={{ fontSize: '12px', fontWeight: 700, color: 'var(--text-main)' }}>
-                Branch Operating Status
+                حالة تشغيل الفرع
               </div>
               <div style={{ fontSize: '10px', color: 'var(--text-muted)' }}>
-                Active branches appear in customer booking & search
+                الفروع النشطة تظهر تلقائياً في تطبيق حجز العملاء
               </div>
             </div>
             <input
@@ -253,14 +253,14 @@ export const AddBranchModal: React.FC<AddBranchModalProps> = ({
               className="secondary-button"
               style={{ flex: 1, justifyContent: 'center' }}
             >
-              Cancel
+              إلغاء
             </button>
             <button
               type="submit"
               className="gold-button"
               style={{ flex: 2 }}
             >
-              <Check size={16} /> Create Branch
+              <Check size={16} /> تأكيد إنشاء الفرع
             </button>
           </div>
         </form>

@@ -13,28 +13,28 @@ import {
 
 export const mockBusinessProfile: BusinessProfile = {
   id: 'biz-1',
-  name: 'ZeTime Prestige Beauty & Wellness',
+  name: 'مركز زيتيم بريستيج للتجميل والرفاهية',
   type: 'Beauty Center',
   commercialRegistrationNumber: '1010928374',
   taxNumber: '310294857200003',
   phone: '+966 11 482 9900',
   email: 'concierge@zetimebeauty.com',
-  description: 'Premier Saudi luxury beauty and wellness center providing salon treatments, skincare rituals, and on-demand VIP home visits.',
+  description: 'المركز الفاخر الرائد في المملكة لخدمات التجميل الشاملة، طقوس العناية الملكية بالبشرة، والزيارات المنزلية VIP.',
   status: 'Active',
-  city: 'Riyadh',
-  address: 'King Fahd Rd, Prestige District, Riyadh'
+  city: 'الرياض',
+  address: 'طريق الملك فهد، حي الصحافة الراقي، الرياض'
 };
 
 export const mockBranches: Branch[] = [
   {
     id: 'b-1',
-    name: 'Downtown Flagship Branch',
-    address: 'King Fahd Rd, Tower 4, Riyadh',
+    name: 'فرع برج المملكة الرئيسي',
+    address: 'طريق الملك فهد، برج 4، الرياض',
     phone: '+966 50 123 4567',
     workingHours: '10:00 - 22:00',
     isActive: true,
     managerId: 'm-1',
-    managerName: 'Noura Al-Otaibi',
+    managerName: 'نورة العتيبي',
     operatingSchedule: [
       { day: 'Sunday', isOpen: true, openTime: '10:00', closeTime: '22:00' },
       { day: 'Monday', isOpen: true, openTime: '10:00', closeTime: '22:00' },
@@ -63,13 +63,13 @@ export const mockBranches: Branch[] = [
   },
   {
     id: 'b-2',
-    name: 'Galleria Mall Branch',
-    address: 'Olaya St, Galleria Mall Gate 2',
+    name: 'فرع غاليريا مول الفاخر',
+    address: 'شارع العليا، غاليريا مول بوابة 2، الرياض',
     phone: '+966 50 987 6543',
     workingHours: '10:00 - 23:00',
     isActive: true,
     managerId: 'm-2',
-    managerName: 'Fahad Al-Zahrani',
+    managerName: 'فهد الزهراني',
     operatingSchedule: [
       { day: 'Sunday', isOpen: true, openTime: '10:00', closeTime: '23:00' },
       { day: 'Monday', isOpen: true, openTime: '10:00', closeTime: '23:00' },
@@ -101,97 +101,97 @@ export const mockBranches: Branch[] = [
 export const mockMasterCatalog: MasterService[] = [
   {
     id: 'ms-1',
-    name: 'Luxury Haircut & Blowdry',
+    name: 'قص وسشوار ملكي فاخر',
     category: 'Hair',
-    description: 'Precision luxury haircut with signature shampoo & gold shine blowdry finish.',
+    description: 'قص دقيق احترافي مع غسيل شامبو عضوي وسشوار لمسة الذهب اللامع.',
     defaultDurationMinutes: 45,
     genderAudience: 'Women'
   },
   {
     id: 'ms-2',
-    name: '24K Gold Facial Treatment',
+    name: 'جلسة نضارة الوجه بذهب عيار 24',
     category: 'Facial & Skincare',
-    description: 'Deep hydrating facial infused with 24K gold foil flakes and collagen boost.',
+    description: 'ترطيب عميق وتغذية للبشرة برقائق الذهب الخالص عيار 24 ومحفز الكولاجين.',
     defaultDurationMinutes: 60,
     genderAudience: 'All'
   },
   {
     id: 'ms-3',
-    name: 'Gel Nails & Spa Manicure',
+    name: 'مناكير سبا وأظافر جل متكاملة',
     category: 'Nails',
-    description: 'Cuticle care, organic hand scrub, nail shaping, and long-lasting gel coating.',
+    description: 'عناية كاملة بالأظافر وتقشير اليدين بالأعشاب الطبيعية مع طبقة جل متينة.',
     defaultDurationMinutes: 50,
     genderAudience: 'Women'
   },
   {
     id: 'ms-4',
-    name: 'Royal Moroccan Bath & Massage',
+    name: 'حمام مغربي ملكي ومساج مهدئ',
     category: 'Spa & Body',
-    description: 'Exfoliating black soap treatment, eucalyptus steam room, and 30-min massage.',
+    description: 'تقشير بالصابون الأسود المغربي والبخار المعطر مع جلسة مساج لمدة 30 دقيقة.',
     defaultDurationMinutes: 90,
     genderAudience: 'All'
   },
   {
     id: 'ms-5',
-    name: 'Beard Sculpting & Hot Towel',
+    name: 'تهذيب وتحديد اللحية بالفوطة الساخنة',
     category: 'Beard & Grooming',
-    description: 'Razor sharp line-up, beard oil treatment, and aromatic hot towel refresh.',
+    description: 'رسم وتحديد احترافي بالموس مع زيوت التغذية وتكميد بالفوطة الساخنة المنعشة.',
     defaultDurationMinutes: 30,
     genderAudience: 'Men'
   },
   {
     id: 'ms-6',
-    name: 'VIP Home Bridal Makeup & Hair',
+    name: 'مكياج وتسريحة العروس VIP (منزلي)',
     category: 'Home Beauty',
-    description: 'On-demand home beauty team for complete hair and glam makeup service.',
+    description: 'فريق تجميل منزلي متنقل بكامل التجهيزات لتقديم أرقى تسريحات ومكياج المناسبات.',
     defaultDurationMinutes: 120,
     genderAudience: 'Women'
   },
   {
     id: 'ms-7',
-    name: 'Keratin Silk Hair Smoothing Treatment',
+    name: 'معالجة الكيراتين الحريري والبروتين',
     category: 'Hair',
-    description: 'Formaldehyde-free organic keratin infusion for mirror-like frizz-free shine.',
+    description: 'كيراتين طبيعي خالٍ من الفورمالديهايد لتنعيم وتغذية الشعر وإضفاء بريق فوري.',
     defaultDurationMinutes: 105,
     genderAudience: 'Women'
   },
   {
     id: 'ms-8',
-    name: 'Hydrafacial Deep Pore Purification',
+    name: 'تنظيف عميق وتقشير هيدرافيشل',
     category: 'Facial & Skincare',
-    description: 'Patented vortex extraction, peptide infusion, and antioxidant LED therapy.',
+    description: 'تقنية التنقية بالشفط الهوائي مع تغلغل أمصال الببتيدات والعلاج الضوئي LED.',
     defaultDurationMinutes: 50,
     genderAudience: 'All'
   },
   {
     id: 'ms-9',
-    name: 'Acrylic Nail Extensions & French Art',
+    name: 'تركيب أظافر أكريليك مع رسم فرنسي',
     category: 'Nails',
-    description: 'Sculpted acrylic tips with hand-painted French borders and cuticle oil.',
+    description: 'تركيب أطراف أكريليك يدوية متقنة مع فرنش كلاسيكي وزيت تغذية البشرة.',
     defaultDurationMinutes: 75,
     genderAudience: 'Women'
   },
   {
     id: 'ms-10',
-    name: 'Aromatherapy Full Body Herbal Massage',
+    name: 'مساج استرخائي كامل بالزيوت العطرية',
     category: 'Spa & Body',
-    description: 'Warm botanical essential oils with Swedish tension-release techniques.',
+    description: 'مساج سويدي علاجي بزيت اللافندر الطبيعي الدافئ لإزالة الإجهاد العضلي.',
     defaultDurationMinutes: 60,
     genderAudience: 'All'
   },
   {
     id: 'ms-11',
-    name: 'Classic Hot Oil Beard & Scalp Ritual',
+    name: 'جلسة حمام زيت للشعر وفروة الرأس',
     category: 'Beard & Grooming',
-    description: 'Herbal hot oil scalp stimulation, steam cleanse, and precision razor shaping.',
+    description: 'تغذية عميقة بالبخار لتقوية بصيلات الشعر وتنشيط الدورة الدموية.',
     defaultDurationMinutes: 40,
     genderAudience: 'Men'
   },
   {
     id: 'ms-12',
-    name: 'Event Glam Evening Makeup & Styling',
+    name: 'مكياج سهرة وتسريحة هوليوود (منزلي)',
     category: 'Home Beauty',
-    description: 'HD camera-ready contouring, premium lashes, and Hollywood wave blowout.',
+    description: 'كونتور احترافي مناسب للتصوير مع رموش خفيفة وتسريحة ويڤي راقية.',
     defaultDurationMinutes: 90,
     genderAudience: 'Women'
   }
@@ -201,7 +201,7 @@ export const mockBranchServices: BranchService[] = [
   {
     id: 'bs-1',
     masterServiceId: 'ms-1',
-    name: 'Luxury Haircut & Blowdry',
+    name: 'قص وسشوار ملكي فاخر',
     category: 'Hair',
     price: 280,
     durationMinutes: 45,
@@ -212,7 +212,7 @@ export const mockBranchServices: BranchService[] = [
   {
     id: 'bs-2',
     masterServiceId: 'ms-2',
-    name: '24K Gold Facial Treatment',
+    name: 'جلسة نضارة الوجه بذهب عيار 24',
     category: 'Facial & Skincare',
     price: 450,
     durationMinutes: 60,
@@ -223,7 +223,7 @@ export const mockBranchServices: BranchService[] = [
   {
     id: 'bs-3',
     masterServiceId: 'ms-3',
-    name: 'Gel Nails & Spa Manicure',
+    name: 'مناكير سبا وأظافر جل متكاملة',
     category: 'Nails',
     price: 220,
     durationMinutes: 50,
@@ -233,7 +233,7 @@ export const mockBranchServices: BranchService[] = [
   {
     id: 'bs-4',
     masterServiceId: 'ms-4',
-    name: 'Royal Moroccan Bath & Massage',
+    name: 'حمام مغربي ملكي ومساج مهدئ',
     category: 'Spa & Body',
     price: 600,
     durationMinutes: 90,
@@ -243,7 +243,7 @@ export const mockBranchServices: BranchService[] = [
   {
     id: 'bs-5',
     masterServiceId: 'ms-5',
-    name: 'Beard Sculpting & Hot Towel',
+    name: 'تهذيب وتحديد اللحية بالفوطة الساخنة',
     category: 'Beard & Grooming',
     price: 150,
     durationMinutes: 30,
@@ -255,96 +255,96 @@ export const mockBranchServices: BranchService[] = [
 export const mockProfessionals: Professional[] = [
   {
     id: 'p-1',
-    name: 'Sara Al-Sayed',
-    title: 'Senior Master Stylist',
+    name: 'سارة السيد',
+    title: 'كبيرة مصففي الشعر',
     photoUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
     branchId: 'b-1',
-    branchName: 'Downtown Flagship Branch',
+    branchName: 'فرع برج المملكة الرئيسي',
     assignedServiceIds: ['bs-1', 'bs-3'],
     isHomeServiceEligible: true,
     rating: 4.9,
     completedBookingsCount: 342,
     isWorkingToday: true,
-    workingSchedule: '09:00 - 15:30 (Morning Shift)',
+    workingSchedule: '09:00 - 15:30 (مناوبة صباحية)',
     scheduleConfig: {
       shiftType: 'MORNING',
-      shiftLabel: 'Morning Shift',
+      shiftLabel: 'مناوبة صباحية',
       workingDays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Saturday'],
       startTime: '09:00',
       endTime: '15:30',
       allowsHomeService: true,
-      notes: 'VIP Bridal and Signature Blowdry specialist'
+      notes: 'متخصصة بتسريحات العرائس والسشوار الذهبي الفاخر'
     }
   },
   {
     id: 'p-2',
-    name: 'Dr. Mona Zaki',
-    title: 'Skin Specialist & Aesthetician',
+    name: 'د. منى زكي',
+    title: 'أخصائية العناية بالبشرة والفيشل',
     photoUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
     branchId: 'b-1',
-    branchName: 'Downtown Flagship Branch',
+    branchName: 'فرع برج المملكة الرئيسي',
     assignedServiceIds: ['bs-2', 'bs-4'],
     isHomeServiceEligible: true,
     rating: 4.95,
     completedBookingsCount: 512,
     isWorkingToday: true,
-    workingSchedule: '10:00 - 18:00 (Full Day)',
+    workingSchedule: '10:00 - 18:00 (دوام كامل)',
     scheduleConfig: {
       shiftType: 'FULL_DAY',
-      shiftLabel: 'Full Day Shift',
+      shiftLabel: 'دوام كامل',
       workingDays: ['Sunday', 'Monday', 'Tuesday', 'Thursday', 'Saturday'],
       startTime: '10:00',
       endTime: '18:00',
       allowsHomeService: true,
-      notes: 'Mobile skin hydration and 24K gold facial kits'
+      notes: 'حقائب العناية المنزلية وجلسات ذهب 24 المتنقلة'
     }
   },
   {
     id: 'p-3',
-    name: 'Ahmed Hassan',
-    title: 'Master Barber & Stylist',
+    name: 'أحمد حسن',
+    title: 'أخصائي حلاقة وتصفيف رجالي',
     photoUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
     branchId: 'b-1',
-    branchName: 'Downtown Flagship Branch',
+    branchName: 'فرع برج المملكة الرئيسي',
     assignedServiceIds: ['bs-5'],
     isHomeServiceEligible: false,
     rating: 4.85,
     completedBookingsCount: 280,
     isWorkingToday: true,
-    workingSchedule: '15:00 - 22:30 (Evening Shift)',
+    workingSchedule: '15:00 - 22:30 (مناوبة مسائية)',
     scheduleConfig: {
       shiftType: 'EVENING',
-      shiftLabel: 'Evening Shift',
+      shiftLabel: 'مناوبة مسائية',
       workingDays: ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
       startTime: '15:00',
       endTime: '22:30',
       allowsHomeService: false,
-      notes: 'In-salon chair only. Hot towel & beard master.'
+      notes: 'خدمات الصالون فقط - خبير الفوط الساخنة والعناية باللحية'
     }
   },
   {
     id: 'p-4',
-    name: 'Karim Vance',
-    title: 'Nail Artist & Technician',
+    name: 'كريم فانس',
+    title: 'أخصائي ورسام أظافر',
     photoUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
     branchId: 'b-2',
-    branchName: 'Galleria Mall Branch',
+    branchName: 'فرع غاليريا مول الفاخر',
     assignedServiceIds: ['bs-3'],
     isHomeServiceEligible: false,
     rating: 4.78,
     completedBookingsCount: 195,
     isWorkingToday: false,
-    workingSchedule: 'Split: 10:00-14:00 & 17:00-21:00',
+    workingSchedule: 'فترتين: 10:00-14:00 و 17:00-21:00',
     scheduleConfig: {
       shiftType: 'SPLIT_SHIFT',
-      shiftLabel: 'Split Shift',
+      shiftLabel: 'دوام مجزأ (فترتين)',
       workingDays: ['Sunday', 'Monday', 'Wednesday', 'Thursday', 'Saturday'],
       startTime: '10:00',
       endTime: '14:00',
       splitStartTime: '17:00',
       splitEndTime: '21:00',
       allowsHomeService: false,
-      notes: 'Available for peak afternoon and evening gel treatments'
+      notes: 'متاح لأوقات الذروة المسائية وجلسات الأظافر السريعة'
     }
   }
 ];
@@ -353,17 +353,17 @@ export const mockBookings: Booking[] = [
   {
     id: 'bk-101',
     customerId: 'c-1',
-    customerName: 'Lina Al-Harthi',
+    customerName: 'لينا الحارثي',
     customerPhone: '+966 55 111 2233',
     customerPhoto: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
     branchId: 'b-1',
-    branchName: 'Downtown Flagship Branch',
+    branchName: 'فرع برج المملكة الرئيسي',
     bookingItems: [
       {
         serviceId: 'bs-2',
-        serviceName: '24K Gold Facial Treatment',
+        serviceName: 'جلسة نضارة الوجه بذهب عيار 24',
         professionalId: 'p-2',
-        professionalName: 'Dr. Mona Zaki',
+        professionalName: 'د. منى زكي',
         price: 450,
         durationMinutes: 60
       }
@@ -377,24 +377,24 @@ export const mockBookings: Booking[] = [
     paymentMethod: 'Online Payment',
     paymentStatus: 'Paid',
     createdAt: new Date(Date.now() - 25 * 60 * 1000).toISOString(),
-    confirmationDeadline: new Date(Date.now() + 35 * 60 * 1000).toISOString(), // 25% window countdown
-    notes: 'Please double check sensitive skin cream options.',
-    customerAllergies: ['Latex Rubber', 'Synthetic Perfumes']
+    confirmationDeadline: new Date(Date.now() + 35 * 60 * 1000).toISOString(),
+    notes: 'يرجى مراجعة كريمات البشرة الحساسة الخالية من العطور.',
+    customerAllergies: ['حساسية اللاتكس (المطاط)', 'العطور الصناعية المركزة']
   },
   {
     id: 'bk-102',
     customerId: 'c-2',
-    customerName: 'Reem Al-Qahtani',
+    customerName: 'ريم القحطاني',
     customerPhone: '+966 50 333 4455',
     customerPhoto: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80',
     branchId: 'b-1',
-    branchName: 'Downtown Flagship Branch',
+    branchName: 'فرع برج المملكة الرئيسي',
     bookingItems: [
       {
         serviceId: 'bs-1',
-        serviceName: 'Luxury Haircut & Blowdry',
+        serviceName: 'قص وسشوار ملكي فاخر',
         professionalId: 'p-1',
-        professionalName: 'Sara Al-Sayed',
+        professionalName: 'سارة السيد',
         price: 280,
         durationMinutes: 45
       }
@@ -408,22 +408,22 @@ export const mockBookings: Booking[] = [
     paymentMethod: 'Card at Provider',
     paymentStatus: 'Pending',
     createdAt: '2026-09-22T08:00:00Z',
-    notes: 'Wants signature gold shine serum finish.'
+    notes: 'تفضل سيروم اللمعان الذهبي النهائي.'
   },
   {
     id: 'bk-103',
     customerId: 'c-3',
-    customerName: 'Princess Yasmin',
+    customerName: 'الأميرة ياسمين',
     customerPhone: '+966 54 888 9900',
     customerPhoto: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80',
     branchId: 'b-1',
-    branchName: 'Downtown Flagship Branch',
+    branchName: 'فرع برج المملكة الرئيسي',
     bookingItems: [
       {
         serviceId: 'bs-2',
-        serviceName: '24K Gold Facial Treatment (Home VIP)',
+        serviceName: 'جلسة نضارة الوجه بذهب عيار 24 (منزلي VIP)',
         professionalId: 'p-2',
-        professionalName: 'Dr. Mona Zaki',
+        professionalName: 'د. منى زكي',
         price: 550,
         durationMinutes: 60
       }
@@ -434,25 +434,25 @@ export const mockBookings: Booking[] = [
     scheduledTime: '16:00',
     status: 'CONFIRMED',
     isHomeService: true,
-    homeAddress: 'Villa 14, Diplomatic Quarter, Riyadh',
+    homeAddress: 'فيلا 14، الحي الدبلوماسي، الرياض',
     paymentMethod: 'Apple Pay',
     paymentStatus: 'Paid',
     createdAt: '2026-09-22T07:30:00Z',
-    notes: 'Home assistant required for equipment setup.'
+    notes: 'المساعدة المنزلية متواجدة لتسهيل إدخال وتجهيز الأجهزة.'
   },
   {
     id: 'bk-104',
     customerId: 'c-4',
-    customerName: 'Tariq Al-Dosari',
+    customerName: 'طارق الدوسري',
     customerPhone: '+966 56 777 1122',
     branchId: 'b-1',
-    branchName: 'Downtown Flagship Branch',
+    branchName: 'فرع برج المملكة الرئيسي',
     bookingItems: [
       {
         serviceId: 'bs-5',
-        serviceName: 'Beard Sculpting & Hot Towel',
+        serviceName: 'تهذيب وتحديد اللحية بالفوطة الساخنة',
         professionalId: 'p-3',
-        professionalName: 'Ahmed Hassan',
+        professionalName: 'أحمد حسن',
         price: 150,
         durationMinutes: 30
       }
@@ -472,11 +472,11 @@ export const mockBookings: Booking[] = [
 export const mockQueueEntries: QueueEntry[] = [
   {
     id: 'q-1',
-    customerName: 'Fatima Al-Mansoor',
+    customerName: 'فاطمة المنصور',
     customerPhone: '+966 59 123 7788',
-    serviceName: 'Gel Nails & Spa Manicure',
+    serviceName: 'مناكير سبا وأظافر جل متكاملة',
     professionalId: 'p-1',
-    professionalName: 'Sara Al-Sayed',
+    professionalName: 'سارة السيد',
     position: 1,
     estimatedWaitMinutes: 12,
     status: 'WAITING',
@@ -485,11 +485,11 @@ export const mockQueueEntries: QueueEntry[] = [
   },
   {
     id: 'q-2',
-    customerName: 'Khaled Al-Subaie',
+    customerName: 'خالد السبيعي',
     customerPhone: '+966 53 444 5566',
-    serviceName: 'Beard Sculpting & Hot Towel',
+    serviceName: 'تهذيب وتحديد اللحية بالفوطة الساخنة',
     professionalId: 'p-3',
-    professionalName: 'Ahmed Hassan',
+    professionalName: 'أحمد حسن',
     position: 2,
     estimatedWaitMinutes: 25,
     status: 'WAITING',
@@ -501,7 +501,7 @@ export const mockQueueEntries: QueueEntry[] = [
 export const mockCustomers: CustomerProfile[] = [
   {
     id: 'c-1',
-    name: 'Lina Al-Harthi',
+    name: 'لينا الحارثي',
     phone: '+966 55 111 2233',
     email: 'lina.harthi@example.com',
     gender: 'Female',
@@ -510,14 +510,14 @@ export const mockCustomers: CustomerProfile[] = [
     totalBookings: 8,
     noShowCount: 0,
     cancellationCount: 1,
-    allergies: ['Latex Rubber', 'Synthetic Perfumes'],
-    preferences: ['Prefers Gold Hydrating Mist', 'Wants Organic Scrubs Only'],
+    allergies: ['حساسية اللاتكس (المطاط)', 'العطور الصناعية المركزة'],
+    preferences: ['تفضل رذاذ الذهب المرطب', 'مقشرات عضوية طبيعية فقط'],
     hasBookingRestrictions: false,
-    recentNotes: 'VIP customer. Prefers quiet environment during facial treatments.'
+    recentNotes: 'عميلة VIP دائمة. تفضل أجواء هادئة بدون ضوضاء أثناء جلسة البشرة.'
   },
   {
     id: 'c-2',
-    name: 'Reem Al-Qahtani',
+    name: 'ريم القحطاني',
     phone: '+966 50 333 4455',
     email: 'reem.q@example.com',
     gender: 'Female',
@@ -527,34 +527,34 @@ export const mockCustomers: CustomerProfile[] = [
     noShowCount: 0,
     cancellationCount: 0,
     allergies: [],
-    preferences: ['Prefers Sara Al-Sayed for haircut styling'],
+    preferences: ['تفضل سارة السيد لتصفيف الشعر'],
     hasBookingRestrictions: false,
-    recentNotes: 'Regular monthly visitor.'
+    recentNotes: 'زيارة شهرية منتظمة.'
   }
 ];
 
 export const mockNotifications: NotificationItem[] = [
   {
     id: 'n-1',
-    title: 'New Customer Booking',
-    message: 'Lina Al-Harthi requested 24K Gold Facial Treatment at 14:30. Confirmation deadline active.',
-    time: '15m ago',
+    title: 'طلب حجز جديد من عميل',
+    message: 'طلبت لينا الحارثي جلسة نضارة الوجه بذهب عيار 24 الساعة 14:30. مهلة تأكيد الحجز نشطة الآن.',
+    time: 'منذ 15 دقيقة',
     isRead: false,
     type: 'booking'
   },
   {
     id: 'n-2',
-    title: 'Walk-in Customer Joined',
-    message: 'Fatima Al-Mansoor joined the walk-in queue for Gel Nails (Position #1).',
-    time: '28m ago',
+    title: 'انضمام عميلة لقائمة الانتظار',
+    message: 'انضمت فاطمة المنصور لقائمة الانتظار الفورية لخدمة أظافر جل (الترتيب #1).',
+    time: 'منذ 28 دقيقة',
     isRead: false,
     type: 'queue'
   },
   {
     id: 'n-3',
-    title: '5-Star Review Received!',
-    message: 'Tariq Al-Dosari left a 5-star review for Ahmed Hassan: "Best beard sculpting in Riyadh!"',
-    time: '1h ago',
+    title: 'تقييم 5 نجوم جديد!',
+    message: 'ترك طارق الدوسري تقييماً بـ 5 نجوم للمصفف أحمد حسن: "أفضل تحديد لحية في الرياض بلا منازع!"',
+    time: 'منذ ساعة',
     isRead: true,
     type: 'review'
   }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Branch, DeliveryFeeConfig } from '../types/zetime';
 import {
-  ArrowLeft,
+  ArrowRight,
   Truck,
   DollarSign,
   MapPin,
@@ -83,8 +83,8 @@ export const DeliveryFeeView: React.FC<DeliveryFeeViewProps> = ({
   };
 
   return (
-    <div style={{ padding: '14px' }}>
-      {/* Back button */}
+    <div style={{ padding: '13px' }}>
+      {/* زر الرجوع */}
       <button
         onClick={onBackToSettings}
         style={{
@@ -92,31 +92,32 @@ export const DeliveryFeeView: React.FC<DeliveryFeeViewProps> = ({
           border: 'none',
           color: 'var(--text-gold)',
           fontSize: '12px',
-          fontWeight: 700,
+          fontWeight: 800,
           cursor: 'pointer',
           display: 'inline-flex',
           alignItems: 'center',
           gap: '4px',
-          marginBottom: '10px'
+          marginBottom: '10px',
+          fontFamily: 'var(--font-body)'
         }}
       >
-        <ArrowLeft size={14} /> Back to Settings Hub
+        <ArrowRight size={14} /> الرجوع لمركز الإعدادات
       </button>
 
-      {/* Header */}
+      {/* الترويسة */}
       <div style={{ marginBottom: '14px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Truck size={20} color="var(--gold-dark)" />
-          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '17px', color: 'var(--text-main)', margin: 0 }}>
-            Home Delivery Fee & Radius
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', color: 'var(--text-main)', margin: 0 }}>
+            رسوم التوصيل المنزلي ونطاق التغطية
           </h2>
         </div>
         <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px' }}>
-          Call-out fee structure and travel calculation for <strong>{selectedBranch.name}</strong>
+          هيكلية تسعير الخدمات الخارجية واحتساب المسافات لـ <strong>{selectedBranch.name}</strong>
         </div>
       </div>
 
-      {/* Success Notification */}
+      {/* إشعار نجاح الحفظ */}
       {savedSuccess && (
         <div
           style={{
@@ -126,22 +127,23 @@ export const DeliveryFeeView: React.FC<DeliveryFeeViewProps> = ({
             borderRadius: '10px',
             padding: '10px 14px',
             fontSize: '12px',
-            fontWeight: 700,
+            fontWeight: 800,
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
-            marginBottom: '14px'
+            marginBottom: '14px',
+            animation: 'fadeIn 0.3s ease'
           }}
         >
           <Check size={16} color="#059669" />
-          <span>Delivery fees and radius rules successfully saved!</span>
+          <span>تم حفظ قواعد ورسوم التوصيل والمسافات بنجاح!</span>
         </div>
       )}
 
-      {/* Quick Presets */}
+      {/* القوالب الجاهزة */}
       <div style={{ marginBottom: '14px' }}>
-        <span style={{ fontSize: '10px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-          Rate Presets
+        <span style={{ fontSize: '10.5px', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+          القوالب والتسعيرات الجاهزة
         </span>
         <div style={{ display: 'flex', gap: '6px', marginTop: '6px', flexWrap: 'wrap' }}>
           <button
@@ -150,14 +152,15 @@ export const DeliveryFeeView: React.FC<DeliveryFeeViewProps> = ({
               background: 'rgba(212, 175, 55, 0.12)',
               border: '1px solid rgba(212, 175, 55, 0.4)',
               color: 'var(--text-gold)',
-              padding: '5px 8px',
+              padding: '5px 9px',
               borderRadius: '6px',
-              fontSize: '10px',
-              fontWeight: 700,
-              cursor: 'pointer'
+              fontSize: '10.5px',
+              fontWeight: 800,
+              cursor: 'pointer',
+              fontFamily: 'var(--font-body)'
             }}
           >
-            Standard Riyadh (50 SAR + 3.5/km)
+            الرياض القياسي (50 ر.س + 3.5/كم)
           </button>
           <button
             onClick={() => handleApplyPreset('metro')}
@@ -165,14 +168,15 @@ export const DeliveryFeeView: React.FC<DeliveryFeeViewProps> = ({
               background: '#f1f5f9',
               border: '1px solid var(--border-dark)',
               color: 'var(--text-main)',
-              padding: '5px 8px',
+              padding: '5px 9px',
               borderRadius: '6px',
-              fontSize: '10px',
-              fontWeight: 600,
-              cursor: 'pointer'
+              fontSize: '10.5px',
+              fontWeight: 700,
+              cursor: 'pointer',
+              fontFamily: 'var(--font-body)'
             }}
           >
-            Compact Metro (35 SAR + 3.0/km)
+            داخل المدينة (35 ر.س + 3.0/كم)
           </button>
           <button
             onClick={() => handleApplyPreset('luxury')}
@@ -180,34 +184,35 @@ export const DeliveryFeeView: React.FC<DeliveryFeeViewProps> = ({
               background: '#f1f5f9',
               border: '1px solid var(--border-dark)',
               color: 'var(--text-main)',
-              padding: '5px 8px',
+              padding: '5px 9px',
               borderRadius: '6px',
-              fontSize: '10px',
-              fontWeight: 600,
-              cursor: 'pointer'
+              fontSize: '10.5px',
+              fontWeight: 700,
+              cursor: 'pointer',
+              fontFamily: 'var(--font-body)'
             }}
           >
-            VIP Luxury (80 SAR + 5.0/km)
+            فاخر VIP (80 ر.س + 5.0/كم)
           </button>
         </div>
       </div>
 
-      {/* Config Inputs Card */}
+      {/* مدخلات معادلة التسعير */}
       <div className="gold-card" style={{ padding: '14px', marginBottom: '14px' }}>
         <div style={{ fontWeight: 800, fontSize: '13px', color: 'var(--text-main)', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
           <DollarSign size={16} color="var(--text-gold)" />
-          <span>Pricing Formula Parameters</span>
+          <span>معايير وضوابط احتساب رسوم الخدمة المنزلية</span>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          {/* Base Fee */}
+          {/* الرسوم الأساسية */}
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-              <label style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-main)' }}>
-                Minimum Call-out Charge (Base Fee)
+              <label style={{ fontSize: '11px', fontWeight: 800, color: 'var(--text-main)' }}>
+                الرسوم الأساسية لانتقال الطاقم
               </label>
               <span style={{ fontSize: '11px', fontWeight: 800, color: 'var(--text-gold)' }}>
-                {config.baseFee} SAR
+                {config.baseFee} ر.س
               </span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -219,21 +224,21 @@ export const DeliveryFeeView: React.FC<DeliveryFeeViewProps> = ({
                 onChange={(e) => setConfig({ ...config, baseFee: Number(e.target.value) })}
                 style={{ flex: 1 }}
               />
-              <span style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 600 }}>SAR</span>
+              <span style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 700 }}>ر.س</span>
             </div>
             <div style={{ fontSize: '10px', color: 'var(--text-muted)', marginTop: '2px' }}>
-              Charged automatically as the base fee for dispatching staff and equipment.
+              تحسب تلقائياً كرسوم فتح خدمة لانتقال الكادر وتجهيز حقائب العمل.
             </div>
           </div>
 
-          {/* Cost per Km */}
+          {/* سعر الكيلومتر */}
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-              <label style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-main)' }}>
-                Cost per Kilometer
+              <label style={{ fontSize: '11px', fontWeight: 800, color: 'var(--text-main)' }}>
+                سعر الكيلومتر الواحد
               </label>
               <span style={{ fontSize: '11px', fontWeight: 800, color: 'var(--text-gold)' }}>
-                {config.pricePerKm} SAR / km
+                {config.pricePerKm} ر.س / كم
               </span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -245,21 +250,21 @@ export const DeliveryFeeView: React.FC<DeliveryFeeViewProps> = ({
                 onChange={(e) => setConfig({ ...config, pricePerKm: Number(e.target.value) })}
                 style={{ flex: 1 }}
               />
-              <span style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 600 }}>SAR/km</span>
+              <span style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 700 }}>ر.س/كم</span>
             </div>
             <div style={{ fontSize: '10px', color: 'var(--text-muted)', marginTop: '2px' }}>
-              Calculated via Google Maps driving distance from branch to client doorstep.
+              تحسب تلقائياً بناءً على مسافة القيادة من موقع الفرع حتى باب العميل.
             </div>
           </div>
 
-          {/* Free Delivery Threshold */}
+          {/* حد التوصيل المجاني */}
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-              <label style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <Gift size={13} color="#059669" /> Free Delivery Order Value
+              <label style={{ fontSize: '11px', fontWeight: 800, color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <Gift size={13} color="#059669" /> حد التوصيل المجاني (قيمة الطلب)
               </label>
               <span style={{ fontSize: '11px', fontWeight: 800, color: '#059669' }}>
-                {config.freeDeliveryThreshold} SAR
+                {config.freeDeliveryThreshold} ر.س
               </span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -271,18 +276,18 @@ export const DeliveryFeeView: React.FC<DeliveryFeeViewProps> = ({
                 onChange={(e) => setConfig({ ...config, freeDeliveryThreshold: Number(e.target.value) })}
                 style={{ flex: 1 }}
               />
-              <span style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 600 }}>SAR</span>
+              <span style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 700 }}>ر.س</span>
             </div>
             <div style={{ fontSize: '10px', color: 'var(--text-muted)', marginTop: '2px' }}>
-              Orders at or above this amount receive 100% free delivery.
+              الطلبات التي تبلغ هذا المبلغ أو أكثر تحصل على خدمة توصيل مجانية بنسبة 100%.
             </div>
           </div>
 
-          {/* Max Radius & Min Booking Amount */}
+          {/* أقصى مسافة والحد الأدنى للطلب */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
             <div>
-              <label style={{ fontSize: '10px', fontWeight: 700, color: 'var(--text-main)', display: 'block', marginBottom: '4px' }}>
-                Max Travel Radius
+              <label style={{ fontSize: '10px', fontWeight: 800, color: 'var(--text-main)', display: 'block', marginBottom: '4px' }}>
+                أقصى مسافة تغطية
               </label>
               <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                 <input
@@ -293,13 +298,13 @@ export const DeliveryFeeView: React.FC<DeliveryFeeViewProps> = ({
                   onChange={(e) => setConfig({ ...config, maxServiceRadiusKm: Number(e.target.value) })}
                   style={{ width: '100%' }}
                 />
-                <span style={{ fontSize: '10px', color: 'var(--text-muted)', fontWeight: 600 }}>km</span>
+                <span style={{ fontSize: '10px', color: 'var(--text-muted)', fontWeight: 700 }}>كم</span>
               </div>
             </div>
 
             <div>
-              <label style={{ fontSize: '10px', fontWeight: 700, color: 'var(--text-main)', display: 'block', marginBottom: '4px' }}>
-                Min Booking Value
+              <label style={{ fontSize: '10px', fontWeight: 800, color: 'var(--text-main)', display: 'block', marginBottom: '4px' }}>
+                الحد الأدنى للطلب
               </label>
               <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                 <input
@@ -310,32 +315,32 @@ export const DeliveryFeeView: React.FC<DeliveryFeeViewProps> = ({
                   onChange={(e) => setConfig({ ...config, minimumBookingAmount: Number(e.target.value) })}
                   style={{ width: '100%' }}
                 />
-                <span style={{ fontSize: '10px', color: 'var(--text-muted)', fontWeight: 600 }}>SAR</span>
+                <span style={{ fontSize: '10px', color: 'var(--text-muted)', fontWeight: 700 }}>ر.س</span>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Interactive Simulator / Live Fee Estimator */}
+      {/* حاسبة ومحاكي الرسوم المباشر */}
       <div className="gold-card highlight" style={{ padding: '14px', marginBottom: '16px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <Calculator size={16} color="var(--text-gold)" />
             <span style={{ fontWeight: 800, fontSize: '13px', color: 'var(--text-main)' }}>
-              Live Fee Estimator & Simulator
+              حاسبة ومحاكي الرسوم الفورية
             </span>
           </div>
-          <span style={{ fontSize: '10px', background: 'rgba(212, 175, 55, 0.2)', color: 'var(--text-gold)', padding: '2px 6px', borderRadius: '4px', fontWeight: 700 }}>
-            TEST CALCULATION
+          <span style={{ fontSize: '9.5px', background: 'rgba(212, 175, 55, 0.2)', color: 'var(--text-gold)', padding: '2px 6px', borderRadius: '4px', fontWeight: 800 }}>
+            تجربة احتساب
           </span>
         </div>
 
-        {/* Distance Slider */}
+        {/* منزلق المسافة */}
         <div style={{ marginBottom: '12px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', marginBottom: '4px' }}>
-            <span style={{ color: 'var(--text-muted)' }}>Simulated Distance:</span>
-            <span style={{ fontWeight: 800, color: 'var(--text-main)' }}>{testDistanceKm} km</span>
+            <span style={{ color: 'var(--text-muted)' }}>المسافة المقدرة:</span>
+            <span style={{ fontWeight: 800, color: 'var(--text-main)' }}>{testDistanceKm} كم</span>
           </div>
           <input
             type="range"
@@ -347,11 +352,11 @@ export const DeliveryFeeView: React.FC<DeliveryFeeViewProps> = ({
           />
         </div>
 
-        {/* Order Value Slider */}
+        {/* منزلق قيمة الطلب */}
         <div style={{ marginBottom: '14px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', marginBottom: '4px' }}>
-            <span style={{ color: 'var(--text-muted)' }}>Simulated Order Services Value:</span>
-            <span style={{ fontWeight: 800, color: 'var(--text-main)' }}>{testOrderValue} SAR</span>
+            <span style={{ color: 'var(--text-muted)' }}>قيمة خدمات الطلب:</span>
+            <span style={{ fontWeight: 800, color: 'var(--text-main)' }}>{testOrderValue} ر.س</span>
           </div>
           <input
             type="range"
@@ -364,7 +369,7 @@ export const DeliveryFeeView: React.FC<DeliveryFeeViewProps> = ({
           />
         </div>
 
-        {/* Calculation Result Breakdown Box */}
+        {/* صندوق تفاصيل النتيجة */}
         <div
           style={{
             background: '#ffffff',
@@ -375,30 +380,30 @@ export const DeliveryFeeView: React.FC<DeliveryFeeViewProps> = ({
         >
           {isOverRadius ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#dc2626' }}>
-              <AlertTriangle size={18} />
+              <AlertTriangle size={18} style={{ flexShrink: 0 }} />
               <div>
-                <div style={{ fontWeight: 700, fontSize: '12px' }}>Exceeds Service Radius</div>
-                <div style={{ fontSize: '10px', color: '#b91c1c' }}>
-                  {testDistanceKm} km exceeds maximum branch radius ({config.maxServiceRadiusKm} km). Home booking will be blocked for this location.
+                <div style={{ fontWeight: 800, fontSize: '12px' }}>تجاوز الحد الأقصى للمسافة</div>
+                <div style={{ fontSize: '10.5px', color: '#b91c1c' }}>
+                  المسافة ({testDistanceKm} كم) تتجاوز أقصى نطاق تغطية للفرع ({config.maxServiceRadiusKm} كم). سيتم حظر الحجز لهذا العنوان.
                 </div>
               </div>
             </div>
           ) : (
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', marginBottom: '4px', color: 'var(--text-muted)' }}>
-                <span>Base Charge:</span>
-                <span>{config.baseFee} SAR</span>
+                <span>الرسوم الأساسية:</span>
+                <span>{config.baseFee} ر.س</span>
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', marginBottom: '4px', color: 'var(--text-muted)' }}>
-                <span>Distance Rate ({testDistanceKm} km × {config.pricePerKm} SAR):</span>
-                <span>+{distanceCost} SAR</span>
+                <span>تكلفة المسافة ({testDistanceKm} كم × {config.pricePerKm} ر.س):</span>
+                <span>+{distanceCost} ر.س</span>
               </div>
 
               {isFreeDelivery && (
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', marginBottom: '4px', color: '#059669', fontWeight: 700 }}>
-                  <span>Free Delivery Discount (Order ≥ {config.freeDeliveryThreshold} SAR):</span>
-                  <span>- {Math.round(config.baseFee + distanceCost)} SAR</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', marginBottom: '4px', color: '#059669', fontWeight: 800 }}>
+                  <span>خصم التوصيل المجاني (قيمة الطلب ≥ {config.freeDeliveryThreshold} ر.س):</span>
+                  <span>- {Math.round(config.baseFee + distanceCost)} ر.س</span>
                 </div>
               )}
 
@@ -413,9 +418,9 @@ export const DeliveryFeeView: React.FC<DeliveryFeeViewProps> = ({
                   fontWeight: 800
                 }}
               >
-                <span style={{ fontSize: '12px', color: 'var(--text-main)' }}>Final Delivery Charge:</span>
+                <span style={{ fontSize: '12px', color: 'var(--text-main)' }}>رسوم التوصيل النهائية:</span>
                 <span style={{ fontSize: '14px', color: isFreeDelivery ? '#059669' : 'var(--text-gold)' }}>
-                  {isFreeDelivery ? 'FREE (0 SAR)' : `${calculatedFee} SAR`}
+                  {isFreeDelivery ? 'مجاناً (0 ر.س)' : `${calculatedFee} ر.س`}
                 </span>
               </div>
 
@@ -429,9 +434,9 @@ export const DeliveryFeeView: React.FC<DeliveryFeeViewProps> = ({
                   color: 'var(--text-muted)'
                 }}
               >
-                <span>Estimated Customer Total:</span>
+                <span>إجمالي الفاتورة المقدر على العميل:</span>
                 <span style={{ fontWeight: 800, color: 'var(--text-main)' }}>
-                  {totalCustomerCost} SAR
+                  {totalCustomerCost} ر.س
                 </span>
               </div>
             </div>
@@ -439,14 +444,14 @@ export const DeliveryFeeView: React.FC<DeliveryFeeViewProps> = ({
         </div>
       </div>
 
-      {/* Save Button */}
-      <div style={{ paddingBottom: '24px' }}>
+      {/* زر الحفظ */}
+      <div style={{ paddingBottom: '20px' }}>
         <button
           onClick={handleSave}
-          className="gold-btn"
+          className="gold-button"
           style={{
             width: '100%',
-            padding: '12px',
+            padding: '11px',
             fontSize: '13px',
             fontWeight: 800,
             display: 'flex',
@@ -455,7 +460,7 @@ export const DeliveryFeeView: React.FC<DeliveryFeeViewProps> = ({
             gap: '8px'
           }}
         >
-          <Check size={16} /> Save Delivery Settings
+          <Check size={16} /> حفظ إعدادات ورسوم التوصيل
         </button>
       </div>
     </div>

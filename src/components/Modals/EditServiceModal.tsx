@@ -96,10 +96,10 @@ export const EditServiceModal: React.FC<EditServiceModalProps> = ({
             </div>
             <div>
               <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '15px', color: 'var(--text-main)', margin: 0 }}>
-                Edit Service Details
+                تعديل بيانات الخدمة
               </h3>
               <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>
-                Configure branch pricing, duration & home visits
+                تعديل تسعير الفرع والمدة وإتاحة الزيارات المنزلية
               </span>
             </div>
           </div>
@@ -122,7 +122,7 @@ export const EditServiceModal: React.FC<EditServiceModalProps> = ({
           {/* Master Catalog Service Select (Dropdown) */}
           <div>
             <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-              Master Service Name
+              اسم الخدمة في الدليل الموحد
             </label>
             <select
               value={selectedMasterId}
@@ -151,7 +151,7 @@ export const EditServiceModal: React.FC<EditServiceModalProps> = ({
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
             <div>
               <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-                Branch Price (SAR) *
+                سعر الخدمة بالفرع (ر.س) *
               </label>
               <input
                 type="number"
@@ -166,13 +166,13 @@ export const EditServiceModal: React.FC<EditServiceModalProps> = ({
                     setHomeServicePrice(val + 70);
                   }
                 }}
-                style={{ width: '100%' }}
+                style={{ width: '100%', direction: 'ltr', textAlign: 'right' }}
               />
             </div>
 
             <div>
               <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-                Duration (Minutes) *
+                مدة الخدمة (بالدقائق) *
               </label>
               <input
                 type="number"
@@ -181,7 +181,7 @@ export const EditServiceModal: React.FC<EditServiceModalProps> = ({
                 required
                 value={durationMinutes}
                 onChange={(e) => setDurationMinutes(Number(e.target.value))}
-                style={{ width: '100%' }}
+                style={{ width: '100%', direction: 'ltr', textAlign: 'right' }}
               />
             </div>
           </div>
@@ -200,10 +200,10 @@ export const EditServiceModal: React.FC<EditServiceModalProps> = ({
           >
             <div>
               <div style={{ fontSize: '12px', fontWeight: 700, color: 'var(--text-main)' }}>
-                Active in Branch Booking
+                تفعيل الخدمة في جدول الحجوزات
               </div>
               <div style={{ fontSize: '10px', color: 'var(--text-muted)' }}>
-                Visible to customers and staff in booking flow
+                تظهر للعملاء وموظفي الاستقبال أثناء إنشاء الحجز
               </div>
             </div>
             <input
@@ -229,10 +229,10 @@ export const EditServiceModal: React.FC<EditServiceModalProps> = ({
                 <Home size={16} color={isHomeServiceAvailable ? 'var(--text-gold)' : 'var(--text-muted)'} />
                 <div>
                   <div style={{ fontSize: '12px', fontWeight: 700, color: 'var(--text-main)' }}>
-                    Home Service Visit Availability
+                    إتاحة الخدمة كزيارة منزلية
                   </div>
                   <div style={{ fontSize: '10px', color: 'var(--text-muted)' }}>
-                    Enable mobile beauty appointments at customer residence
+                    تمكين العملاء من حجز زيارة تجميل متنقلة لموقعهم
                   </div>
                 </div>
               </div>
@@ -248,7 +248,7 @@ export const EditServiceModal: React.FC<EditServiceModalProps> = ({
             {isHomeServiceAvailable && (
               <div style={{ marginTop: '10px', paddingTop: '8px', borderTop: '1px dashed var(--border-gold)' }}>
                 <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-                  Home Service Price (SAR)
+                  سعر الخدمة المنزلية (ر.س)
                 </label>
                 <input
                   type="number"
@@ -256,10 +256,10 @@ export const EditServiceModal: React.FC<EditServiceModalProps> = ({
                   step="5"
                   value={homeServicePrice}
                   onChange={(e) => setHomeServicePrice(Number(e.target.value))}
-                  style={{ width: '100%' }}
+                  style={{ width: '100%', direction: 'ltr', textAlign: 'right' }}
                 />
                 <span style={{ fontSize: '10px', color: 'var(--text-gold)', marginTop: '3px', display: 'block' }}>
-                  Home surcharge: +{homeServicePrice - price} SAR above salon chair price
+                  فارق الزيارة: +{homeServicePrice - price} ر.س لتغطية النقل والتجهيز
                 </span>
               </div>
             )}
@@ -271,7 +271,7 @@ export const EditServiceModal: React.FC<EditServiceModalProps> = ({
               <button
                 type="button"
                 onClick={() => {
-                  if (confirm(`Remove "${service.name}" from this branch catalog?`)) {
+                  if (confirm(`هل ترغب بحذف خدمة "${service.name}" من هذا الفرع؟`)) {
                     onDelete(service.id);
                     onClose();
                   }
@@ -279,7 +279,7 @@ export const EditServiceModal: React.FC<EditServiceModalProps> = ({
                 className="secondary-button"
                 style={{ color: '#dc2626', borderColor: '#fecaca', background: '#fef2f2' }}
               >
-                <Trash2 size={14} /> Remove
+                <Trash2 size={14} /> حذف
               </button>
             )}
 
@@ -289,7 +289,7 @@ export const EditServiceModal: React.FC<EditServiceModalProps> = ({
               className="secondary-button"
               style={{ flex: 1, justifyContent: 'center' }}
             >
-              Cancel
+              إلغاء
             </button>
 
             <button
@@ -297,7 +297,7 @@ export const EditServiceModal: React.FC<EditServiceModalProps> = ({
               className="gold-button"
               style={{ flex: 2 }}
             >
-              <Check size={16} /> Save Changes
+              <Check size={16} /> حفظ التعديلات
             </button>
           </div>
         </form>

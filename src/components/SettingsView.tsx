@@ -8,7 +8,7 @@ import {
   Users,
   BarChart3,
   UserCheck,
-  ChevronRight,
+  ChevronLeft,
   ToggleLeft,
   ToggleRight,
   Building2,
@@ -63,38 +63,38 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   }[] = [
     {
       role: 'BUSINESS_OWNER',
-      title: 'Business Owner',
+      title: 'مالك المنشأة',
       icon: <Crown size={18} color="var(--gold-primary)" />,
-      desc: 'Full business management, multi-branch access, financial reports & staff transfers',
-      permissionsSummary: 'Full Access • All Privileges'
+      desc: 'إدارة شاملة للمنشأة، صلاحيات كافة الفروع، التقارير المالية، ونقل الموظفين',
+      permissionsSummary: 'صلاحيات كاملة • وصول غير مقيد'
     },
     {
       role: 'BRANCH_MANAGER',
-      title: 'Branch Manager',
+      title: 'مدير الفرع',
       icon: <Building size={18} color="#2563eb" />,
-      desc: 'Assigned branch operations, daily staff shifts & branch performance analytics',
-      permissionsSummary: 'Branch Operations & Shifts'
+      desc: 'إدارة عمليات الفرع المسند، مناوبات الطاقم اليومية، وإحصائيات أداء الفرع',
+      permissionsSummary: 'عمليات الفرع والمناوبات'
     },
     {
       role: 'BRANCH_STAFF',
-      title: 'Branch Staff (Reception)',
+      title: 'موظف الاستقبال (الكاونتر)',
       icon: <Users size={18} color="#7c3aed" />,
-      desc: 'Front desk check-ins, guest arrivals & live queue. No financial data or pricing edits',
-      permissionsSummary: 'Check-ins & Queue Only'
+      desc: 'تسجيل وصول الضيوف، إدارة قائمة الانتظار الحية. محجوب عن البيانات المالية والتسعير',
+      permissionsSummary: 'حضور وانتظار فقط'
     },
     {
       role: 'PROFESSIONAL',
-      title: 'Professional Stylist',
+      title: 'أخصائية التجميل والتصفيف',
       icon: <Scissors size={18} color="#d97706" />,
-      desc: 'Personal station chair, assigned clients, treatment schedules & personal commission/tips',
-      permissionsSummary: 'Personal Chair & Assigned Clients'
+      desc: 'محطة الخدمة الخاصة، العميلات المسندات، جدول الجلسات، والعمولات والإكراميات',
+      permissionsSummary: 'الكرسي والعميلات المسندات'
     },
     {
       role: 'FREELANCER',
-      title: 'Independent Freelancer',
+      title: 'أخصائية مستقلة (خدمات خارجية)',
       icon: <Car size={18} color="#16a34a" />,
-      desc: 'Solo mobile provider: Home beauty appointments, GPS dispatch & direct payouts',
-      permissionsSummary: 'Solo Mobile Provider & GPS'
+      desc: 'مقدمة خدمة مستقلة: مواعيد تجميل منزلية، ملاحة GPS، وتسوية أرباح مباشرة',
+      permissionsSummary: 'خدمة منزلية مستقلة و GPS'
     }
   ];
 
@@ -102,7 +102,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
     if (tool === 'business-branches') {
       if (!canManageStaff && !canManageSub) {
         setPermissionAlert(
-          `Permission Restricted: Multi-branch network and manager configurations require Business Owner or Branch Manager role clearance.`
+          'تنبيه الصلاحية: إدارة شبكة الفروع وتعيين المدراء تتطلب صلاحيات مالك المنشأة أو مدير الفرع.'
         );
         return;
       }
@@ -110,7 +110,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
     } else if (tool === 'analytics') {
       if (!canViewAnalytics) {
         setPermissionAlert(
-          `Permission Denied: Financial revenue and analytics reports are restricted to Business Owners and Managers. Active role "${currentRole.replace('_', ' ')}" has no financial clearance.`
+          'تنبيه الصلاحية: التقارير المالية وحجم الإيرادات مقتصرة على مالك النشاط والمدراء فقط.'
         );
         return;
       }
@@ -118,7 +118,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
     } else if (tool === 'professionals') {
       if (!canManageStaff) {
         setPermissionAlert(
-          `Permission Denied: Team shift rosters and branch transfers are restricted to Business Owners and Branch Managers.`
+          'تنبيه الصلاحية: إدارة طاقم العمل ومناوبات الدوام مقتصرة على الإدارة والمدراء.'
         );
         return;
       }
@@ -133,15 +133,15 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   };
 
   return (
-    <div style={{ padding: '14px' }}>
-      {/* Active Session & Switch Role Section */}
+    <div style={{ padding: '13px' }}>
+      {/* قسم تبديل الدور الإداري */}
       <div style={{ marginBottom: '16px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-          <span style={{ fontSize: '11px', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-            Switch Role & Profile
+          <span style={{ fontSize: '11px', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+            تبديل الدور والملف التعريفي
           </span>
-          <span style={{ fontSize: '10px', color: 'var(--text-gold)', fontWeight: 700 }}>
-            Live Permission Matrix
+          <span style={{ fontSize: '10px', color: 'var(--text-gold)', fontWeight: 800 }}>
+            مصفوفة الصلاحيات الفعالة
           </span>
         </div>
 
@@ -174,11 +174,11 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                               borderRadius: '4px'
                             }}
                           >
-                            ACTIVE
+                            نشط
                           </span>
                         )}
                       </div>
-                      <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '2px', lineHeight: 1.3 }}>
+                      <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '2px', lineHeight: 1.35 }}>
                         {r.desc}
                       </div>
                       <div style={{ fontSize: '10px', color: 'var(--text-gold)', fontWeight: 700, marginTop: '4px' }}>
@@ -194,20 +194,20 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         </div>
       </div>
 
-      {/* Branch Location Section */}
+      {/* موقع الفرع النشط */}
       <div style={{ marginBottom: '16px' }}>
-        <div style={{ fontSize: '11px', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>
-          Assigned Salon Location
+        <div style={{ fontSize: '11px', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '8px' }}>
+          موقع الصالون / الفرع المسند
         </div>
 
         {currentRole === 'FREELANCER' ? (
           <div className="gold-card" style={{ padding: '12px', background: '#f0fdf4', marginBottom: 0 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#16a34a' }}>
               <Car size={16} />
-              <span style={{ fontWeight: 700, fontSize: '13px' }}>Independent Solo Provider</span>
+              <span style={{ fontWeight: 800, fontSize: '13px' }}>أخصائية تجميل منزلية مستقلة</span>
             </div>
             <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px' }}>
-              Mobile beauty & on-demand home visits in Riyadh. No physical branch assignment required.
+              خدمات تجميل وعناية منزلية متنقلة في مدينة الرياض. لا يتطلب التواجد في فرع محدد.
             </div>
           </div>
         ) : (
@@ -226,7 +226,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <Building2 size={16} color="var(--text-gold)" />
               <div>
-                <div style={{ fontWeight: 700, fontSize: '13px', color: 'var(--text-main)' }}>
+                <div style={{ fontWeight: 800, fontSize: '13px', color: 'var(--text-main)' }}>
                   {selectedBranch.name}
                 </div>
                 <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
@@ -235,19 +235,19 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               </div>
             </div>
             {canSwitchBranches ? (
-              <span style={{ fontSize: '11px', color: 'var(--text-gold)', fontWeight: 700 }}>
-                Switch ▾
+              <span style={{ fontSize: '11px', color: 'var(--text-gold)', fontWeight: 800 }}>
+                تبديل ▾
               </span>
             ) : (
               <span style={{ fontSize: '10px', color: 'var(--text-muted)', background: '#f1f5f9', padding: '2px 6px', borderRadius: '4px' }}>
-                Assigned
+                مسند
               </span>
             )}
           </div>
         )}
       </div>
 
-      {/* Permission Restriction Alert Box (if triggered) */}
+      {/* صندوق تنبيه حظر الصلاحيات */}
       {permissionAlert && (
         <div
           style={{
@@ -263,8 +263,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         >
           <AlertCircle size={16} color="#dc2626" style={{ flexShrink: 0, marginTop: '2px' }} />
           <div style={{ flex: 1 }}>
-            <div style={{ fontSize: '12px', color: '#dc2626', fontWeight: 700 }}>Access Restricted</div>
-            <div style={{ fontSize: '11px', color: '#991b1b', marginTop: '2px', lineHeight: 1.3 }}>
+            <div style={{ fontSize: '12px', color: '#dc2626', fontWeight: 800 }}>تم تقييد الوصول</div>
+            <div style={{ fontSize: '11px', color: '#991b1b', marginTop: '2px', lineHeight: 1.35 }}>
               {permissionAlert}
             </div>
           </div>
@@ -277,14 +277,14 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         </div>
       )}
 
-      {/* Provider Operational Tools Grid */}
+      {/* أدوات الإدارة والتشغيل */}
       <div style={{ marginBottom: '16px' }}>
-        <div style={{ fontSize: '11px', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>
-          Provider Management Tools
+        <div style={{ fontSize: '11px', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '8px' }}>
+          أدوات إدارة المنشأة
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          {/* Business & Branches Management */}
+          {/* الملف التجاري وفروع المنشأة */}
           <div
             role="button"
             tabIndex={0}
@@ -304,7 +304,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               </div>
               <div>
                 <div style={{ fontWeight: 800, fontSize: '13px', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span>Business Profile & Branches</span>
+                  <span>الملف التجاري وفروع المنشأة</span>
                   <span
                     style={{
                       background: 'var(--gold-gradient)',
@@ -315,18 +315,18 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                       borderRadius: '4px'
                     }}
                   >
-                    ENTERPRISE
+                    شامل
                   </span>
                 </div>
                 <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
-                  {branches.length} Branches • Designated Managers • Enterprise CR Profile
+                  {branches.length} فروع • تعيين المدراء • السجل التجاري والضريبة
                 </div>
               </div>
             </div>
-            <ChevronRight size={16} color="var(--text-gold)" />
+            <ChevronLeft size={16} color="var(--text-gold)" />
           </div>
 
-          {/* CRM */}
+          {/* إدارة العملاء CRM */}
           <div
             role="button"
             tabIndex={0}
@@ -344,18 +344,18 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 <UserCheck size={18} />
               </div>
               <div>
-                <div style={{ fontWeight: 700, fontSize: '13px', color: 'var(--text-main)' }}>
-                  Customer CRM & Beauty Profiles
+                <div style={{ fontWeight: 800, fontSize: '13px', color: 'var(--text-main)' }}>
+                  إدارة علاقات العملاء CRM
                 </div>
                 <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
-                  Allergies, preferences & spending history
+                  سجل الحساسيات، التفضيلات التجميلية، والإنفاق
                 </div>
               </div>
             </div>
-            <ChevronRight size={16} color="var(--text-muted)" />
+            <ChevronLeft size={16} color="var(--text-muted)" />
           </div>
 
-          {/* Analytics */}
+          {/* التقارير والتحليلات */}
           <div
             role="button"
             tabIndex={0}
@@ -374,29 +374,29 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 <BarChart3 size={18} />
               </div>
               <div>
-                <div style={{ fontWeight: 700, fontSize: '13px', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span>Business & Branch Analytics</span>
+                <div style={{ fontWeight: 800, fontSize: '13px', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span>التقارير والأداء المالي</span>
                   {!canViewAnalytics && (
                     <span className="permission-locked-badge">
-                      <Lock size={10} /> Locked
+                      <Lock size={10} /> مقفل
                     </span>
                   )}
                 </div>
                 <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
                   {canViewAnalytics
-                    ? 'Revenue trends, top services & completion rates'
-                    : 'Requires Business Owner / Manager permissions'}
+                    ? 'إحصائيات الإيرادات، الأكثر طلباً، ومعدلات الإنجاز'
+                    : 'يتطلب صلاحيات مالك المنشأة أو مدير الفرع'}
                 </div>
               </div>
             </div>
             {canViewAnalytics ? (
-              <ChevronRight size={16} color="var(--text-muted)" />
+              <ChevronLeft size={16} color="var(--text-muted)" />
             ) : (
               <Lock size={14} color="#dc2626" />
             )}
           </div>
 
-          {/* Staff Roster */}
+          {/* طاقم العمل والمناوبات */}
           <div
             role="button"
             tabIndex={0}
@@ -415,29 +415,29 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 <Users size={18} />
               </div>
               <div>
-                <div style={{ fontWeight: 700, fontSize: '13px', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span>Staff & Team Shift Rosters</span>
+                <div style={{ fontWeight: 800, fontSize: '13px', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span>طاقم العمل وجداول المناوبات</span>
                   {!canManageStaff && (
                     <span className="permission-locked-badge">
-                      <Lock size={10} /> Locked
+                      <Lock size={10} /> مقفل
                     </span>
                   )}
                 </div>
                 <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
                   {canManageStaff
-                    ? 'Morning/evening shifts, working days & home eligibility'
-                    : 'Requires Business Owner / Manager permissions'}
+                    ? 'المناوبات الصباحية والمسائية، أيام العمل، والأهلية الخارجية'
+                    : 'يتطلب صلاحيات مالك المنشأة أو مدير الفرع'}
                 </div>
               </div>
             </div>
             {canManageStaff ? (
-              <ChevronRight size={16} color="var(--text-muted)" />
+              <ChevronLeft size={16} color="var(--text-muted)" />
             ) : (
               <Lock size={14} color="#dc2626" />
             )}
           </div>
 
-          {/* Operating Hours & Days */}
+          {/* أوقات العمل وساعات الصالون والمنزل */}
           <div
             role="button"
             tabIndex={0}
@@ -455,18 +455,18 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 <Clock size={18} />
               </div>
               <div>
-                <div style={{ fontWeight: 700, fontSize: '13px', color: 'var(--text-main)' }}>
-                  Salon & Home Operating Hours
+                <div style={{ fontWeight: 800, fontSize: '13px', color: 'var(--text-main)' }}>
+                  أوقات العمل (الصالون والخدمة المنزلية)
                 </div>
                 <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
-                  Weekly opening schedule & home service dispatch windows
+                  جدول الافتتاح الأسبوعي وفترات إتاحة الخدمات الخارجية
                 </div>
               </div>
             </div>
-            <ChevronRight size={16} color="var(--text-muted)" />
+            <ChevronLeft size={16} color="var(--text-muted)" />
           </div>
 
-          {/* Delivery Fees & Travel Radius */}
+          {/* رسوم التوصيل ونطاق التغطية */}
           <div
             role="button"
             tabIndex={0}
@@ -484,26 +484,26 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 <Truck size={18} />
               </div>
               <div>
-                <div style={{ fontWeight: 700, fontSize: '13px', color: 'var(--text-main)' }}>
-                  Home Delivery Fees & Radius
+                <div style={{ fontWeight: 800, fontSize: '13px', color: 'var(--text-main)' }}>
+                  رسوم التوصيل المنزلي والتغطية
                 </div>
                 <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
-                  Minimum call-out charge, per-km rate & free delivery rule
+                  الرسوم الأساسية، تسعير الكيلومتر، وسياسة التوصيل المجاني
                 </div>
               </div>
             </div>
-            <ChevronRight size={16} color="var(--text-muted)" />
+            <ChevronLeft size={16} color="var(--text-muted)" />
           </div>
         </div>
       </div>
 
-      {/* Subscription Status Card */}
+      {/* بطاقة الاشتراك في باقة الأعمال */}
       <div className="gold-card highlight" style={{ marginBottom: '14px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <Crown size={18} color="var(--text-gold)" />
             <span style={{ fontWeight: 800, fontSize: '14px', color: 'var(--text-gold)' }}>
-              {subscription.name}
+              باقة الأعمال الذهبية
             </span>
           </div>
           <span
@@ -516,41 +516,41 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               borderRadius: '10px'
             }}
           >
-            ACTIVE
+            نشطة
           </span>
         </div>
 
         <div style={{ marginTop: '10px', fontSize: '11px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-main)' }}>
-            <span>Branches Usage:</span>
-            <span style={{ fontWeight: 700, color: 'var(--text-gold)' }}>
-              {subscription.currentBranchCount} / {subscription.branchLimit} Branches
+            <span>استهلاك الفروع:</span>
+            <span style={{ fontWeight: 800, color: 'var(--text-gold)' }}>
+              {subscription.currentBranchCount} من {subscription.branchLimit} فروع
             </span>
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-main)' }}>
-            <span>Professionals Limit:</span>
-            <span style={{ fontWeight: 700, color: 'var(--text-gold)' }}>
-              {subscription.currentProfessionalCount} / {subscription.professionalLimit} Staff
+            <span>سعة طاقم العمل:</span>
+            <span style={{ fontWeight: 800, color: 'var(--text-gold)' }}>
+              {subscription.currentProfessionalCount} من {subscription.professionalLimit} موظفين
             </span>
           </div>
 
           <div style={{ fontSize: '10px', color: 'var(--text-muted)', marginTop: '4px' }}>
-            Renews on {subscription.expiryDate} {!canManageSub && '• Managed by Business Owner'}
+            تتجدد بتاريخ {subscription.expiryDate} {!canManageSub && '• خاضعة لإدارة مالك المنشأة'}
           </div>
         </div>
       </div>
 
-      {/* Operational Toggles */}
+      {/* خيارات وضوابط التشغيل الفوري */}
       <div className="gold-card" style={{ marginBottom: '14px' }}>
-        <div style={{ fontWeight: 700, fontSize: '13px', color: 'var(--text-main)', marginBottom: '10px' }}>
-          Operational Rules & Control
+        <div style={{ fontWeight: 800, fontSize: '13px', color: 'var(--text-main)', marginBottom: '10px' }}>
+          قواعد وضوابط التشغيل الفوري
         </div>
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', borderBottom: '1px solid var(--border-dark)' }}>
           <div>
-            <div style={{ fontSize: '12px', color: 'var(--text-main)', fontWeight: 600 }}>Auto-Confirm Bookings</div>
-            <div style={{ fontSize: '10px', color: 'var(--text-muted)' }}>Skip manual confirmation for standard services</div>
+            <div style={{ fontSize: '12px', color: 'var(--text-main)', fontWeight: 700 }}>التأكيد التلقائي للحجوزات</div>
+            <div style={{ fontSize: '10.5px', color: 'var(--text-muted)' }}>قبول فوري ومباشر دون انتظار التأكيد اليدوي</div>
           </div>
           <button
             onClick={() => canManageSub && setAutoConfirm(!autoConfirm)}
@@ -563,8 +563,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0' }}>
           <div>
-            <div style={{ fontSize: '12px', color: '#dc2626', fontWeight: 600 }}>Emergency Branch Closure</div>
-            <div style={{ fontSize: '10px', color: 'var(--text-muted)' }}>Temporarily pause new customer bookings</div>
+            <div style={{ fontSize: '12px', color: '#dc2626', fontWeight: 700 }}>الإغلاق الطارئ المؤقت للفرع</div>
+            <div style={{ fontSize: '10.5px', color: 'var(--text-muted)' }}>إيقاف استقبال طلبات الحجز الجديدة مؤقتاً</div>
           </div>
           <button
             onClick={() => canManageSub && setEmergencyClose(!emergencyClose)}
@@ -576,20 +576,21 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         </div>
       </div>
 
-      {/* Branch Switcher Modal Sheet */}
+      {/* نافذة تبديل الفرع */}
       {isBranchModalOpen && (
         <div className="modal-overlay" onClick={() => setIsBranchModalOpen(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-drag-handle" />
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <Building2 size={18} color="var(--text-gold)" />
-                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', color: 'var(--text-main)', margin: 0 }}>
-                  Select Operating Branch
+                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', color: 'var(--text-main)', margin: 0, fontWeight: 800 }}>
+                  اختيار فرع العمل النشط
                 </h3>
               </div>
               <button
                 onClick={() => setIsBranchModalOpen(false)}
-                style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontWeight: 700 }}
+                style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontWeight: 800 }}
               >
                 ✕
               </button>
@@ -617,7 +618,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                     }}
                   >
                     <div>
-                      <div style={{ fontWeight: 700, fontSize: '13px', color: 'var(--text-main)' }}>{b.name}</div>
+                      <div style={{ fontWeight: 800, fontSize: '13px', color: 'var(--text-main)' }}>{b.name}</div>
                       <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{b.address}</div>
                     </div>
                     {isSelected && <Check size={16} color="var(--gold-dark)" />}

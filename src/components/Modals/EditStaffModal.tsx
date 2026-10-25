@@ -91,10 +91,10 @@ export const EditStaffModal: React.FC<EditStaffModalProps> = ({
             </div>
             <div>
               <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '15px', color: 'var(--text-main)', margin: 0 }}>
-                Edit Staff Profile
+                تعديل ملف الموظف
               </h3>
               <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>
-                Update title, branch assignment & service eligibility
+                تحديث المسمى الوظيفي، الفرع المخصص، وأهلية الخدمات المنزلية
               </span>
             </div>
           </div>
@@ -117,7 +117,7 @@ export const EditStaffModal: React.FC<EditStaffModalProps> = ({
           {/* Avatar Selection */}
           <div>
             <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '6px' }}>
-              Profile Photo
+              الصورة الشخصية
             </label>
             <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '4px' }}>
               {PRESET_AVATARS.map((av) => {
@@ -148,7 +148,7 @@ export const EditStaffModal: React.FC<EditStaffModalProps> = ({
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
             <div>
               <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-                Full Name *
+                الاسم الكامل *
               </label>
               <input
                 type="text"
@@ -161,7 +161,7 @@ export const EditStaffModal: React.FC<EditStaffModalProps> = ({
 
             <div>
               <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-                Job Title / Specialty *
+                المسمى الوظيفي والتخصص *
               </label>
               <input
                 type="text"
@@ -176,7 +176,7 @@ export const EditStaffModal: React.FC<EditStaffModalProps> = ({
           {/* Assigned Branch */}
           <div>
             <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-              Assigned Branch
+              الفرع المخصص
             </label>
             <select
               value={branchId}
@@ -217,10 +217,10 @@ export const EditStaffModal: React.FC<EditStaffModalProps> = ({
               <Home size={16} color={isHomeServiceEligible ? 'var(--text-gold)' : 'var(--text-muted)'} />
               <div>
                 <div style={{ fontSize: '12px', fontWeight: 700, color: 'var(--text-main)' }}>
-                  Home Service Dispatch Eligible
+                  إتاحة تقديم الخدمات المنزلية
                 </div>
                 <div style={{ fontSize: '10px', color: 'var(--text-muted)' }}>
-                  Eligible for mobile visits to client homes
+                  مؤهل للخروج في مواعيد التجميل المنزلية للعملاء
                 </div>
               </div>
             </div>
@@ -238,7 +238,7 @@ export const EditStaffModal: React.FC<EditStaffModalProps> = ({
               <button
                 type="button"
                 onClick={() => {
-                  if (confirm(`Remove "${professional.name}" from your team?`)) {
+                  if (confirm(`هل أنت متأكد من حذف الموظف "${professional.name}" من فريق العمل؟`)) {
                     onDelete(professional.id);
                     onClose();
                   }
@@ -246,7 +246,7 @@ export const EditStaffModal: React.FC<EditStaffModalProps> = ({
                 className="secondary-button"
                 style={{ color: '#dc2626', borderColor: '#fecaca', background: '#fef2f2' }}
               >
-                <Trash2 size={14} /> Remove
+                <Trash2 size={14} /> حذف
               </button>
             )}
 
@@ -256,7 +256,7 @@ export const EditStaffModal: React.FC<EditStaffModalProps> = ({
               className="secondary-button"
               style={{ flex: 1, justifyContent: 'center' }}
             >
-              Cancel
+              إلغاء
             </button>
 
             <button
@@ -264,7 +264,7 @@ export const EditStaffModal: React.FC<EditStaffModalProps> = ({
               className="gold-button"
               style={{ flex: 2 }}
             >
-              <Check size={16} /> Save Changes
+              <Check size={16} /> حفظ التعديلات
             </button>
           </div>
         </form>

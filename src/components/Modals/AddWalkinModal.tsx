@@ -59,24 +59,28 @@ export const AddWalkinModal: React.FC<AddWalkinModalProps> = ({
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-drag-handle" />
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-          <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--text-gold)', fontSize: '16px' }}>
-            + Add Walk-In Customer
+          <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--text-gold)', fontSize: '16px', fontWeight: 800 }}>
+            + إضافة عميل انتظار فوري
           </h3>
-          <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'var(--text-main)', fontSize: '18px', cursor: 'pointer' }}>
+          <button
+            onClick={onClose}
+            style={{ background: 'none', border: 'none', color: 'var(--text-main)', fontSize: '18px', cursor: 'pointer', fontWeight: 800 }}
+          >
             <X size={18} />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           <div>
-            <label style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'block', marginBottom: '4px', fontWeight: 600 }}>
-              Customer Full Name *
+            <label style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'block', marginBottom: '4px', fontWeight: 700 }}>
+              اسم العميل / العميلة الكامل *
             </label>
             <input
               type="text"
               required
-              placeholder="e.g. Muna Al-Sulaimi"
+              placeholder="مثال: منى السليمي"
               value={customerName}
               onChange={(e) => setCustomerName(e.target.value)}
               style={{ width: '100%' }}
@@ -84,43 +88,43 @@ export const AddWalkinModal: React.FC<AddWalkinModalProps> = ({
           </div>
 
           <div>
-            <label style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'block', marginBottom: '4px', fontWeight: 600 }}>
-              Phone Number
+            <label style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'block', marginBottom: '4px', fontWeight: 700 }}>
+              رقم الجوال
             </label>
             <input
               type="tel"
               placeholder="+966 5X XXX XXXX"
               value={customerPhone}
               onChange={(e) => setCustomerPhone(e.target.value)}
-              style={{ width: '100%' }}
+              style={{ width: '100%', direction: 'ltr', textAlign: 'right' }}
             />
           </div>
 
           <div>
-            <label style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'block', marginBottom: '4px', fontWeight: 600 }}>
-              Service Requested
+            <label style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'block', marginBottom: '4px', fontWeight: 700 }}>
+              الخدمة المطلوبة
             </label>
             <select
               value={selectedServiceId}
               onChange={(e) => setSelectedServiceId(e.target.value)}
-              style={{ width: '100%' }}
+              style={{ width: '100%', fontFamily: 'var(--font-body)' }}
             >
               {services.map((s) => (
                 <option key={s.id} value={s.id}>
-                  {s.name} ({s.durationMinutes} min)
+                  {s.name} ({s.durationMinutes} دقيقة)
                 </option>
               ))}
             </select>
           </div>
 
           <div>
-            <label style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'block', marginBottom: '4px', fontWeight: 600 }}>
-              Preferred Professional
+            <label style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'block', marginBottom: '4px', fontWeight: 700 }}>
+              الأخصائية المفضلة
             </label>
             <select
               value={selectedProfId}
               onChange={(e) => setSelectedProfId(e.target.value)}
-              style={{ width: '100%' }}
+              style={{ width: '100%', fontFamily: 'var(--font-body)' }}
             >
               {professionals.map((p) => (
                 <option key={p.id} value={p.id}>
@@ -131,15 +135,15 @@ export const AddWalkinModal: React.FC<AddWalkinModalProps> = ({
           </div>
 
           <div style={{ background: '#f8fafc', border: '1px solid var(--border-dark)', padding: '10px', borderRadius: '8px', fontSize: '12px' }}>
-            <div style={{ color: 'var(--text-muted)', marginBottom: '4px', fontWeight: 600 }}>Queue Preview:</div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 700 }}>
-              <span>Assigned Position: <span style={{ color: 'var(--text-gold)' }}>#{currentQueueLength + 1}</span></span>
-              <span>Estimated Wait: <span style={{ color: '#2563eb' }}>~{(currentQueueLength) * 20 + selectedService.durationMinutes} mins</span></span>
+            <div style={{ color: 'var(--text-muted)', marginBottom: '4px', fontWeight: 700 }}>معاينة الدور:</div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 800 }}>
+              <span>الترتيب المسند: <span style={{ color: 'var(--text-gold)' }}>#{currentQueueLength + 1}</span></span>
+              <span>الانتظار المتوقع: <span style={{ color: '#2563eb' }}>~{(currentQueueLength) * 20 + selectedService.durationMinutes} دقيقة</span></span>
             </div>
           </div>
 
           <button type="submit" className="gold-button" style={{ marginTop: '6px' }}>
-            <UserPlus size={16} /> Enter Walk-In Queue
+            <UserPlus size={16} /> الدخول في قائمة الانتظار
           </button>
         </form>
       </div>

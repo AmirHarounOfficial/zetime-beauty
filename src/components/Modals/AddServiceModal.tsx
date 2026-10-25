@@ -79,10 +79,10 @@ export const AddServiceModal: React.FC<AddServiceModalProps> = ({
             </div>
             <div>
               <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '15px', color: 'var(--text-main)', margin: 0 }}>
-                Add New Service
+                إضافة خدمة جديدة
               </h3>
               <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>
-                Select verified service from ZeTime Master Catalog
+                اختيار خدمة معتمدة من دليل خدمات زيتيم الموحد
               </span>
             </div>
           </div>
@@ -105,7 +105,7 @@ export const AddServiceModal: React.FC<AddServiceModalProps> = ({
           {/* Master Service Dropdown Selection (Strict Requirement: Provider does not type name, selects from dropdown) */}
           <div>
             <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '5px' }}>
-              Service Name <span style={{ color: 'var(--text-gold)' }}>* (Select from Master Catalog)</span>
+              اسم الخدمة <span style={{ color: 'var(--text-gold)' }}>* (اختر من الدليل الموحد)</span>
             </label>
             <select
               value={selectedMasterId}
@@ -126,13 +126,13 @@ export const AddServiceModal: React.FC<AddServiceModalProps> = ({
                 const alreadyAdded = existingServices.some((s) => s.name === master.name);
                 return (
                   <option key={master.id} value={master.id}>
-                    [{master.category}] {master.name} {alreadyAdded ? '(Already in catalog)' : ''}
+                    [{master.category}] {master.name} {alreadyAdded ? '(مضافة مسبقاً)' : ''}
                   </option>
                 );
               })}
             </select>
             <span style={{ fontSize: '10px', color: 'var(--text-muted)', marginTop: '3px', display: 'block' }}>
-              ℹ️ Standardized beauty treatment name recognized across the ZeTime platform.
+              ℹ️ أسماء وتصنيفات الخدمات موحدة ومعتمدة رسمياً على منصة زيتيم لضمان جودة البحث.
             </span>
           </div>
 
@@ -161,10 +161,10 @@ export const AddServiceModal: React.FC<AddServiceModalProps> = ({
                     borderRadius: '4px'
                   }}
                 >
-                  Category: {currentMaster.category}
+                  التصنيف: {currentMaster.category}
                 </span>
                 <span style={{ fontSize: '10px', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '3px' }}>
-                  <Sparkles size={11} color="var(--gold-primary)" /> Target: {currentMaster.genderAudience}
+                  <Sparkles size={11} color="var(--gold-primary)" /> الفئة: {currentMaster.genderAudience === 'Women' ? 'سيدات' : currentMaster.genderAudience === 'Men' ? 'رجال' : 'الجميع'}
                 </span>
               </div>
               <p style={{ fontSize: '11px', color: 'var(--text-main)', margin: '4px 0 0', lineHeight: 1.3 }}>
@@ -177,7 +177,7 @@ export const AddServiceModal: React.FC<AddServiceModalProps> = ({
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
             <div>
               <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-                Branch Price (SAR) *
+                سعر الخدمة بالفرع (ر.س) *
               </label>
               <input
                 type="number"
@@ -192,14 +192,14 @@ export const AddServiceModal: React.FC<AddServiceModalProps> = ({
                     setHomeServicePrice(val + 70);
                   }
                 }}
-                style={{ width: '100%' }}
-                placeholder="e.g. 250"
+                style={{ width: '100%', direction: 'ltr', textAlign: 'right' }}
+                placeholder="مثال: 250"
               />
             </div>
 
             <div>
               <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-                Duration (Minutes) *
+                مدة الخدمة (بالدقائق) *
               </label>
               <input
                 type="number"
@@ -208,8 +208,8 @@ export const AddServiceModal: React.FC<AddServiceModalProps> = ({
                 required
                 value={durationMinutes}
                 onChange={(e) => setDurationMinutes(Number(e.target.value))}
-                style={{ width: '100%' }}
-                placeholder="e.g. 45"
+                style={{ width: '100%', direction: 'ltr', textAlign: 'right' }}
+                placeholder="مثال: 45"
               />
             </div>
           </div>
@@ -229,10 +229,10 @@ export const AddServiceModal: React.FC<AddServiceModalProps> = ({
                 <Home size={16} color={isHomeServiceAvailable ? 'var(--text-gold)' : 'var(--text-muted)'} />
                 <div>
                   <div style={{ fontSize: '12px', fontWeight: 700, color: 'var(--text-main)' }}>
-                    Enable Home Service Visit
+                    إتاحة الخدمة المنزلية
                   </div>
                   <div style={{ fontSize: '10px', color: 'var(--text-muted)' }}>
-                    Allow customers to book this service for home dispatch
+                    تمكين العملاء من حجز هذه الخدمة كزيارة منزلية
                   </div>
                 </div>
               </div>
@@ -248,7 +248,7 @@ export const AddServiceModal: React.FC<AddServiceModalProps> = ({
             {isHomeServiceAvailable && (
               <div style={{ marginTop: '10px', paddingTop: '8px', borderTop: '1px dashed var(--border-gold)' }}>
                 <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px' }}>
-                  Home Service Price (SAR)
+                  سعر الخدمة المنزلية (ر.س)
                 </label>
                 <input
                   type="number"
@@ -256,11 +256,11 @@ export const AddServiceModal: React.FC<AddServiceModalProps> = ({
                   step="5"
                   value={homeServicePrice}
                   onChange={(e) => setHomeServicePrice(Number(e.target.value))}
-                  style={{ width: '100%' }}
-                  placeholder="e.g. 320"
+                  style={{ width: '100%', direction: 'ltr', textAlign: 'right' }}
+                  placeholder="مثال: 320"
                 />
                 <span style={{ fontSize: '10px', color: 'var(--text-gold)', marginTop: '3px', display: 'block' }}>
-                  Premium delta: +{homeServicePrice - price} SAR for home equipment & visit setup
+                  فارق الزيارة: +{homeServicePrice - price} ر.س لتغطية تكاليف التجهيز المتنقل
                 </span>
               </div>
             )}
@@ -274,14 +274,14 @@ export const AddServiceModal: React.FC<AddServiceModalProps> = ({
               className="secondary-button"
               style={{ flex: 1, justifyContent: 'center' }}
             >
-              Cancel
+              إلغاء
             </button>
             <button
               type="submit"
               className="gold-button"
               style={{ flex: 2 }}
             >
-              <Check size={16} /> Add to Branch Catalog
+              <Check size={16} /> إضافة إلى خدمات الفرع
             </button>
           </div>
         </form>

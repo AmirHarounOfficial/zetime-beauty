@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Branch, DayOfWeek, DaySchedule, HomeServiceDaySchedule } from '../types/zetime';
 import {
-  ArrowLeft,
+  ArrowRight,
   Clock,
   Home,
   Building2,
@@ -31,6 +31,16 @@ const DAYS_OF_WEEK: DayOfWeek[] = [
   'Saturday'
 ];
 
+const ARABIC_DAYS: Record<DayOfWeek, string> = {
+  Sunday: 'الأحد',
+  Monday: 'الإثنين',
+  Tuesday: 'الثلاثاء',
+  Wednesday: 'الأربعاء',
+  Thursday: 'الخميس',
+  Friday: 'الجمعة',
+  Saturday: 'السبت'
+};
+
 export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
   selectedBranch,
   onUpdateBranchSchedule,
@@ -39,7 +49,7 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
   const [activeTab, setActiveTab] = useState<'salon' | 'home'>('salon');
   const [savedNotification, setSavedNotification] = useState(false);
 
-  // Initialize or fallback to standard schedules
+  // التهيئة أو استخدام الجداول الافتراضية
   const [salonSchedule, setSalonSchedule] = useState<DaySchedule[]>(() => {
     if (selectedBranch.operatingSchedule && selectedBranch.operatingSchedule.length > 0) {
       return selectedBranch.operatingSchedule;
@@ -64,7 +74,7 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
     }));
   });
 
-  // Salon schedule toggles & updates
+  // دوام الصالون
   const handleToggleSalonDay = (day: DayOfWeek) => {
     setSalonSchedule((prev) =>
       prev.map((item) => (item.day === day ? { ...item, isOpen: !item.isOpen } : item))
@@ -77,7 +87,7 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
     );
   };
 
-  // Home schedule toggles & updates
+  // دوام الخدمة المنزلية
   const handleToggleHomeDay = (day: DayOfWeek) => {
     setHomeSchedule((prev) =>
       prev.map((item) => (item.day === day ? { ...item, isAvailable: !item.isAvailable } : item))
@@ -90,7 +100,7 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
     );
   };
 
-  // Presets & Batch Actions
+  // اختصارات التوقيت
   const handleApplyWeekdayPreset = () => {
     setSalonSchedule((prev) =>
       prev.map((item) =>
@@ -120,13 +130,12 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
     }, 2800);
   };
 
-  // Calculate statistics
   const openSalonDays = salonSchedule.filter((d) => d.isOpen).length;
   const activeHomeDays = homeSchedule.filter((d) => d.isAvailable).length;
 
   return (
-    <div style={{ padding: '14px' }}>
-      {/* Back button */}
+    <div style={{ padding: '13px' }}>
+      {/* زر الرجوع */}
       <button
         onClick={onBackToSettings}
         style={{
@@ -134,31 +143,32 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
           border: 'none',
           color: 'var(--text-gold)',
           fontSize: '12px',
-          fontWeight: 700,
+          fontWeight: 800,
           cursor: 'pointer',
           display: 'inline-flex',
           alignItems: 'center',
           gap: '4px',
-          marginBottom: '10px'
+          marginBottom: '10px',
+          fontFamily: 'var(--font-body)'
         }}
       >
-        <ArrowLeft size={14} /> Back to Settings Hub
+        <ArrowRight size={14} /> الرجوع لمركز الإعدادات
       </button>
 
-      {/* Header */}
+      {/* الترويسة */}
       <div style={{ marginBottom: '14px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Clock size={20} color="var(--gold-dark)" />
-          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '17px', color: 'var(--text-main)', margin: 0 }}>
-            Operating Hours & Days
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', color: 'var(--text-main)', margin: 0 }}>
+            أوقات العمل وجداول الدوام
           </h2>
         </div>
         <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px' }}>
-          Configuring operating schedule for <strong>{selectedBranch.name}</strong>
+          إعداد جدول أوقات العمل لـ <strong>{selectedBranch.name}</strong>
         </div>
       </div>
 
-      {/* Save Success Banner */}
+      {/* إشعار نجاح الحفظ */}
       {savedNotification && (
         <div
           style={{
@@ -168,7 +178,7 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
             borderRadius: '10px',
             padding: '10px 14px',
             fontSize: '12px',
-            fontWeight: 700,
+            fontWeight: 800,
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
@@ -177,11 +187,11 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
           }}
         >
           <Check size={16} color="#059669" />
-          <span>Operating hours & home service schedule successfully updated!</span>
+          <span>تم حفظ وتحديث أوقات العمل وجدول الخدمة المنزلية بنجاح!</span>
         </div>
       )}
 
-      {/* Tab Switcher: In-Salon vs Home Service */}
+      {/* التبديل بين دوام الصالون والخدمة المنزلية */}
       <div
         style={{
           display: 'grid',
@@ -198,8 +208,8 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
             padding: '8px 10px',
             borderRadius: '8px',
             border: 'none',
-            fontSize: '12px',
-            fontWeight: 700,
+            fontSize: '11.5px',
+            fontWeight: 800,
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
@@ -208,11 +218,12 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
             transition: 'all 0.2s ease',
             background: activeTab === 'salon' ? '#ffffff' : 'transparent',
             color: activeTab === 'salon' ? 'var(--text-main)' : 'var(--text-muted)',
-            boxShadow: activeTab === 'salon' ? '0 2px 6px rgba(0,0,0,0.06)' : 'none'
+            boxShadow: activeTab === 'salon' ? '0 2px 6px rgba(0,0,0,0.06)' : 'none',
+            fontFamily: 'var(--font-body)'
           }}
         >
           <Building2 size={14} color={activeTab === 'salon' ? 'var(--text-gold)' : 'currentColor'} />
-          <span>In-Salon Hours ({openSalonDays}/7)</span>
+          <span>دوام الصالون ({openSalonDays}/7)</span>
         </button>
 
         <button
@@ -221,8 +232,8 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
             padding: '8px 10px',
             borderRadius: '8px',
             border: 'none',
-            fontSize: '12px',
-            fontWeight: 700,
+            fontSize: '11.5px',
+            fontWeight: 800,
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
@@ -231,15 +242,16 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
             transition: 'all 0.2s ease',
             background: activeTab === 'home' ? '#ffffff' : 'transparent',
             color: activeTab === 'home' ? 'var(--text-main)' : 'var(--text-muted)',
-            boxShadow: activeTab === 'home' ? '0 2px 6px rgba(0,0,0,0.06)' : 'none'
+            boxShadow: activeTab === 'home' ? '0 2px 6px rgba(0,0,0,0.06)' : 'none',
+            fontFamily: 'var(--font-body)'
           }}
         >
           <Home size={14} color={activeTab === 'home' ? 'var(--text-gold)' : 'currentColor'} />
-          <span>Home Service ({activeHomeDays}/7)</span>
+          <span>الخدمة المنزلية ({activeHomeDays}/7)</span>
         </button>
       </div>
 
-      {/* Quick Action Shortcuts */}
+      {/* اختصارات القوالب الجاهزة */}
       <div style={{ display: 'flex', gap: '8px', marginBottom: '14px', flexWrap: 'wrap' }}>
         {activeTab === 'salon' ? (
           <button
@@ -251,14 +263,15 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
               padding: '6px 10px',
               borderRadius: '8px',
               fontSize: '11px',
-              fontWeight: 700,
+              fontWeight: 800,
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              gap: '4px'
+              gap: '4px',
+              fontFamily: 'var(--font-body)'
             }}
           >
-            <Sparkles size={12} /> Standard Saudi Hours (10:00-22:00, Fri 13:30)
+            <Sparkles size={12} /> التوقيت المعتاد (10:00 - 22:00، الجمعة 13:30)
           </button>
         ) : (
           <button
@@ -270,19 +283,20 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
               padding: '6px 10px',
               borderRadius: '8px',
               fontSize: '11px',
-              fontWeight: 700,
+              fontWeight: 800,
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              gap: '4px'
+              gap: '4px',
+              fontFamily: 'var(--font-body)'
             }}
           >
-            <Sparkles size={12} /> Sync with In-Salon Operating Days
+            <Sparkles size={12} /> مطابقة أيام الخدمة المنزلية مع دوام الصالون
           </button>
         )}
       </div>
 
-      {/* Schedule Rows */}
+      {/* صفوف جدول الأيام */}
       {activeTab === 'salon' ? (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           {salonSchedule.map((item) => (
@@ -292,7 +306,7 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
               style={{
                 padding: '12px',
                 marginBottom: 0,
-                borderLeft: item.isOpen ? '3px solid var(--gold-primary)' : '3px solid #cbd5e1',
+                borderRight: item.isOpen ? '3px solid var(--gold-primary)' : '3px solid #cbd5e1',
                 background: item.isOpen ? '#ffffff' : '#f8fafc'
               }}
             >
@@ -307,12 +321,12 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
                     }}
                   />
                   <div>
-                    <div style={{ fontWeight: 700, fontSize: '13px', color: item.isOpen ? 'var(--text-main)' : 'var(--text-muted)' }}>
-                      {item.day}
+                    <div style={{ fontWeight: 800, fontSize: '13.5px', color: item.isOpen ? 'var(--text-main)' : 'var(--text-muted)' }}>
+                      {ARABIC_DAYS[item.day]}
                     </div>
                     {item.day === 'Friday' && (
-                      <div style={{ fontSize: '10px', color: '#d97706', fontWeight: 600 }}>
-                        Post-Friday Prayer Opening
+                      <div style={{ fontSize: '10px', color: '#d97706', fontWeight: 700 }}>
+                        يبدأ العمل بعد صلاة الجمعة
                       </div>
                     )}
                   </div>
@@ -322,17 +336,18 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
                   <button
                     onClick={() => handleToggleSalonDay(item.day)}
                     style={{
-                      padding: '4px 10px',
+                      padding: '4px 11px',
                       borderRadius: '20px',
                       border: 'none',
                       fontSize: '11px',
-                      fontWeight: 700,
+                      fontWeight: 800,
                       cursor: 'pointer',
                       background: item.isOpen ? 'rgba(16, 185, 129, 0.15)' : '#e2e8f0',
-                      color: item.isOpen ? '#059669' : '#64748b'
+                      color: item.isOpen ? '#059669' : '#64748b',
+                      fontFamily: 'var(--font-body)'
                     }}
                   >
-                    {item.isOpen ? 'OPEN' : 'CLOSED'}
+                    {item.isOpen ? 'مفتوح' : 'مغلق'}
                   </button>
                 </div>
               </div>
@@ -349,8 +364,8 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
                   }}
                 >
                   <div>
-                    <label style={{ fontSize: '10px', color: 'var(--text-muted)', display: 'block', marginBottom: '2px', fontWeight: 600 }}>
-                      Opens At
+                    <label style={{ fontSize: '10px', color: 'var(--text-muted)', display: 'block', marginBottom: '3px', fontWeight: 700 }}>
+                      يفتح الساعة
                     </label>
                     <input
                       type="time"
@@ -361,8 +376,8 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
                   </div>
 
                   <div>
-                    <label style={{ fontSize: '10px', color: 'var(--text-muted)', display: 'block', marginBottom: '2px', fontWeight: 600 }}>
-                      Closes At
+                    <label style={{ fontSize: '10px', color: 'var(--text-muted)', display: 'block', marginBottom: '3px', fontWeight: 700 }}>
+                      يغلق الساعة
                     </label>
                     <input
                       type="time"
@@ -374,7 +389,7 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
                 </div>
               ) : (
                 <div style={{ marginTop: '6px', fontSize: '11px', color: 'var(--text-muted)', fontStyle: 'italic' }}>
-                  Branch is closed to walk-ins and in-salon appointments on this day.
+                  الفرع مغلق ولا يستقبل حجوزات في هذا اليوم.
                 </div>
               )}
             </div>
@@ -396,7 +411,7 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
           >
             <AlertCircle size={16} color="#2563eb" style={{ flexShrink: 0 }} />
             <div style={{ fontSize: '11px', color: '#1e40af', lineHeight: 1.4 }}>
-              Home service appointments can only be booked by clients on enabled days within the dispatch window.
+              طلبات الخدمة المنزلية متاحة للعملاء فقط خلال الأيام المفعلة وضمن فترات التوصيل المحددة أدناه.
             </div>
           </div>
 
@@ -407,7 +422,7 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
               style={{
                 padding: '12px',
                 marginBottom: 0,
-                borderLeft: item.isAvailable ? '3px solid #2563eb' : '3px solid #cbd5e1',
+                borderRight: item.isAvailable ? '3px solid #2563eb' : '3px solid #cbd5e1',
                 background: item.isAvailable ? '#ffffff' : '#f8fafc'
               }}
             >
@@ -421,8 +436,8 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
                       background: item.isAvailable ? '#2563eb' : '#94a3b8'
                     }}
                   />
-                  <div style={{ fontWeight: 700, fontSize: '13px', color: item.isAvailable ? 'var(--text-main)' : 'var(--text-muted)' }}>
-                    {item.day}
+                  <div style={{ fontWeight: 800, fontSize: '13.5px', color: item.isAvailable ? 'var(--text-main)' : 'var(--text-muted)' }}>
+                    {ARABIC_DAYS[item.day]}
                   </div>
                 </div>
 
@@ -430,17 +445,18 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
                   <button
                     onClick={() => handleToggleHomeDay(item.day)}
                     style={{
-                      padding: '4px 10px',
+                      padding: '4px 11px',
                       borderRadius: '20px',
                       border: 'none',
                       fontSize: '11px',
-                      fontWeight: 700,
+                      fontWeight: 800,
                       cursor: 'pointer',
                       background: item.isAvailable ? 'rgba(37, 99, 235, 0.15)' : '#e2e8f0',
-                      color: item.isAvailable ? '#2563eb' : '#64748b'
+                      color: item.isAvailable ? '#2563eb' : '#64748b',
+                      fontFamily: 'var(--font-body)'
                     }}
                   >
-                    {item.isAvailable ? 'ACTIVE' : 'OFF'}
+                    {item.isAvailable ? 'متاح للتوصيل' : 'معطل'}
                   </button>
                 </div>
               </div>
@@ -457,8 +473,8 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
                   }}
                 >
                   <div>
-                    <label style={{ fontSize: '10px', color: 'var(--text-muted)', display: 'block', marginBottom: '2px', fontWeight: 600 }}>
-                      Dispatch Window Starts
+                    <label style={{ fontSize: '10px', color: 'var(--text-muted)', display: 'block', marginBottom: '3px', fontWeight: 700 }}>
+                      بداية فترة التوصيل
                     </label>
                     <input
                       type="time"
@@ -469,8 +485,8 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
                   </div>
 
                   <div>
-                    <label style={{ fontSize: '10px', color: 'var(--text-muted)', display: 'block', marginBottom: '2px', fontWeight: 600 }}>
-                      Dispatch Window Ends
+                    <label style={{ fontSize: '10px', color: 'var(--text-muted)', display: 'block', marginBottom: '3px', fontWeight: 700 }}>
+                      نهاية فترة التوصيل
                     </label>
                     <input
                       type="time"
@@ -482,7 +498,7 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
                 </div>
               ) : (
                 <div style={{ marginTop: '6px', fontSize: '11px', color: 'var(--text-muted)', fontStyle: 'italic' }}>
-                  Home visits are paused on this day. In-salon visits remain subject to salon hours.
+                  الخدمة المنزلية متوقفة في هذا اليوم.
                 </div>
               )}
             </div>
@@ -490,14 +506,14 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
         </div>
       )}
 
-      {/* Save Button */}
-      <div style={{ marginTop: '18px', paddingBottom: '24px' }}>
+      {/* زر الحفظ النهائي */}
+      <div style={{ marginTop: '16px', paddingBottom: '20px' }}>
         <button
           onClick={handleSave}
-          className="gold-btn"
+          className="gold-button"
           style={{
             width: '100%',
-            padding: '12px',
+            padding: '11px',
             fontSize: '13px',
             fontWeight: 800,
             display: 'flex',
@@ -506,7 +522,7 @@ export const OperatingHoursView: React.FC<OperatingHoursViewProps> = ({
             gap: '8px'
           }}
         >
-          <Check size={16} /> Save Branch Schedule
+          <Check size={16} /> حفظ أوقات العمل وجداول الدوام
         </button>
       </div>
     </div>
